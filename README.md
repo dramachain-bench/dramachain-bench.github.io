@@ -21,9 +21,9 @@ Zhichao Hu<sup>1,†</sup> &nbsp; Lilin Wang<sup>1</sup> &nbsp; Yuhong Liu<sup>1
 
 ## Abstract
 
-Commercial short-drama production follows a multi-stage chain: script, storyboard, keyframe imagery, shot-level video, and the finished short drama. Most existing benchmarks evaluate solely the video-generation stage using pre-authored inputs instead of real upstream pipeline outputs. This leaves two critical questions unanswerable: whether each stage adheres to the original *script* intent (rather than only its immediate input prompt), and whether disparate shots remain coherent after assembly into multi-episode releases.
+Commercial short-drama production runs as a chain — script, storyboard, keyframes, shot video, finished drama — but benchmarks score only the video stage, on inputs written for the test rather than produced by a pipeline. So no one can say which stage caused a delivery defect, or how far it travelled.
 
-We present **DramaChain Bench**, the first short-drama benchmark that evaluates every stage of the complete production chain. It is built upon three in-house systems sharing one dimension system, **DramaChain Dimensions**: five evaluation axes instantiated at every stage, resolving into 63 leaf dimensions. **DramaChain Agent** is calibrated against commercial short-drama platforms in both workflow and finished short-drama quality, enabling stage-wise fair comparison across models. The **DramaChain Labeling System** has each of the 5,785 items scored independently by three professional annotators, with all defects spatio-temporally localised and selected from a predefined defect list. This process produces 17,488 valid scores and 255,925 traceable attribution records. The human annotations confirm that upstream defects cascade across the pipeline, demonstrating that final episode quality is not governed by video generation alone. The **DramaChain Agentic Judge** then scores every leaf dimension automatically, gathering evidence over multiple agentic rounds before judging against a per-item checklist; it reproduces the model ranking at a mean PLCC of 0.918, enough to admit new models at no annotation cost.
+**DramaChain Bench** scores every stage of a full production chain, on items that chain itself produced. Five evaluation axes are instantiated at six granularities into 63 leaf dimensions, over 5,785 items. Three professional annotators score each item independently with every defect localised in space and time, giving 17,488 scores and 255,925 traceable attributions. An agentic judge then reproduces that board at a mean PLCC of 0.918 — enough to admit new models at no annotation cost.
 
 <div align="center">
 <img src="assets/overview.png" alt="DramaChain Bench overview: the dimension system, the production pipeline, the labeling system and the agentic judge" width="820">
@@ -33,17 +33,10 @@ We present **DramaChain Bench**, the first short-drama benchmark that evaluates 
 
 ## Highlights
 
-**One dominant chain, operating near the usable line.** Excluding models added after the annotation round, the state-of-the-art pipeline is `gpt-5.5-xhigh` for storyboarding, `gpt-image-2` for keyframes and `seedance-2.0` for video. Within each modality the leading model is invariant to evaluation granularity. That chain delivers a finished short drama at 3.30, only 0.3 above the 3.0 usable line, with its best single-shot result at 3.24.
-
-**Quality decays along the chain.** Mean scores fall from 3.78 at storyboard design to 3.62 for single keyframes, 3.30 for episode keyframes, 3.09 for single-shot video and 2.93 for episode video, rebounding modestly to 3.03 for the finished drama. No pixel- or video-generation stage reaches the mean achieved at the text stage.
-
-**Upstream defects accumulate rather than stay local.** Degrading exactly one upstream stage costs a single clip 0.07–0.13 points but costs the finished short drama 0.25–0.83. What ships is therefore not determined by the video-generation stage alone.
-
-**Discrimination tracks reference explicitness, not task difficulty.** Averaged across applicable stages, top-to-bottom gaps are 1.22 on input fidelity and 0.70 on internal consistency — both validated against an external artefact — versus 0.53 on generation plausibility and 0.42 on cinematic expressiveness, which have no external reference. Small gaps on weakly anchored metrics reflect a benchmark limit, not comparable models.
-
-**Composite scores hide dimensional trade-offs.** `seedream-5.0-pro` and `nano-banana-pro` differ by 0.02 overall, yet by 0.39 on input fidelity and 0.60 on generation plausibility in opposite directions. Composites are suitable for tier grouping and misleading for model selection.
-
-**Automated scoring reproduces the board.** The agentic judge reaches a mean model-level PLCC of 0.918 against the three-annotator panel, which is what allows 8 further models to enter the leaderboard at no annotation cost.
+- **The best chain today barely clears the usable line.** `gpt-5.5-xhigh` → `gpt-image-2` → `seedance-2.0` delivers a finished drama at 3.30, only 0.3 above 3.0.
+- **Upstream defects accumulate rather than stay local.** Degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.
+- **Quality decays along the chain.** 3.78 at storyboard design down to 2.93 at episode video; no pixel or video stage reaches the text stage's mean.
+- **Composite scores hide dimensional trade-offs.** `seedream-5.0-pro` and `nano-banana-pro` differ by 0.02 overall, but by 0.39 and 0.60 on two axes in opposite directions.
 
 ---
 
@@ -208,7 +201,7 @@ The judge replicates the human reference automatically. It aggregates routed mea
 
 ### Equal scores, different failure modes
 
-Four items all score 1.3–1.7 on some dimension, so a composite ranks them together — but the localised defect boxes fall in four disjoint places: on faces, on limbs mid-action, on people who should not be present, and on hands with the wrong number of fingers. Within each pair the two models trade which dimension they fail: the model that loses identity holds action at 3.0, and the model that loses action holds identity at 3.33.
+All four items score 1.3–1.7 on some dimension, so a composite ranks them together. The boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.
 
 <table>
 <tr>
@@ -233,7 +226,7 @@ Boxes are drawn independently by the three annotators; colour distinguishes them
 
 ### Cross-shot consistency is a separate capability
 
-Two models draw the same episode from the same character sheets. The top-tier row holds its two leads across shots; the bottom-tier row does not, a 2.66-point gap on cross-shot character consistency. The important property is that every individual panel in the failing row is defensible — nothing in shot 7 alone is wrong, it is wrong relative to shot 5. A single-asset board is not under-reporting cross-shot quality; it is measuring a different quantity.
+Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.
 
 **T1 `gpt-image-2`** — MI-D1 cross-shot character consistency **4.33**, alternate shots 1, 3, … 11 of 13
 
@@ -269,6 +262,25 @@ Two models draw the same episode from the same character sheets. The top-tier ro
 </tr>
 </table>
 
+### What a tier gap looks like in motion
+
+The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.
+
+<table>
+<tr>
+<td width="33%"><a href="assets/video/tier-seedance.mp4"><img src="assets/video/tier-seedance.jpg" alt="Play: top tier, seedance-2.0"></a></td>
+<td width="33%"><a href="assets/video/tier-kling.mp4"><img src="assets/video/tier-kling.jpg" alt="Play: mid tier, kling-3.0-omni"></a></td>
+<td width="33%"><a href="assets/video/tier-pixverse.mp4"><img src="assets/video/tier-pixverse.jpg" alt="Play: bottom tier, pixverse-c1"></a></td>
+</tr>
+<tr>
+<td><b>Top tier</b> — <code>seedance-2.0</code><br>V-C1 character appearance <b>5.00</b>, 30 problems marked. <a href="assets/video/tier-seedance.mp4">▶ play</a></td>
+<td><b>Mid tier</b> — <code>kling-3.0-omni</code><br>V-C1 character appearance <b>2.33</b>, 109 problems marked. <a href="assets/video/tier-kling.mp4">▶ play</a></td>
+<td><b>Bottom tier</b> — <code>pixverse-c1</code><br>V-C1 character appearance <b>1.67</b>, 94 problems marked. <a href="assets/video/tier-pixverse.mp4">▶ play</a></td>
+</tr>
+</table>
+
+Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyframes and the same prompt.
+
 ### Shot count decides executability
 
 One identical episode script, forked only at the storyboard stage:
@@ -287,7 +299,7 @@ The three-shot output compresses the episode into 30 s of self-declared duration
 
 ### Each input paradigm carries its own failure mode
 
-Grid panels omit people, because one image must fill several cells; first/last-frame shots change person between the two frames, because the frames are not produced in one pass and identity is not held across them. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than by visual style — 1 of 10 failing dimensions for first/last frame against 9 of 15 for grid.
+Grid panels omit people; first/last-frame shots change person between the two frames. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than visual style — 1 of 10 failing dimensions against 9 of 15.
 
 <table>
 <tr>
@@ -317,7 +329,7 @@ The input for the first/last-frame case — the shot's own first frame, then thr
 
 ### An upstream defect is re-expressed downstream, not repaired
 
-Rooms drift before people do. All three annotators circled this run of four consecutive shots for the set dressing while the characters held. Corpus-wide, cross-shot *scene* consistency at 2.42 is the lowest of the four episode-level dimensions, and the video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
+Rooms drift before people do: all three annotators circled this run for the set dressing while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
 
 **`gpt-image-1.5`**, four consecutive shots — MI-D3 scene **2.00** vs MI-D1 character **3.67**
 
@@ -336,15 +348,26 @@ Rooms drift before people do. All three annotators circled this run of four cons
 
 ### `hy3` reproduces the script and does not dramatise it
 
-It scores 3.43 on storyboard design against 3.60 for its nearest neighbour `doubao-seed-2.1-pro`, and the gap is grouped rather than general. Over the eight leaf dimensions on the same 533 items, `hy3` leads on everything that means *reproduce the script* — dialogue fidelity reaches 4.44, only 0.20 behind the leader — and trails on everything that means *turn it into television*, with emotional expression at 3.64 and audiovisual style at 3.91, both eighth of nine.
+It scores 3.43 against 3.60 for its nearest neighbour `doubao-seed-2.1-pro`, and the gap is grouped rather than general: it leads on everything that means *reproduce the script* (dialogue fidelity 4.44) and trails on everything that means *turn it into television* (emotion 3.64, audiovisual style 3.91, both eighth of nine).
 
 ### `seedance-2.5` buys episode coherence with single-clip quality
 
-On paired items the newer version loses on single-shot video and gains at both episode and short-drama granularity. Everything that must hold continuously along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility) and everything about joining shots together got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already present in the prompt is now executed faithfully.
+On paired items the newer version loses on single-shot video and gains at episode and short-drama granularity. Everything that must hold along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility); everything about joining shots got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already in the prompt is now executed faithfully.
+
+<table>
+<tr>
+<td width="50%"><a href="assets/video/sd25-lipsync.mp4"><img src="assets/video/sd25-lipsync.jpg" alt="Play: the character delivers her lines with her back to camera"></a></td>
+<td width="50%"><a href="assets/video/sd25-cuts.mp4"><img src="assets/video/sd25-cuts.jpg" alt="Play: four internal cuts inside one 25-second shot"></a></td>
+</tr>
+<tr>
+<td><b>The prompt said film her from behind, so it did.</b> There is no mouth to sync the dialogue to. <a href="assets/video/sd25-lipsync.mp4">▶ play</a></td>
+<td><b>Four internal cuts inside one 25 s shot.</b> Single shots went from 15 s to 30 s while the score stays one number. <a href="assets/video/sd25-cuts.mp4">▶ play</a></td>
+</tr>
+</table>
 
 ### Automated scoring drifts where there is no reference to check against
 
-One `nano-banana-pro` panel, all four scored dimensions shown: every dimension with a reference to check against is right, and the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, visible noise, blur, ghosting. This is the item-level form of what metric validation found across the population.
+Every dimension with a reference to check against is right; the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, noise, blur, ghosting.
 
 <img src="assets/cases/judgefail.jpg" alt="The nano-banana-pro keyframe whose technical quality the judge overestimated" width="360">
 
