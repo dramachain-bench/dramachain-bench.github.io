@@ -313,7 +313,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     <div class="legend">
       <span><i>bold</i> — best value in the column among fully annotated models</span>
       <span><i class="fail">red</i> — below the 3.0 usable line</span>
-      <span><i>—</i> — axis not defined at this stage</span>
+      <span>each stage shows only the axes defined at its granularity</span>
     </div>
 
     <div class="tabs" role="tablist" aria-label="Production stage"></div>
@@ -729,13 +729,17 @@ function cell(v){
 }
 
 function buildTable(stage){
-  const head = AXES.map(([code, name, cls]) =>
-    `<th><span class="ax ${cls}">${code}</span>${name}</th>`).join('');
+  /* An axis undefined at this granularity would be a column of dashes. */
+  const live = AXES.map((_, i) => stage.rows.some(r => r[i + 2] !== null));
+  const head = AXES.filter((_, i) => live[i])
+    .map(([code, name, cls]) => `<th><span class="ax ${cls}">${code}</span>${name}</th>`)
+    .join('');
   const body = stage.rows.map(r => {
     const extra = r[1] ? ' class="extra"' : '';
     const mark = r[1] ? `<span class="mk">${r[1]}</span>` : '';
+    const axes = r.slice(2, 7).filter((_, i) => live[i]).map(cell).join('');
     return `<tr${extra}><td><span class="mdl">${r[0]}</span>${mark}</td>`
-      + r.slice(2).map(cell).join('') + '</tr>';
+      + axes + cell(r[7]) + '</tr>';
   }).join('');
   return `<div class="tscroll"><table>
     <thead><tr><th>Model</th>${head}<th>All</th></tr></thead>

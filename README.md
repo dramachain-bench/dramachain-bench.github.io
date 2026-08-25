@@ -48,7 +48,7 @@ Automated board, 5-point scale, over six production stages and five evaluation a
 |---|---|
 | **bold** | best value in the column among fully annotated models |
 | *italic* | below the 3.0 usable line |
-| — | axis not defined at this stage |
+| | each stage shows only the axes defined at its granularity |
 | † | added after the annotation round, scored automatically only; excluded from agreement metrics and best-column marking |
 | ‡ | partial corpus run (reduced dramas, paradigms or styles); scores from the evaluated subset |
 
@@ -59,24 +59,24 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 
 <br>
 
-| Model | F<br>Input fidelity | C<br>Internal consistency | P<br>Generation plausibility | Q<br>Visual quality | E<br>Cinematic expressiveness | All |
-|---|---|---|---|---|---|---|
-| `gpt-5.5-xhigh` | **4.84** | — | **3.89** | — | 4.10 | **4.23** |
-| `claude-opus-4.8-max` | 4.51 | — | 3.80 | — | **4.19** | 4.17 |
-| `hy3` | 4.36 | — | 3.65 | — | 3.78 | 3.89 |
-| `doubao-seed-2.1-pro` | 4.26 | — | 3.65 | — | 3.82 | 3.89 |
-| `glm-5.2` | 4.01 | — | 3.66 | — | 3.74 | 3.79 |
-| `gemini-3.1-pro` | 4.08 | — | 3.43 | — | 3.67 | 3.71 |
-| `kimi-k2.6` | 3.66 | — | 3.42 | — | 3.74 | 3.64 |
-| `qwen3.7-max` | 3.24 | — | 3.48 | — | 3.59 | 3.48 |
-| `mimo-v2.5-pro` | *2.68* | — | 3.53 | — | 3.41 | 3.26 |
-| `gpt-5.6-sol-max` † | 4.95 | — | 4.02 | — | 4.31 | 4.40 |
-| `claude-fable-5-max` † | 4.55 | — | 3.99 | — | 4.20 | 4.24 |
-| `claude-opus-5-max` † | 4.45 | — | 3.85 | — | 4.30 | 4.22 |
-| `kimi-k3` † | 4.67 | — | 3.87 | — | 4.17 | 4.22 |
-| `qwen3.8-max` † | 4.55 | — | 3.88 | — | 3.94 | 4.08 |
-| `grok-4.5` † | 3.96 | — | 3.85 | — | 3.92 | 3.92 |
-| `gemini-3.6-flash-high` † | 4.04 | — | 3.65 | — | 3.71 | 3.78 |
+| Model | F<br>Input fidelity | P<br>Generation plausibility | E<br>Cinematic expressiveness | All |
+| --- | --- | --- | --- | --- |
+| `gpt-5.5-xhigh` | **4.84** | **3.89** | 4.10 | **4.23** |
+| `claude-opus-4.8-max` | 4.51 | 3.80 | **4.19** | 4.17 |
+| `hy3` | 4.36 | 3.65 | 3.78 | 3.89 |
+| `doubao-seed-2.1-pro` | 4.26 | 3.65 | 3.82 | 3.89 |
+| `glm-5.2` | 4.01 | 3.66 | 3.74 | 3.79 |
+| `gemini-3.1-pro` | 4.08 | 3.43 | 3.67 | 3.71 |
+| `kimi-k2.6` | 3.66 | 3.42 | 3.74 | 3.64 |
+| `qwen3.7-max` | 3.24 | 3.48 | 3.59 | 3.48 |
+| `mimo-v2.5-pro` | *2.68* | 3.53 | 3.41 | 3.26 |
+| `gpt-5.6-sol-max` † | 4.95 | 4.02 | 4.31 | 4.40 |
+| `claude-fable-5-max` † | 4.55 | 3.99 | 4.20 | 4.24 |
+| `claude-opus-5-max` † | 4.45 | 3.85 | 4.30 | 4.22 |
+| `kimi-k3` † | 4.67 | 3.87 | 4.17 | 4.22 |
+| `qwen3.8-max` † | 4.55 | 3.88 | 3.94 | 4.08 |
+| `grok-4.5` † | 3.96 | 3.85 | 3.92 | 3.92 |
+| `gemini-3.6-flash-high` † | 4.04 | 3.65 | 3.71 | 3.78 |
 
 </details>
 
@@ -85,15 +85,15 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 
 <br>
 
-| Model | F<br>Input fidelity | C<br>Internal consistency | P<br>Generation plausibility | Q<br>Visual quality | E<br>Cinematic expressiveness | All |
-|---|---|---|---|---|---|---|
-| `gpt-image-2` | **3.65** | **4.32** | **4.47** | **4.13** | — | **3.99** |
-| `gpt-image-1.5` | 3.25 | 3.96 | 4.46 | 3.90 | — | 3.72 |
-| `nano-banana-2` | 3.33 | 3.92 | 4.25 | 3.71 | — | 3.68 |
-| `seedream-5.0-pro` | 3.56 | 3.92 | 3.74 | 3.52 | — | 3.64 |
-| `nano-banana-pro` | 3.17 | 3.89 | 4.34 | 3.79 | — | 3.62 |
-| `wan2.7-image-pro` | *2.95* | 3.63 | 4.03 | 3.46 | — | 3.38 |
-| `seedream-5.0-lite` ‡ | *2.96* | 3.40 | 3.89 | 3.40 | — | 3.32 |
+| Model | F<br>Input fidelity | C<br>Internal consistency | P<br>Generation plausibility | Q<br>Visual quality | All |
+| --- | --- | --- | --- | --- | --- |
+| `gpt-image-2` | **3.65** | **4.32** | **4.47** | **4.13** | **3.99** |
+| `gpt-image-1.5` | 3.25 | 3.96 | 4.46 | 3.90 | 3.72 |
+| `nano-banana-2` | 3.33 | 3.92 | 4.25 | 3.71 | 3.68 |
+| `seedream-5.0-pro` | 3.56 | 3.92 | 3.74 | 3.52 | 3.64 |
+| `nano-banana-pro` | 3.17 | 3.89 | 4.34 | 3.79 | 3.62 |
+| `wan2.7-image-pro` | *2.95* | 3.63 | 4.03 | 3.46 | 3.38 |
+| `seedream-5.0-lite` ‡ | *2.96* | 3.40 | 3.89 | 3.40 | 3.32 |
 
 </details>
 
@@ -102,15 +102,15 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 
 <br>
 
-| Model | F<br>Input fidelity | C<br>Internal consistency | P<br>Generation plausibility | Q<br>Visual quality | E<br>Cinematic expressiveness | All |
-|---|---|---|---|---|---|---|
-| `gpt-image-2` | — | **3.82** | — | — | — | **3.82** |
-| `gpt-image-1.5` | — | 3.60 | — | — | — | 3.60 |
-| `nano-banana-2` | — | 3.47 | — | — | — | 3.47 |
-| `seedream-5.0-pro` | — | 3.28 | — | — | — | 3.28 |
-| `nano-banana-pro` | — | 3.04 | — | — | — | 3.04 |
-| `wan2.7-image-pro` | — | 3.00 | — | — | — | 3.00 |
-| `seedream-5.0-lite` ‡ | — | *2.91* | — | — | — | *2.91* |
+| Model | C<br>Internal consistency | All |
+| --- | --- | --- |
+| `gpt-image-2` | **3.82** | **3.82** |
+| `gpt-image-1.5` | 3.60 | 3.60 |
+| `nano-banana-2` | 3.47 | 3.47 |
+| `seedream-5.0-pro` | 3.28 | 3.28 |
+| `nano-banana-pro` | 3.04 | 3.04 |
+| `wan2.7-image-pro` | 3.00 | 3.00 |
+| `seedream-5.0-lite` ‡ | *2.91* | *2.91* |
 
 </details>
 
@@ -120,7 +120,7 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 <br>
 
 | Model | F<br>Input fidelity | C<br>Internal consistency | P<br>Generation plausibility | Q<br>Visual quality | E<br>Cinematic expressiveness | All |
-|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- |
 | `seedance-2.0` ‡ | 3.44 | **3.27** | 3.06 | **3.77** | 3.05 | **3.24** |
 | `happyhorse-1.1` | 3.34 | 3.21 | 3.04 | 3.43 | 3.08 | 3.18 |
 | `kling-3.0-omni` | 3.22 | 3.23 | **3.08** | 3.28 | *2.88* | 3.11 |
@@ -136,15 +136,15 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 
 <br>
 
-| Model | F<br>Input fidelity | C<br>Internal consistency | P<br>Generation plausibility | Q<br>Visual quality | E<br>Cinematic expressiveness | All |
-|---|---|---|---|---|---|---|
-| `seedance-2.0` ‡ | — | ***2.96*** | 3.41 | — | 3.32 | **3.11** |
-| `happyhorse-1.1` | — | *2.84* | **3.64** | — | 3.37 | 3.08 |
-| `kling-3.0-omni` | — | *2.79* | 3.31 | — | **3.48** | 3.06 |
-| `wan2.7` ‡ | — | *2.57* | 3.24 | — | 3.35 | *2.87* |
-| `veo-3.1` ‡ | — | *2.47* | 3.27 | — | 3.18 | *2.76* |
-| `pixverse-c1` | — | *2.42* | 3.08 | — | 3.16 | *2.71* |
-| `seedance-2.5` †‡ | — | 3.16 | 3.11 | — | 3.50 | 3.25 |
+| Model | C<br>Internal consistency | P<br>Generation plausibility | E<br>Cinematic expressiveness | All |
+| --- | --- | --- | --- | --- |
+| `seedance-2.0` ‡ | ***2.96*** | 3.41 | 3.32 | **3.11** |
+| `happyhorse-1.1` | *2.84* | **3.64** | 3.37 | 3.08 |
+| `kling-3.0-omni` | *2.79* | 3.31 | **3.48** | 3.06 |
+| `wan2.7` ‡ | *2.57* | 3.24 | 3.35 | *2.87* |
+| `veo-3.1` ‡ | *2.47* | 3.27 | 3.18 | *2.76* |
+| `pixverse-c1` | *2.42* | 3.08 | 3.16 | *2.71* |
+| `seedance-2.5` †‡ | 3.16 | 3.11 | 3.50 | 3.25 |
 
 </details>
 
@@ -153,15 +153,15 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 
 <br>
 
-| Model | F<br>Input fidelity | C<br>Internal consistency | P<br>Generation plausibility | Q<br>Visual quality | E<br>Cinematic expressiveness | All |
-|---|---|---|---|---|---|---|
-| `seedance-2.0` ‡ | **4.29** | 3.38 | — | — | *2.68* | **3.30** |
-| `happyhorse-1.1` | 3.82 | 3.38 | — | — | ***2.69*** | 3.22 |
-| `kling-3.0-omni` | 3.37 | **3.41** | — | — | *2.54* | 3.11 |
-| `wan2.7` ‡ | 4.12 | *2.80* | — | — | *2.59* | *2.95* |
-| `pixverse-c1` | 3.05 | *2.88* | — | — | *2.58* | *2.81* |
-| `veo-3.1` ‡ | *2.67* | 3.07 | — | — | *2.44* | *2.79* |
-| `seedance-2.5` †‡ | 4.40 | 3.93 | — | — | 3.00 | 3.70 |
+| Model | F<br>Input fidelity | C<br>Internal consistency | E<br>Cinematic expressiveness | All |
+| --- | --- | --- | --- | --- |
+| `seedance-2.0` ‡ | **4.29** | 3.38 | *2.68* | **3.30** |
+| `happyhorse-1.1` | 3.82 | 3.38 | ***2.69*** | 3.22 |
+| `kling-3.0-omni` | 3.37 | **3.41** | *2.54* | 3.11 |
+| `wan2.7` ‡ | 4.12 | *2.80* | *2.59* | *2.95* |
+| `pixverse-c1` | 3.05 | *2.88* | *2.58* | *2.81* |
+| `veo-3.1` ‡ | *2.67* | 3.07 | *2.44* | *2.79* |
+| `seedance-2.5` †‡ | 4.40 | 3.93 | 3.00 | 3.70 |
 
 </details>
 
