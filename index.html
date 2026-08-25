@@ -151,6 +151,26 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 /* ── video panels ─────────────────────────────────────────────────────── */
 .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .vrow.two{grid-template-columns:1fr 1fr}
+.vrow.four{grid-template-columns:repeat(4,1fr);gap:9px}
+.vrow.four figcaption{font-size:11px;text-align:center}
+.vrow.four figcaption b{display:inline;font-size:12px}
+.vrow.four figcaption .dur{display:block;font-family:var(--mono);font-size:10.5px;
+  color:var(--muted);margin-top:2px}
+.vrow.four figcaption b.ours{color:var(--accent)}
+details.script{margin-top:14px;border:1px solid var(--line);border-radius:9px;
+  background:var(--sheet);overflow:hidden}
+details.script>summary{cursor:pointer;padding:10px 15px;font-size:12.5px;
+  font-weight:600;list-style:none}
+details.script>summary::-webkit-details-marker{display:none}
+details.script>summary::before{content:"+ ";color:var(--accent);font-weight:700}
+details.script[open]>summary::before{content:"− "}
+details.script>summary:hover{color:var(--accent)}
+.script-body{padding:0 16px 14px;font-size:12.5px;line-height:1.72;color:var(--ink-2)}
+.script-body h4{font-size:12.5px;font-weight:600;color:var(--ink);margin:12px 0 5px}
+.script-body h4:first-child{margin-top:0}
+.script-body p{margin:0 0 6px}
+.script-body .sh{font-family:var(--mono);font-size:11px;color:var(--muted);
+  margin-right:7px}
 .vrow figure{margin:0;position:relative}
 .vrow video{width:100%;display:block;border:1px solid var(--line);border-radius:6px;
   background:#111;cursor:zoom-in}
@@ -317,6 +337,50 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     <figure>
       <img src="assets/agent.png" alt="The DramaChain Agent production pipeline, forking at exactly one stage per run" width="880">
     </figure>
+
+    <p><b>What the calibration means.</b> One script, run end to end by our pipeline and by three commercial short-drama platforms — OiiOii, XiaoYunQue and Flova. Shot segmentation, character and scene consistency, camera language and audio all land in the same band; what differs is house style. This is what licenses the benchmark to treat pipeline output as representative of the product category rather than as a weaker stand-in.</p>
+
+    <div class="cfig vrow four">
+      <figure>
+        <video src="assets/video/demo-ours.mp4" poster="assets/video/demo-ours.jpg" muted loop playsinline preload="none"></video>
+        <figcaption><b class="ours">DramaChain Agent</b><span class="dur">64.9 s</span></figcaption>
+      </figure>
+      <figure>
+        <video src="assets/video/demo-oiioii.mp4" poster="assets/video/demo-oiioii.jpg" muted loop playsinline preload="none"></video>
+        <figcaption><b>OiiOii</b><span class="dur">97.6 s</span></figcaption>
+      </figure>
+      <figure>
+        <video src="assets/video/demo-xiaoyunque.mp4" poster="assets/video/demo-xiaoyunque.jpg" muted loop playsinline preload="none"></video>
+        <figcaption><b>XiaoYunQue</b><span class="dur">43.3 s</span></figcaption>
+      </figure>
+      <figure>
+        <video src="assets/video/demo-flova.mp4" poster="assets/video/demo-flova.jpg" muted loop playsinline preload="none"></video>
+        <figcaption><b>Flova</b><span class="dur">72.4 s</span></figcaption>
+      </figure>
+    </div>
+
+    <details class="script">
+      <summary>The one script all four received &nbsp;·&nbsp; 3 scenes, 8 shots</summary>
+      <div class="script-body">
+        <p class="muted" style="margin-bottom:10px">Abridged from the Chinese source script. Each entry gives the framing and the beat; the delivered script also carried camera movement, dialogue and sound notes.</p>
+
+        <h4>Scene 1 — Ambush on the old road (day)</h4>
+        <p><span class="sh">1-1</span>Wide, locked off. Sun beating down, heat haze. A rider drives a horse at full gallop out of the depth of frame, dust everywhere, shouting that the lychees will spoil if he is late.</p>
+        <p><span class="sh">1-2</span>Close-up, handheld. The rider's face streaming sweat, lips cracked; tilt down to the horse foaming at the mouth, whip-pan to the lychee basket rocking loose. He looks back at the road behind and says he cannot go on.</p>
+
+        <h4>Scene 2 — Relief from the air (day)</h4>
+        <p><span class="sh">2-1</span>POV into a low angle. A buzzing pulls his eyes to the sky; a silver-grey heavy-lift drone drops into a hover above the horse. He forgets to rein in and asks whether the immortals have sent reinforcements.</p>
+        <p><span class="sh">2-2</span>Medium, eye level, man and machine. The drone descends, its grab system lit soft blue. He lifts the basket overhead, the claw locks with a click, the indicator turns green.</p>
+        <p><span class="sh">2-3</span>Aerial, extreme wide. The drone climbs away toward the city with the basket. The pull-back holds both the winding old road and the tiny figure still waving; the score cuts from heavy drums to bright electronica.</p>
+
+        <h4>Scene 3 — Fresh fruit, delivered (day)</h4>
+        <p><span class="sh">3-1</span>Medium, shooting from inside out. A modern high-rise balcony against the city skyline. The drone lands on the pad and releases the box; a family of three collects it, the mother remarking that the order was placed barely an hour ago.</p>
+        <p><span class="sh">3-2</span>Macro into medium. The red shell splits, juice bursting, translucent flesh beneath. Pull back to the family sharing the fruit on the sofa; the father, eyes closed, begins to recite the old line about the imperial consort's lychees.</p>
+        <p><span class="sh">3-3</span>Close two-shot. Before he can finish, the small boy jumps up with a peeled lychee and cuts him off with the punchline. Both parents laugh; the boy feeds his father the fruit and the frame holds on the family.</p>
+      </div>
+    </details>
+
+    <p class="fnote">All four runs are end to end and fully automatic — no manual editing, frame picking or re-rolling. Their source encodings differed (ours 720p / 24 fps / 2.0 Mbps, OiiOii 720p / 30 fps / 4.7 Mbps, XiaoYunQue 720p / 30 fps / 9.2 Mbps, Flova 1080p / 30 fps / 13.5 Mbps); all four are re-encoded here to 960×540 at roughly 1 Mbps, which removes bitrate as a confound in what you see. Clip lengths differ because each pipeline decides its own shot durations from the same script.</p>
 
     <h3>DramaChain Labeling System — human reference</h3>
     <p>Three professional annotators score every item independently against a five-point decidable rubric, each deduction tagged from a closed vocabulary and localised in space and time — 17,488 scores and 255,925 reviewable attributions from 543 annotators.</p>

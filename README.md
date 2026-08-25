@@ -177,7 +177,26 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 <img src="assets/agent.png" alt="The DramaChain Agent production pipeline, forking at exactly one stage per run" width="880">
 </div>
 
-An end-to-end short-drama production pipeline running fully automatically. It generates the 20 dramas and 60 episodes the benchmark rests on, and both its workflow and its finished-drama quality are calibrated against real commercial platforms, so that a flawed pipeline does not itself become the object of evaluation. The framework forks at exactly the stage under test: competing models receive identical upstream artefacts and prompt strings while every other stage stays fixed.
+**What the calibration means.** One script, run end to end by our pipeline and by three commercial short-drama platforms — OiiOii, XiaoYunQue and Flova. Shot segmentation, character and scene consistency, camera language and audio all land in the same band; what differs is house style.
+
+<table>
+<tr>
+<td width="25%"><a href="assets/video/demo-ours.mp4"><img src="assets/video/demo-ours.jpg" alt="Play: our pipeline's run"></a></td>
+<td width="25%"><a href="assets/video/demo-oiioii.mp4"><img src="assets/video/demo-oiioii.jpg" alt="Play: OiiOii's run"></a></td>
+<td width="25%"><a href="assets/video/demo-xiaoyunque.mp4"><img src="assets/video/demo-xiaoyunque.jpg" alt="Play: XiaoYunQue's run"></a></td>
+<td width="25%"><a href="assets/video/demo-flova.mp4"><img src="assets/video/demo-flova.jpg" alt="Play: Flova's run"></a></td>
+</tr>
+<tr>
+<td align="center"><b>DramaChain Agent</b><br>64.9 s &nbsp;<a href="assets/video/demo-ours.mp4">▶</a></td>
+<td align="center">OiiOii<br>97.6 s &nbsp;<a href="assets/video/demo-oiioii.mp4">▶</a></td>
+<td align="center">XiaoYunQue<br>43.3 s &nbsp;<a href="assets/video/demo-xiaoyunque.mp4">▶</a></td>
+<td align="center">Flova<br>72.4 s &nbsp;<a href="assets/video/demo-flova.mp4">▶</a></td>
+</tr>
+</table>
+
+All four runs are end to end and fully automatic — no manual editing, frame picking or re-rolling, from one 3-scene / 8-shot script. Their source encodings differed (ours 720p / 24 fps / 2.0 Mbps, OiiOii 720p / 30 fps / 4.7 Mbps, XiaoYunQue 720p / 30 fps / 9.2 Mbps, Flova 1080p / 30 fps / 13.5 Mbps); all four are re-encoded here to 960×540 at roughly 1 Mbps, which removes bitrate as a confound. Clip lengths differ because each pipeline decides its own shot durations from the same script.
+
+Generates the 20 dramas and 60 episodes the benchmark rests on, calibrated against real commercial platforms so a flawed pipeline is not itself what gets measured. It forks at exactly the stage under test — competing models receive identical upstream artefacts, everything else stays fixed.
 
 ### DramaChain Labeling System — human reference
 
