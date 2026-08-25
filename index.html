@@ -201,10 +201,29 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 /* ── cases ────────────────────────────────────────────────────────────── */
 .case{background:var(--sheet);border:1px solid var(--line);border-radius:10px;
   padding:18px 21px;margin-bottom:13px}
-.case b{display:block;font-size:15px;margin-bottom:6px}
+/* only a case's own heading is a block; bold inside prose stays inline */
+.case>b{display:block;font-size:15px;margin-bottom:6px}
+.case p b,.case figcaption b,.case td b{display:inline}
 .case p{font-size:14px;color:var(--ink-2);margin-bottom:0;line-height:1.7}
 .case table{margin-top:14px;font-size:12.5px}
 .case .tscroll{margin-top:14px}
+
+/* verbatim storyboard or script text, set apart from the commentary */
+.sb{margin-top:12px;padding:13px 16px;background:var(--sheet);
+  border:1px solid var(--line);border-left:3px solid var(--line);border-radius:0 8px 8px 0}
+.sb-h{font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:9px}
+.sb-v{font-size:12.5px;line-height:1.75;color:var(--ink-2);margin-bottom:8px}
+.sb-l{font-size:12.5px;line-height:1.75;color:var(--ink);margin-bottom:5px;
+  padding-left:13px;border-left:2px solid var(--accent-wash)}
+.sb-l b{font-weight:600}
+.sb-l i{font-style:normal;color:var(--muted);font-size:11.5px}
+.sb-n{margin-top:9px;padding-top:8px;border-top:1px solid var(--hairline);
+  font-size:11.5px;line-height:1.68;color:var(--muted)}
+.sbgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;align-items:start}
+.sbgrid .sb{margin-top:14px}
+.vrow.one{grid-template-columns:minmax(0,0.62fr)}
+@media (max-width:720px){.sbgrid{grid-template-columns:1fr}.vrow.one{grid-template-columns:1fr}}
 
 /* the propagation chain: three numbered steps sharing one rule */
 .chain{margin-top:14px}
@@ -622,6 +641,19 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
             <b data-l="zh">上游 —— 分镜把三人的一问一答压进同一镜</b>
             <p data-l="en"><code>gpt-5.5-xhigh</code>, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker.</p>
             <p data-l="zh"><code>gpt-5.5-xhigh</code> 作为该环节榜首，把镜头 3 写成三段对白、分属两个角色。谁说哪一句，只靠「戴细金属框眼镜的清瘦少年」「胸袋别螺丝刀的瘦高少年」这类描述来指认，此外没有任何标记。</p>
+            <div class="sb">
+              <div class="sb-h"><span data-l="en">Shot 3, as the storyboard model wrote it</span><span data-l="zh">镜头 3 · 分镜模型写出的原文</span></div>
+              <p class="sb-v" data-l="en">A crisp whip-pan carries off the profiles of Gu Yan and Zhou Zi'an toward the shadow at the back right of the bike shed, revealing Qi Xiangbei standing by a row of bicycles… Late sun cuts narrow strips through the corrugated roof, falling between the three of them.</p>
+              <p class="sb-v" data-l="zh">镜头以一个干脆的甩 pan 从〈顾砚〉和〈周子安〉的侧脸扫向车棚右后方阴影，揭出〈祁向北〉站在一排自行车旁……夕阳从铁皮棚缝隙切下窄窄光线，照在三人之间。</p>
+              <p class="sb-l" data-l="en"><b>Qi Xiangbei</b> <i>(the tall thin boy with a screwdriver in his chest pocket, very quietly)</i>, head down: “The Walkman… I was the one who fixed it.”</p>
+              <p class="sb-l" data-l="zh"><b>祁向北</b> <i>（胸袋别螺丝刀的瘦高少年，声音很轻）</i>低头：「随身听……是我修的。」</p>
+              <p class="sb-l" data-l="en"><b>Gu Yan</b> <i>(the slim boy in thin metal-framed glasses, stopping to press him)</i>, turning slightly toward Qi Xiangbei: “Then you'd know the original line of that lyric too.”</p>
+              <p class="sb-l" data-l="zh"><b>顾砚</b> <i>（戴细金属框眼镜的清瘦少年，顿住追问）</i>微微侧身面对祁向北：「那这句歌词，你也该知道原句。」</p>
+              <p class="sb-l" data-l="en"><b>Qi Xiangbei</b> <i>(the tall thin boy with a screwdriver in his chest pocket, admitting it under his breath)</i>, fingers against the hem of his uniform, avoiding eye contact: “…I know. I didn't change it. He copied it wrong; it's not mine to fix.”</p>
+              <p class="sb-l" data-l="zh"><b>祁向北</b> <i>（胸袋别螺丝刀的瘦高少年，低声承认）</i>手指贴着校服边缘，避开视线：「……知道。我没改。是他抄的，我不能替他改。」</p>
+              <p class="sb-n" data-l="en">Three dialogue turns in one shot, belonging to two characters. Not a line of it is wrong — the fault is that a three-turn exchange was put in a single shot, leaving the speaker for a downstream video model to infer. Given the same script, a model that cut twelve shots gave each turn its own.</p>
+              <p class="sb-n" data-l="zh">同一镜内 3 段对白，分属 2 个角色。没有写错任何一句，问题在于把三人的一问一答放进了同一个镜头，说话人只能由下游的视频模型自己认。同一份剧本切到 12 镜的模型，把一问一答分到了各自的镜头里。</p>
+            </div>
           </div>
         </div>
 
@@ -632,14 +664,10 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
             <b data-l="zh">中游 —— 这一镜生成出来，台词分给了错的人</b>
             <p data-l="en">Two annotators working independently marked the same thing. Speech quality lands at <span class="fail">2.00</span> (2 / 3 / 1) while the shot's composite is 3.00 — the picture holds, the speaker does not.</p>
             <p data-l="zh">两名标注员独立作业，标到的是同一处。语音质量人工共识只有 <span class="fail">2.00</span> 分（三人 2 / 3 / 1），而这一镜的综合分是 3.00 —— 画面立得住，说话人认错了。</p>
-            <div class="cfig vrow two">
+            <div class="cfig vrow one">
               <figure>
                 <video src="assets/video/chain-shot.mp4" poster="assets/video/chain-shot.jpg" muted loop playsinline preload="none"></video>
-                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">Single-shot video, shot 2 · V-E1 speech quality <span class="fail">2.00</span></span><span data-l="zh">单分镜视频，镜 2 · V-E1 语音质量 <span class="fail">2.00</span></span></figcaption>
-              </figure>
-              <figure>
-                <video src="assets/video/chain-episode.mp4" poster="assets/video/chain-episode.jpg" muted loop playsinline preload="none"></video>
-                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">The finished drama, episodes 1–3 · composite <span class="fail">2.33</span></span><span data-l="zh">成片，第 1–3 集 · 综合 <span class="fail">2.33</span></span></figcaption>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">Single-shot video, shot 2 · V-E1 speech quality <span class="fail">2.00</span>, shot composite 3.00</span><span data-l="zh">单分镜视频，镜 2 · V-E1 语音质量 <span class="fail">2.00</span>，该镜综合 3.00</span></figcaption>
               </figure>
             </div>
           </div>
@@ -652,11 +680,51 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
             <b data-l="zh">下游 —— 整集成片里，同样两句还是说错人</b>
             <p data-l="en">The episode is scored on its own, by annotators who did not see the shot-level task. They marked <em>the same two lines</em>: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is <span class="fail">2.33</span>.</p>
             <p data-l="zh">成片按整集单独出题，标注员并未看过镜头级的那道题。他们标到的是<em>同样两句</em>：一个角色的台词由另一个角色说了出来，前后两处。两人都标了「人物指认错乱」，成片综合 <span class="fail">2.33</span> 分。</p>
+            <div class="cfig vrow one">
+              <figure>
+                <video src="assets/video/chain-episode.mp4" poster="assets/video/chain-episode.jpg" muted loop playsinline preload="none"></video>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">The finished drama, episodes 1–3, 3 min 35 s · composite <span class="fail">2.33</span>. Note that the audio drops out entirely from 1:50 to 2:30 — forty silent seconds inside episode 2, in the delivered file itself.</span><span data-l="zh">成片，第 1–3 集，3 分 35 秒 · 综合 <span class="fail">2.33</span>。注意 1:50 到 2:30 之间完全没有声音——第 2 集里有整整 40 秒静音，这是交付文件本身的状态。</span></figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </div>
       <p class="fnote" data-l="en">Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.</p>
       <p class="fnote" data-l="zh">三个环节各自独立出题，标注员只看到自己那一道。这处缺陷被标出三次，是因为它确实存在三次，而不是一次判断顺延到了下一环。</p>
+    </div>
+
+    <div class="case">
+      <b data-l="en">Fourteen dialogue turns go in; none come out</b>
+      <b data-l="zh">剧本 14 段对白进去，脚本 0 段出来</b>
+      <p data-l="en">A 2,086-character episode script carrying 14 dialogue turns across five characters. The storyboard that came back runs 922 characters over four shots and contains <b>no dialogue at all</b> — not one <code>says:</code>, not one quotation mark. All three annotators put dialogue fidelity at <span class="fail">1.00</span> (1 / 1 / 1, zero disagreement) while event coverage held at 3.67: the events are all there, nobody speaks.</p>
+      <p data-l="zh">一份 2,086 字的分集剧本，含 14 段对白、分属五个角色。产出的分镜脚本 922 字、4 个镜头，<b>一段对白都没有</b>——没有一处 <code>says:</code>，没有一对引号。三名标注员在对白保真上一致给 <span class="fail">1.00</span> 分（1 / 1 / 1，分歧 0），而同一份产物的事件覆盖仍有 3.67 分：事件都在，只是没人说话。</p>
+
+      <div class="sbgrid">
+        <div class="sb">
+          <div class="sb-h"><span data-l="en">In — the script, scene 1-1, abridged</span><span data-l="zh">输入 · 剧本第 1-1 场（节选）</span></div>
+          <p class="sb-v" data-l="en">△ A blood-orange shaft of light cuts through humid mist, rotting leaves everywhere. Chen Yu lands hard on the gravel…</p>
+          <p class="sb-v" data-l="zh">△ 血橙色光柱斜切进湿热雾气，腐叶满地。陈屿摔在碎石上……</p>
+          <p class="sb-l" data-l="en"><b>Chen Yu</b> <i>(terrified)</i>: “What— where is this—”</p>
+          <p class="sb-l" data-l="zh"><b>陈屿</b> <i>（惊恐）</i>：什么……这是哪 ——</p>
+          <p class="sb-l" data-l="en"><b>Chen Yu</b> <i>(voice-over)</i>: “Dinosaurs… the Cretaceous? I didn't die, and I'm about to be eaten.”</p>
+          <p class="sb-l" data-l="zh"><b>陈屿</b> <i>（OS）</i>：恐龙……白垩纪？我没死，可下一秒就要被吃了！</p>
+          <p class="sb-l" data-l="en"><b>Chen Yu</b> <i>(gasping)</i>: “Light, body size, single hooked claw — velociraptor. Afraid of fire? I'll bet on it.”</p>
+          <p class="sb-l" data-l="zh"><b>陈屿</b> <i>（急喘）</i>：光照、体型、单趾钩爪 —— 迅猛龙，怕不怕火我赌一把！</p>
+          <p class="sb-n" data-l="en">14 dialogue turns across the episode, belonging to five characters.</p>
+          <p class="sb-n" data-l="zh">全集 14 段对白，分属陈屿、阿石、卜阴、老岩、苗禾五个角色。</p>
+        </div>
+
+        <div class="sb">
+          <div class="sb-h"><span data-l="en">Out — storyboard shot 1, unabridged</span><span data-l="zh">产出 · 分镜脚本镜头 1（未省略）</span></div>
+          <p class="sb-v" data-l="en">Visual: (fast multi-angle cutting) tracking shot — a blood-orange shaft pierces humid mist, Chen Yu <i>(a thin boy in a washed-grey school tee)</i> is thrown into frame and lands hard on gravel, uniform tearing. Whip tilt up; through a shrill clatter a dark green blur breaks low out of the ferns on the left — Feng Ren <i>(a dark green velociraptor with slit pupils and gold markings)</i>, close on the amber slit eye. Cut to Chen Yu's shaking POV as he scrambles behind deadfall. Fast cut to medium: his eyes flick, he grabs a sharp stone and strikes volcanic rock, sparks flying (close on sparks). He tears a plastic bag off his pack and lights dry leaves (close on hands); flame lifts. Whip-pan to Feng Ren, which brakes hard, the down on its neck standing up (close on the down), growls, retreats. Chen Yu drops to his knees by the fire, spent, the corners of his mouth naturally upturned.</p>
+          <p class="sb-v" data-l="zh">画面：（快节奏多视角剪辑）动态跟拍镜头：血橙光柱穿透湿热雾气，〈陈屿〉（穿发灰白色校服 T 恤的瘦削少年）被抛入画面，重重摔在碎石地上，校服撕裂。镜头急速上摇，刺耳的咔咔声中，一道墨绿色残影压低身形从左侧蕨丛扑出 ——〈风刃〉（竖瞳金纹墨绿迅猛龙）琥珀金竖瞳特写。镜头切为陈屿主观晃动视角，他连滚带爬躲到枯木堆后。急速切换至中景：陈屿眼睛飞快一转，抓起尖石狠砸火山岩，火星四溅（特写火星）。他撕下背包塑料袋点燃枯叶（手部特写），一团火腾起。镜头猛地甩向〈风刃〉，它急刹，颈侧绒羽根根炸立（绒羽特写），低吼后退。〈陈屿〉虚脱地跪在火边，嘴角天生上扬。</p>
+          <p class="sb-n" data-l="en">All four shots read like this: pure visual description.</p>
+          <p class="sb-n" data-l="zh">四个镜头全是画面描述，一句台词都没有。</p>
+        </div>
+      </div>
+
+      <p class="fnote" data-l="en"><code>mimo-v2.5-pro</code> on animated <i>Baiè Kaihuang</i> episode 1. The three annotators landed in the same place independently — “dialogue missing throughout”, “shots 1 to 4, dialogue absent”, “shots 1–4: character dialogue missing”. Whether a line is present does not depend on taste, which is why the text stage is where automation does best: 0.509 against a human baseline of 0.217, better than baseline on 8 of 8 dimensions.</p>
+      <p class="fnote" data-l="zh"><code>mimo-v2.5-pro</code>，动画短剧《白垩开荒》第 1 集。三名标注员各自独立作业，落点完全一样——「全文缺漏台词」「镜头 1 到镜头 4 对白缺失」「镜头 1-4：人物对白缺失」。「有没有这句台词」不依赖审美，这正是自动化在文本侧做得最好的那类判据：逐题一致性 0.509，人工基线 0.217，8 / 8 个维度优于基线。</p>
     </div>
     <div class="case">
       <b><span data-l="en">Shot count decides executability</span><span data-l="zh"><b>切几个镜决定了能不能拍</b></span></b>
