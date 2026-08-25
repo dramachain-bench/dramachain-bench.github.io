@@ -22,6 +22,9 @@
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
+/* any author rule that sets display would otherwise defeat the attribute,
+   and the language switch hides one side with it */
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);
   font-size:15.5px;line-height:1.7;-webkit-font-smoothing:antialiased;
@@ -202,6 +205,16 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .case p{font-size:14px;color:var(--ink-2);margin-bottom:0;line-height:1.7}
 .case table{margin-top:14px;font-size:12.5px}
 .case .tscroll{margin-top:14px}
+
+/* the propagation chain: three numbered steps sharing one rule */
+.chain{margin-top:14px}
+.chain-step{display:grid;grid-template-columns:26px minmax(0,1fr);gap:0 13px;
+  padding:14px 0;border-top:1px solid var(--hairline)}
+.chain-step:first-child{border-top:0;padding-top:4px}
+.chain-step .cs-n{font-family:var(--mono);font-size:12px;font-weight:700;
+  color:var(--accent);padding-top:2px}
+.chain-step b{display:block;font-size:13.5px;margin-bottom:5px}
+.chain-step p{font-size:13.5px;color:var(--ink-2);line-height:1.72;margin-bottom:0}
 
 /* ── case figures ─────────────────────────────────────────────────────── */
 .cfig{margin-top:15px}
@@ -594,6 +607,57 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <p class="fnote" data-l="zh">动漫短剧《归刃》第 2 集第 5 镜。每个模型拿到的关键帧与提示词完全相同。</p>
     </div>
 
+
+    <div class="case">
+      <b data-l="en">One defect, followed from storyboard to delivery</b>
+      <b data-l="zh">一处缺陷，从分镜一路跟到成片</b>
+      <p data-l="en">The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action <i>That Summer's Cicadas</i>, episode 3.</p>
+      <p data-l="zh">环节之间并非彼此独立，最清楚的证据就是这个：同一部剧、同一处错误，在三个连续粒度上各留下一次痕迹。真人短剧《那年蝉鸣》第 3 集。</p>
+
+      <div class="chain">
+        <div class="chain-step">
+          <span class="cs-n">1</span>
+          <div>
+            <b data-l="en">Upstream — the storyboard packs a three-turn exchange into one shot</b>
+            <b data-l="zh">上游 —— 分镜把三人的一问一答压进同一镜</b>
+            <p data-l="en"><code>gpt-5.5-xhigh</code>, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker.</p>
+            <p data-l="zh"><code>gpt-5.5-xhigh</code> 作为该环节榜首，把镜头 3 写成三段对白、分属两个角色。谁说哪一句，只靠「戴细金属框眼镜的清瘦少年」「胸袋别螺丝刀的瘦高少年」这类描述来指认，此外没有任何标记。</p>
+          </div>
+        </div>
+
+        <div class="chain-step">
+          <span class="cs-n">2</span>
+          <div>
+            <b data-l="en">Midstream — the generated clip gives the lines to the wrong people</b>
+            <b data-l="zh">中游 —— 这一镜生成出来，台词分给了错的人</b>
+            <p data-l="en">Two annotators working independently marked the same thing. Speech quality lands at <span class="fail">2.00</span> (2 / 3 / 1) while the shot's composite is 3.00 — the picture holds, the speaker does not.</p>
+            <p data-l="zh">两名标注员独立作业，标到的是同一处。语音质量人工共识只有 <span class="fail">2.00</span> 分（三人 2 / 3 / 1），而这一镜的综合分是 3.00 —— 画面立得住，说话人认错了。</p>
+            <div class="cfig vrow two">
+              <figure>
+                <video src="assets/video/chain-shot.mp4" poster="assets/video/chain-shot.jpg" muted loop playsinline preload="none"></video>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">Single-shot video, shot 2 · V-E1 speech quality <span class="fail">2.00</span></span><span data-l="zh">单分镜视频，镜 2 · V-E1 语音质量 <span class="fail">2.00</span></span></figcaption>
+              </figure>
+              <figure>
+                <video src="assets/video/chain-episode.mp4" poster="assets/video/chain-episode.jpg" muted loop playsinline preload="none"></video>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">The finished drama, episodes 1–3 · composite <span class="fail">2.33</span></span><span data-l="zh">成片，第 1–3 集 · 综合 <span class="fail">2.33</span></span></figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="chain-step">
+          <span class="cs-n">3</span>
+          <div>
+            <b data-l="en">Downstream — the finished drama still misattributes the same two lines</b>
+            <b data-l="zh">下游 —— 整集成片里，同样两句还是说错人</b>
+            <p data-l="en">The episode is scored on its own, by annotators who did not see the shot-level task. They marked <em>the same two lines</em>: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is <span class="fail">2.33</span>.</p>
+            <p data-l="zh">成片按整集单独出题，标注员并未看过镜头级的那道题。他们标到的是<em>同样两句</em>：一个角色的台词由另一个角色说了出来，前后两处。两人都标了「人物指认错乱」，成片综合 <span class="fail">2.33</span> 分。</p>
+          </div>
+        </div>
+      </div>
+      <p class="fnote" data-l="en">Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.</p>
+      <p class="fnote" data-l="zh">三个环节各自独立出题，标注员只看到自己那一道。这处缺陷被标出三次，是因为它确实存在三次，而不是一次判断顺延到了下一环。</p>
+    </div>
     <div class="case">
       <b><span data-l="en">Shot count decides executability</span><span data-l="zh"><b>切几个镜决定了能不能拍</b></span></b>
       <p data-l="en">One identical episode script, forked only at the storyboard stage. The three-shot output compresses the episode into 30 s and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement.</p>
@@ -647,6 +711,48 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       </div>
     </div>
 
+
+    <div class="case">
+      <b data-l="en">Four shots clear the line; the sequence they form does not</b>
+      <b data-l="zh">四个镜头单看都过线，连成一段却不成立</b>
+      <p data-l="en">Same episode, same model, same batch of output. Scored one shot at a time, all four sit above the usable line. Scored as a sequence, cross-shot scene and props fall to <span class="fail">1.33</span>, character to <span class="fail">2.00</span>, action to <span class="fail">2.33</span>, and the segment composite to <span class="fail">2.67</span>. This is the argument for evaluating a granularity that no single-asset board reaches.</p>
+      <p data-l="zh">同一集、同一个模型、同一批产物。按单镜评，四个镜头全部在可用线以上；同一批产物按整段评，场景道具跨镜只剩 <span class="fail">1.33</span>、角色跨镜 <span class="fail">2.00</span>、动作跨镜 <span class="fail">2.33</span>，整段综合 <span class="fail">2.67</span>。这正是必须评一个单素材榜够不到的粒度的理由。</p>
+      <div class="cfig vrow four">
+        <figure>
+          <video src="assets/video/xcut-1.mp4" poster="assets/video/xcut-1.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span data-l="en">shot 1</span><span data-l="zh">镜 1</span><span class="dur">3.77</span></figcaption>
+        </figure>
+        <figure>
+          <video src="assets/video/xcut-7.mp4" poster="assets/video/xcut-7.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span data-l="en">shot 7</span><span data-l="zh">镜 7</span><span class="dur">3.92</span></figcaption>
+        </figure>
+        <figure>
+          <video src="assets/video/xcut-8.mp4" poster="assets/video/xcut-8.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span data-l="en">shot 8</span><span data-l="zh">镜 8</span><span class="dur">4.22</span></figcaption>
+        </figure>
+        <figure>
+          <video src="assets/video/xcut-9.mp4" poster="assets/video/xcut-9.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span data-l="en">shot 9</span><span data-l="zh">镜 9</span><span class="dur">4.02</span></figcaption>
+        </figure>
+      </div>
+      <p class="fnote" data-l="en"><code>seedance-2.0</code>, the video leader, on animated <i>Bu Xihan</i> episode 3. Figures under each clip are its own single-shot mean; the episode runs 11 shots, of which these four were set as individual items.</p>
+      <p class="fnote" data-l="zh"><code>seedance-2.0</code>，视频主榜榜首档，动漫短剧《不稀罕》第 3 集。每条下方为它自己那一题的单分镜视频均分；整段共 11 个镜头，其中这四个被单独出过题。</p>
+    </div>
+
+    <div class="case">
+      <b data-l="en">Sound design is specified and simply not produced</b>
+      <b data-l="zh">音效写在提示词里，一条都没做出来</b>
+      <p data-l="en">The prompt carries explicit <code>[Sound Effect]</code> lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score <span class="fail">1.67</span>.</p>
+      <p data-l="zh">提示词里逐镜写明了 <code>[Sound Effect]</code>：包厢内低沉的餐厅环境声、远处空调轻响、餐具与酒杯轻微碰响；素圈戒指轻叩桌面的短促声；酒杯细微震响。标注员逐条对着核，每一条都标了「没有体现」。另一名标注员标了反向的问题——出现了一个杯子碰撞的音效，但画面中没有这个动作。音效与配乐 <span class="fail">1.67</span> 分。</p>
+      <div class="cfig vrow two">
+        <figure>
+          <video src="assets/video/audio-miss.mp4" poster="assets/video/audio-miss.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b><code>pixverse-c1</code></b><span data-l="en">V-E3 sound &amp; music <span class="fail">1.67</span> · live-action <i>Chong Lai Bu Du</i>, episode 3, shot 6, grid paradigm</span><span data-l="zh">V-E3 音效与配乐 <span class="fail">1.67</span> · 真人《重来不渡》第 3 集第 6 镜，宫格范式</span></figcaption>
+        </figure>
+      </div>
+      <p class="fnote" data-l="en">The grid previews here are silent by design; open the clip to hear what was and was not produced.</p>
+      <p class="fnote" data-l="zh">网格里的预览默认静音，点开可以听到实际做出了什么、没做出什么。</p>
+    </div>
     <div class="case">
       <b><span data-l="en">An upstream defect is re-expressed downstream, not repaired</span><span data-l="zh"><b>上游缺陷到下游是重演，不是修复</b></span></b>
       <p data-l="en">Rooms drift before people do: all three annotators circled this run for the set dressing while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
@@ -670,6 +776,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       <b><span data-l="en"><span class="mdl">hy3</span> reproduces the script and does not dramatise it</span><span data-l="zh"><b><span class="mdl">hy3</span> 忠实复述剧本，但不做戏剧化</b></span></b>
       <p data-l="en">It scores 3.43 against 3.60 for its nearest neighbour <code>doubao-seed-2.1-pro</code>, and the gap is grouped rather than general: it leads on everything that means <em>reproduce the script</em> (dialogue fidelity 4.44) and trails on everything that means <em>turn it into television</em> (emotion 3.64, audiovisual style 3.91, both eighth of nine).</p>
 <p data-l="zh">它得 3.43 分，最近邻的 <code>doubao-seed-2.1-pro</code> 得 3.60 分，而这个差距是成组的而非普遍的：凡是<em>复述剧本</em>的维度它都领先（对白保真 4.44），凡是<em>把剧本变成影视</em>的维度它都落后（情绪表达 3.64、视听风格 3.91，均为九个模型中的第八）。</p>
+      <p data-l="en">One paired item shows the mechanism. From the same 2,019-character episode script carrying 20 dialogue turns, <code>hy3</code> cut 10 shots in 1,306 characters and reproduced <b>all 20 turns verbatim</b>; <code>doubao-seed-2.1-pro</code> cut 7 shots in 2,586 characters and reproduced <b>3</b>. The three annotators split exactly along that line — dialogue fidelity 4.67 against 3.33, emotional expression 3.33 against 4.33, audiovisual style 3.33 against 4.00. Every one of <code>hy3</code>'s ten shot descriptions opens with the same phrase, “rapid cut”.</p>
+      <p data-l="zh">一道配对题就能看到机制。同一份 2,019 字、含 20 段对白的分集剧本：<code>hy3</code> 切 10 镜、1,306 字，20 段对白<b>逐字一致</b>；<code>doubao-seed-2.1-pro</code> 切 7 镜、2,586 字，逐字一致的<b>只有 3 段</b>。三名标注员的判断正好沿这条线分开——对白保真 4.67 对 3.33，情绪表达 3.33 对 4.33，视听风格处理 3.33 对 4.00。而 <code>hy3</code> 那十个镜头的画面描述，全部以「快速切镜」起手。</p>
     </div>
 
     <div class="case">
