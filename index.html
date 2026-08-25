@@ -151,9 +151,15 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 /* ── video panels ─────────────────────────────────────────────────────── */
 .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .vrow.two{grid-template-columns:1fr 1fr}
-.vrow figure{margin:0}
+.vrow figure{margin:0;position:relative}
 .vrow video{width:100%;display:block;border:1px solid var(--line);border-radius:6px;
-  background:#111}
+  background:#111;cursor:zoom-in}
+/* grid clips run as silent loops; the badge says where the sound is */
+.vrow figure::after{content:"\25B6  sound";position:absolute;top:9px;right:9px;
+  font:600 10.5px/1 var(--sans);letter-spacing:.06em;color:#fff;
+  background:rgba(20,18,15,.72);border-radius:11px;padding:5px 9px;
+  opacity:0;transition:opacity .16s;pointer-events:none}
+.vrow figure:hover::after{opacity:1}
 .vrow figcaption{margin-top:7px;font-size:11.5px;color:var(--muted);line-height:1.58;
   text-align:left}
 .vrow figcaption b{display:block;font-size:12.5px;color:var(--ink);margin-bottom:2px}
@@ -182,8 +188,10 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 #zm[hidden]{display:none}
 #zm figure{margin:0;max-width:100%;max-height:100%;display:flex;
   flex-direction:column;align-items:center;gap:12px}
-#zm img{max-width:100%;max-height:calc(100vh - 130px);width:auto;height:auto;
+#zm img,#zm video{max-width:100%;max-height:calc(100vh - 130px);width:auto;height:auto;
   border-radius:6px;background:#fff;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+#zm video{background:#000}
+#zm img[hidden],#zm video[hidden]{display:none}
 #zm figcaption{color:rgba(255,255,255,.82);font-size:12.5px;line-height:1.6;
   text-align:center;max-width:760px}
 #zm figcaption code{background:rgba(255,255,255,.14);color:#fff}
@@ -395,15 +403,15 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       <p>The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.</p>
       <div class="cfig vrow">
         <figure>
-          <video src="assets/video/tier-seedance.mp4" poster="assets/video/tier-seedance.jpg" controls playsinline preload="none"></video>
+          <video src="assets/video/tier-seedance.mp4" poster="assets/video/tier-seedance.jpg" muted loop playsinline preload="none"></video>
           <figcaption><span class="vtag t1">TOP TIER</span><b><code>seedance-2.0</code></b>V-C1 character appearance <span class="pass">5.00</span> · 30 problems marked, the fewest of any model here.</figcaption>
         </figure>
         <figure>
-          <video src="assets/video/tier-kling.mp4" poster="assets/video/tier-kling.jpg" controls playsinline preload="none"></video>
+          <video src="assets/video/tier-kling.mp4" poster="assets/video/tier-kling.jpg" muted loop playsinline preload="none"></video>
           <figcaption><span class="vtag tm">MID TIER</span><b><code>kling-3.0-omni</code></b>V-C1 character appearance <span class="fail">2.33</span> · 109 problems marked; visual quality and identity both 2.33.</figcaption>
         </figure>
         <figure>
-          <video src="assets/video/tier-pixverse.mp4" poster="assets/video/tier-pixverse.jpg" controls playsinline preload="none"></video>
+          <video src="assets/video/tier-pixverse.mp4" poster="assets/video/tier-pixverse.jpg" muted loop playsinline preload="none"></video>
           <figcaption><span class="vtag t3">BOTTOM TIER</span><b><code>pixverse-c1</code></b>V-C1 character appearance <span class="fail">1.67</span> · 94 problems marked.</figcaption>
         </figure>
       </div>
@@ -488,11 +496,11 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       <p>On paired items the newer version loses on single-shot video and gains at episode and short-drama granularity. Everything that must hold along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility); everything about joining shots got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already in the prompt is now executed faithfully.</p>
       <div class="cfig vrow two">
         <figure>
-          <video src="assets/video/sd25-lipsync.mp4" poster="assets/video/sd25-lipsync.jpg" controls playsinline preload="none"></video>
+          <video src="assets/video/sd25-lipsync.mp4" poster="assets/video/sd25-lipsync.jpg" muted loop playsinline preload="none"></video>
           <figcaption><b>The prompt said film her from behind, so it did</b>The character delivers her lines with her back to camera — faithful to the prompt, and there is no mouth to sync to.</figcaption>
         </figure>
         <figure>
-          <video src="assets/video/sd25-cuts.mp4" poster="assets/video/sd25-cuts.jpg" controls playsinline preload="none"></video>
+          <video src="assets/video/sd25-cuts.mp4" poster="assets/video/sd25-cuts.jpg" muted loop playsinline preload="none"></video>
           <figcaption><b>Four internal cuts inside one 25 s shot</b>Single shots went from 15 s to 30 s, so one clip now carries several cuts while the score stays a single number.</figcaption>
         </figure>
       </div>
@@ -544,7 +552,11 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
   <button class="zm-btn" id="zm-close" type="button" aria-label="Close">&times;</button>
   <button class="zm-btn" id="zm-prev" type="button" aria-label="Previous">&lsaquo;</button>
   <button class="zm-btn" id="zm-next" type="button" aria-label="Next">&rsaquo;</button>
-  <figure><img id="zm-img" alt=""><figcaption id="zm-cap"></figcaption></figure>
+  <figure>
+    <img id="zm-img" alt="">
+    <video id="zm-vid" controls playsinline hidden></video>
+    <figcaption id="zm-cap"></figcaption>
+  </figure>
   <div id="zm-count"></div>
 </div>
 
@@ -720,53 +732,70 @@ tabs.addEventListener('keydown', e => {
   list[next].focus();
 });
 
-/* ── figures enlarge in place; clips play in place ───────────────────── */
+/* ── figures and clips open in place ─────────────────────────────────── */
 
-/* Images that sit together in one figure block step through as a group. */
+/* Media sitting together in one figure block steps through as a group. */
 const GROUPS = [];
-document.querySelectorAll('.cfig, .cg2, .crow, #systems figure, #abstract figure')
+document.querySelectorAll('.cfig, .cg2, .crow, .vrow, #systems figure, #abstract figure')
   .forEach(box => {
-    if (box.closest('.cfig') && box.closest('.cfig') !== box && box.matches('.crow, .cg2'))
+    if (box.matches('.crow, .cg2, .vrow') && box.parentElement.closest('.cfig'))
       return;                                   // already covered by its .cfig
-    const imgs = [...box.querySelectorAll('img')];
-    if (imgs.length) GROUPS.push(imgs);
+    const media = [...box.querySelectorAll('img, video')];
+    if (media.length) GROUPS.push(media);
   });
 
 const groupOf = new Map();
-GROUPS.forEach(g => g.forEach(img => {
-  if (!groupOf.has(img)) groupOf.set(img, g);
+GROUPS.forEach(g => g.forEach(el => {
+  if (!groupOf.has(el)) groupOf.set(el, g);
 }));
 
 const zm = document.getElementById('zm');
 const zmImg = document.getElementById('zm-img');
+const zmVid = document.getElementById('zm-vid');
 const zmCap = document.getElementById('zm-cap');
 const zmCount = document.getElementById('zm-count');
 const zmPrev = document.getElementById('zm-prev');
 const zmNext = document.getElementById('zm-next');
 let group = [], index = 0, lastFocus = null;
 
-function captionFor(img){
-  const cap = img.closest('figure')?.querySelector('figcaption');
-  return cap ? cap.innerHTML : (img.getAttribute('alt') || '');
+function captionFor(el){
+  const cap = el.closest('figure')?.querySelector('figcaption');
+  return cap ? cap.innerHTML : (el.getAttribute('alt') || '');
 }
 
 function show(i){
   index = (i + group.length) % group.length;
-  const img = group[index];
-  zmImg.src = img.currentSrc || img.src;
-  zmImg.alt = img.getAttribute('alt') || '';
-  zmCap.innerHTML = captionFor(img);
+  const el = group[index];
+  const isVideo = el.tagName === 'VIDEO';
+
+  zmVid.pause();
+  zmImg.hidden = isVideo;
+  zmVid.hidden = !isVideo;
+
+  if (isVideo){
+    zmImg.removeAttribute('src');
+    zmVid.poster = el.poster || '';
+    zmVid.src = el.currentSrc || el.src;
+    zmVid.muted = false;                        // the grid loop is the silent one
+    zmVid.play().catch(() => {});               // a blocked autoplay just shows controls
+  } else {
+    zmVid.removeAttribute('src');
+    zmImg.src = el.currentSrc || el.src;
+    zmImg.alt = el.getAttribute('alt') || '';
+  }
+
+  zmCap.innerHTML = captionFor(el);
   const many = group.length > 1;
   zmPrev.hidden = zmNext.hidden = !many;
   zmCount.textContent = many ? `${index + 1} / ${group.length}` : '';
 }
 
-function open(img){
-  group = groupOf.get(img) || [img];
+function open(el){
+  group = groupOf.get(el) || [el];
   lastFocus = document.activeElement;
   zm.hidden = false;
   requestAnimationFrame(() => zm.classList.add('on'));
-  show(group.indexOf(img));
+  show(group.indexOf(el));
   document.body.style.overflow = 'hidden';
   document.getElementById('zm-close').focus();
 }
@@ -774,13 +803,18 @@ function open(img){
 function close(){
   zm.classList.remove('on');
   document.body.style.overflow = '';
-  setTimeout(() => { zm.hidden = true; zmImg.removeAttribute('src'); }, 160);
+  zmVid.pause();
+  setTimeout(() => {
+    zm.hidden = true;
+    zmImg.removeAttribute('src');
+    zmVid.removeAttribute('src');
+  }, 160);
   lastFocus?.focus();
 }
 
-groupOf.forEach((_, img) => {
-  img.classList.add('zoomable');
-  img.addEventListener('click', () => open(img));
+groupOf.forEach((_, el) => {
+  if (el.tagName === 'IMG') el.classList.add('zoomable');
+  el.addEventListener('click', () => open(el));
 });
 
 zm.addEventListener('click', e => {
@@ -796,14 +830,16 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'ArrowRight') show(index + 1);
 });
 
-/* Clicking the frame toggles playback; the bottom strip stays with the
-   browser's own controls so scrubbing still works. */
-document.querySelectorAll('video').forEach(v => {
-  v.addEventListener('click', e => {
-    if (e.clientY > v.getBoundingClientRect().bottom - 46) return;
-    v.paused ? v.play() : v.pause();
+/* Grid clips loop silently, but only while they are on screen — three of
+   them side by side is the point, and nothing decodes off-screen. */
+const inView = new IntersectionObserver(entries => {
+  entries.forEach(({target, isIntersecting}) => {
+    if (isIntersecting) target.play().catch(() => {});
+    else target.pause();
   });
-});
+}, {threshold: 0.25});
+
+document.querySelectorAll('.vrow video').forEach(v => inView.observe(v));
 </script>
 </body>
 </html>
