@@ -119,60 +119,66 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .fnote{margin-top:13px;font-size:12px;color:var(--muted);line-height:1.66}
 
 /* ── leaderboard ──────────────────────────────────────────────────────
-   Set as an editorial ranking table, not a data grid: no enclosing box, one
-   dominant number per row, supporting figures held back in weight. */
-.lb-wrap{overflow-x:auto;margin-top:6px}
-.lbt{width:100%;border-collapse:collapse;background:none}
-.lbt thead th{background:none;color:var(--muted);border-bottom:1px solid var(--ink);
-  padding:0 14px 9px;font-size:10px;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;text-align:right;vertical-align:bottom;white-space:nowrap}
-.lbt thead th .ax{font-family:var(--mono);font-size:11.5px;letter-spacing:0;
-  margin-right:5px}
-.lbt thead th.rk,.lbt thead th.mc{text-align:left}
-.lbt thead th.rk{padding-left:3px;padding-right:0}
+   A stage defines anywhere from one axis to five. As columns that meant the
+   table's shape lurched on every tab — overflowing at five, half empty at
+   one — so the axes sit under the model name instead and the row keeps one
+   geometry throughout: rank, name, composite. */
+.lb{margin-top:8px}
+.lb-hd,.lb-row{display:grid;grid-template-columns:26px minmax(0,1fr) 160px;
+  align-items:center;column-gap:16px}
+.lb-hd{padding-bottom:9px;border-bottom:1px solid var(--ink);
+  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted)}
+.lb-hd .h-sc{text-align:right}
+.lb-hd .h-sc .ax{font-family:var(--mono);font-size:11.5px;letter-spacing:0;
+  margin-left:7px}
 
-.lbt tbody td{padding:13px 14px;border-bottom:1px solid var(--hairline);
-  text-align:right;font-family:var(--mono);font-size:13px;color:var(--muted);
-  white-space:nowrap}
-.lbt tbody tr:last-child td{border-bottom:0}
-.lbt tbody tr:hover td{background:#FAF8F2}
-.lbt td.rk{width:24px;padding-left:3px;padding-right:0;text-align:left;
-  font-size:11.5px;color:#A8A08E}
-.lbt td.mc{text-align:left;font-family:var(--sans);font-size:14px;font-weight:500;
-  color:var(--ink)}
-/* column best and sub-line values are the only figures that carry emphasis */
-.lbt tbody td.best{color:var(--ink);font-weight:700}
-.lbt tbody td.fail{color:var(--bad)}
+.lb-row{padding:12px 0;border-bottom:1px solid var(--hairline)}
+.lb-row:last-child{border-bottom:0}
+.lb-row:hover{background:#FAF8F2}
+.lb-row .rk{font-family:var(--mono);font-size:11.5px;color:#A8A08E;
+  align-self:start;padding-top:2px}
+.lb-row .nm{font-size:14.5px;font-weight:500;color:var(--ink);
+  font-family:var(--sans)}
+.lb-row .mk{font-size:10.5px;color:var(--muted);margin-left:4px}
 
-.lbt tr.top td.rk{color:var(--accent);font-weight:700}
-.lbt tr.top td.mc{color:var(--accent);font-weight:600}
-.lbt tr.extra td.mc{color:var(--ink-2);font-weight:400}
-.lbt tbody tr:not(.extra)+tr.extra td{border-top:1px dashed var(--line)}
+/* one line of axis figures, wrapping instead of widening the row */
+.chips{display:flex;flex-wrap:wrap;gap:2px 15px;margin-top:6px}
+.chip{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.chip i{font-style:normal;font-weight:700;font-size:11px;margin-right:5px}
+.chip.best{color:var(--ink);font-weight:600}
+.chip.fail{color:var(--bad)}
 
-.lbt td.sc{padding-left:26px}
-.lbt .bar{display:inline-block;vertical-align:middle;position:relative;
-  width:92px;height:6px;margin-right:13px;background:var(--inset);
-  border-radius:3px;overflow:hidden}
-.lbt .bar i{position:absolute;top:0;bottom:0;left:0;width:var(--w);
+.lb-row.top .rk,.lb-row.top .nm{color:var(--accent)}
+.lb-row.top .rk{font-weight:700}
+.lb-row.top .nm{font-weight:600}
+.lb-row.extra .nm{color:var(--ink-2);font-weight:400}
+.lb-row.extra{background:#FAF8F3}
+.lb-row:not(.extra)+.lb-row.extra{border-top:1px dashed var(--line)}
+
+.sc{display:flex;align-items:center;justify-content:flex-end;gap:13px}
+.sc .bar{position:relative;flex:0 0 auto;width:88px;height:6px;
+  background:var(--inset);border-radius:3px;overflow:hidden}
+.sc .bar i{position:absolute;top:0;bottom:0;left:0;width:var(--w);
   background:var(--accent);border-radius:3px}
 /* 3.0 on a 2.0–5.0 track: the line the report says the field barely clears */
-.lbt .bar u{position:absolute;top:0;bottom:0;left:33.33%;width:2px;
+.sc .bar u{position:absolute;top:0;bottom:0;left:33.33%;width:2px;
   background:rgba(30,28,24,.42)}
-.lbt .av{display:inline-block;vertical-align:middle;min-width:46px;text-align:right;
-  font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.02em;
-  color:var(--ink);line-height:1}
-.lbt td.sc.fail .av{color:var(--bad)}
-.lbt td.sc.fail .bar i{background:var(--bad)}
-.lbt tr.extra .bar i{background:#B0A997}
-.lbt tr.extra .av{color:var(--ink-2);font-weight:500}
+.sc .av{font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.02em;
+  color:var(--ink);line-height:1;min-width:46px;text-align:right}
+.lb-row.fail .av{color:var(--bad)}
+.lb-row.fail .bar i{background:var(--bad)}
+.lb-row.extra .bar i{background:#B0A997}
+.lb-row.extra .av{color:var(--ink-2);font-weight:500}
 
 @media (max-width:720px){
-  .lbt thead th{font-size:9px;padding:0 9px 7px}
-  .lbt tbody td{padding:10px 9px;font-size:12px}
-  .lbt td.mc{font-size:13px}
-  .lbt td.sc{padding-left:12px}
-  .lbt .bar{width:52px;margin-right:9px}
-  .lbt .av{font-size:15px;min-width:40px}
+  .lb-hd,.lb-row{grid-template-columns:22px minmax(0,1fr) auto;column-gap:10px}
+  .lb-row .nm{font-size:13.5px}
+  .chips{gap:2px 11px}
+  .chip{font-size:11.5px}
+  .sc{gap:9px}
+  .sc .bar{width:46px}
+  .sc .av{font-size:15px;min-width:40px}
 }
 
 /* ── cases ────────────────────────────────────────────────────────────── */
@@ -778,60 +784,56 @@ const STAGES = [
 
 const CIRCLED = ['①','②','③','④','⑤','⑥'];
 
-function cell(v){
-  if(v === null) return '<td class="na">—</td>';
+function chip(v, axis){
+  if (v === null) return '';
   const [score, marks] = v;
-  const cls = [marks.includes('b') ? 'best' : '', marks.includes('f') ? 'fail' : '']
+  const cls = ['chip', marks.includes('b') ? 'best' : '', marks.includes('f') ? 'fail' : '']
     .filter(Boolean).join(' ');
-  return `<td class="${cls}">${score.toFixed(2)}</td>`;
+  return `<span class="${cls}"><i class="${axis[2]}">${axis[0]}</i>${score.toFixed(2)}</span>`;
 }
 
 /* Bars run 2.0–5.0 rather than 0–5, so the spread between models is visible
    and the 3.0 usable line sits a third of the way along. */
 const BAR_MIN = 2, BAR_MAX = 5;
 
-function scoreCell(v){
-  if (v === null) return '<td class="sc"></td>';
-  const [score, marks] = v;
+function scoreBlock(v){
+  if (v === null) return '<div class="sc"></div>';
+  const [score] = v;
   const pct = Math.max(0, Math.min(100, (score - BAR_MIN) / (BAR_MAX - BAR_MIN) * 100));
-  return `<td class="sc${marks.includes('f') ? ' fail' : ''}">`
+  return '<div class="sc">'
     + `<span class="bar"><i style="--w:${pct.toFixed(1)}%"></i><u></u></span>`
-    + `<span class="av">${score.toFixed(2)}</span></td>`;
+    + `<span class="av">${score.toFixed(2)}</span></div>`;
 }
 
 function buildTable(stage){
-  /* An axis undefined at this granularity would be a column of dashes. */
   const live = AXES.map((_, i) => stage.rows.some(r => r[i + 2] !== null));
-  /* With one axis in play the composite just repeats it, so the axis moves
-     into the composite's own heading instead of printing every value twice. */
+  /* With one axis in play the chips would just repeat the composite, so the
+     axis is named in the heading and the chip line is dropped. */
   const lone = live.filter(Boolean).length === 1 ? AXES[live.indexOf(true)] : null;
-  const head = lone ? '' : AXES.filter((_, i) => live[i])
-    .map(([code, name, cls]) => `<th><span class="ax ${cls}">${code}</span>${name}</th>`)
-    .join('');
   const scHead = lone
-    ? `Composite <span class="ax ${lone[2]}">${lone[0]}</span>${lone[1]}`
+    ? `Composite <span class="ax ${lone[2]}">${lone[0]}</span> ${lone[1]}`
     : 'Composite';
 
   let rank = 0;
-  const body = stage.rows.map(r => {
+  const rows = stage.rows.map(r => {
     /* Only † sits outside the ranking. A ‡ model ran a reduced corpus but was
        still annotated, so it holds its place on the board. */
     const isExtra = r[1].includes('†');
     if (!isExtra) rank++;
-    const cls = [isExtra ? 'extra' : '', !isExtra && rank === 1 ? 'top' : '']
-      .filter(Boolean).join(' ');
+    const cls = ['lb-row', isExtra ? 'extra' : '', !isExtra && rank === 1 ? 'top' : '',
+                 r[7] && r[7][1].includes('f') ? 'fail' : ''].filter(Boolean).join(' ');
     const mark = r[1] ? `<span class="mk">${r[1]}</span>` : '';
-    const axes = lone ? '' : r.slice(2, 7).filter((_, i) => live[i]).map(cell).join('');
-    return `<tr${cls ? ` class="${cls}"` : ''}>`
-      + `<td class="rk">${isExtra ? '+' : rank}</td>`
-      + `<td class="mc">${r[0]}${mark}</td>`
-      + axes + scoreCell(r[7]) + '</tr>';
+    const chips = lone ? ''
+      : `<div class="chips">${AXES.map((a, i) => chip(r[i + 2], a)).join('')}</div>`;
+    return `<div class="${cls}">`
+      + `<span class="rk">${isExtra ? '+' : rank}</span>`
+      + `<div><span class="nm">${r[0]}</span>${mark}${chips}</div>`
+      + scoreBlock(r[7]) + '</div>';
   }).join('');
 
-  return `<div class="lb-wrap"><table class="lbt">
-    <thead><tr><th class="rk"></th><th class="mc">Model</th>${head}
-      <th class="sc">${scHead}</th></tr></thead>
-    <tbody>${body}</tbody></table></div>`;
+  return `<div class="lb">
+    <div class="lb-hd"><span></span><span>Model</span><span class="h-sc">${scHead}</span></div>
+    ${rows}</div>`;
 }
 
 const tabs = document.querySelector('.tabs');
