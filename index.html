@@ -118,6 +118,44 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .axQ{color:var(--axQ)}.axE{color:var(--axE)}
 .fnote{margin-top:13px;font-size:12px;color:var(--muted);line-height:1.66}
 
+/* ── leaderboard table ────────────────────────────────────────────────── */
+.lbt{font-size:13.5px}
+.lbt thead th{background:var(--panel);color:var(--ink);border-bottom:2px solid var(--ink);
+  padding:11px 13px 9px;font-size:10.5px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;text-align:right;vertical-align:bottom;line-height:1.3}
+.lbt thead th .ax{display:block;font-family:var(--mono);font-size:12.5px;
+  letter-spacing:0;text-transform:none;margin-bottom:3px}
+.lbt thead th.rk,.lbt thead th.mc{text-align:left}
+.lbt thead th.allh{border-left:1px solid var(--line)}
+.lbt td{padding:9px 13px;border-bottom:1px solid var(--hairline)}
+.lbt td.rk{width:30px;padding-right:0;text-align:left;font-family:var(--mono);
+  font-size:11.5px;color:var(--muted)}
+.lbt td.mc{text-align:left;font-family:var(--sans)}
+.lbt tbody tr.top td.rk{color:var(--accent);font-weight:700}
+.lbt tbody tr.top td:first-child{box-shadow:inset 2px 0 0 var(--accent)}
+/* the composite is the headline number, so it gets the width and the scale */
+.lbt td.all{border-left:1px solid var(--hairline);width:118px;padding-left:15px}
+.lbt td.all .av{font-family:var(--mono);font-size:14.5px;font-weight:600;
+  letter-spacing:-.01em;display:block;line-height:1.2}
+.lbt td.all.fail .av{color:var(--bad)}
+.lbt .bar{display:block;position:relative;height:5px;margin-top:5px;
+  background:var(--inset);border-radius:3px;overflow:hidden}
+.lbt .bar i{position:absolute;left:0;top:0;bottom:0;width:var(--w);
+  background:var(--accent);border-radius:3px}
+.lbt tr.extra .bar i{background:#A9A294}
+.lbt td.all.fail .bar i{background:var(--bad)}
+/* 3.0 on a 2.0–5.0 track: the line the report says the field barely clears.
+   Dark enough to read against the fill and against the empty track. */
+.lbt .bar u{position:absolute;left:33.33%;top:0;bottom:0;width:2px;
+  background:rgba(30,28,24,.5)}
+.lbt tbody tr:hover td{background:#FAF8F2}
+.lbt tr.extra td{background:#F8F6EF}
+@media (max-width:720px){
+  .lbt td.all{width:92px}
+  .lbt thead th{font-size:9.5px;padding:9px 9px 7px}
+  .lbt td{padding:8px 9px}
+}
+
 /* ── cases ────────────────────────────────────────────────────────────── */
 .case{background:var(--sheet);border:1px solid var(--line);border-radius:10px;
   padding:18px 21px;margin-bottom:13px}
@@ -313,6 +351,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     <div class="legend">
       <span><i>bold</i> — best value in the column among fully annotated models</span>
       <span><i class="fail">red</i> — below the 3.0 usable line</span>
+      <span>bars run 2.0–5.0; the notch marks the 3.0 usable line</span>
       <span>each stage shows only the axes defined at its granularity</span>
     </div>
 
@@ -728,21 +767,45 @@ function cell(v){
   return `<td class="${cls}">${score.toFixed(2)}</td>`;
 }
 
+/* Bars run 2.0–5.0 rather than 0–5, so the spread between models is visible
+   and the 3.0 usable line sits a third of the way along. */
+const BAR_MIN = 2, BAR_MAX = 5;
+
+function allCell(v){
+  if (v === null) return '<td class="all"></td>';
+  const [score, marks] = v;
+  const pct = Math.max(0, Math.min(100, (score - BAR_MIN) / (BAR_MAX - BAR_MIN) * 100));
+  return `<td class="all${marks.includes('f') ? ' fail' : ''}">`
+    + `<span class="av">${score.toFixed(2)}</span>`
+    + `<span class="bar"><i style="--w:${pct.toFixed(1)}%"></i><u></u></span></td>`;
+}
+
 function buildTable(stage){
   /* An axis undefined at this granularity would be a column of dashes. */
   const live = AXES.map((_, i) => stage.rows.some(r => r[i + 2] !== null));
   const head = AXES.filter((_, i) => live[i])
     .map(([code, name, cls]) => `<th><span class="ax ${cls}">${code}</span>${name}</th>`)
     .join('');
+
+  let rank = 0;
   const body = stage.rows.map(r => {
-    const extra = r[1] ? ' class="extra"' : '';
+    /* Only † sits outside the ranking. A ‡ model ran a reduced corpus but was
+       still annotated, so it holds its place on the board. */
+    const isExtra = r[1].includes('†');
+    if (!isExtra) rank++;
+    const cls = [isExtra ? 'extra' : '', !isExtra && rank === 1 ? 'top' : '']
+      .filter(Boolean).join(' ');
     const mark = r[1] ? `<span class="mk">${r[1]}</span>` : '';
     const axes = r.slice(2, 7).filter((_, i) => live[i]).map(cell).join('');
-    return `<tr${extra}><td><span class="mdl">${r[0]}</span>${mark}</td>`
-      + axes + cell(r[7]) + '</tr>';
+    return `<tr${cls ? ` class="${cls}"` : ''}>`
+      + `<td class="rk">${isExtra ? '+' : rank}</td>`
+      + `<td class="mc"><span class="mdl">${r[0]}</span>${mark}</td>`
+      + axes + allCell(r[7]) + '</tr>';
   }).join('');
-  return `<div class="tscroll"><table>
-    <thead><tr><th>Model</th>${head}<th>All</th></tr></thead>
+
+  return `<div class="tscroll"><table class="lbt">
+    <thead><tr><th class="rk"></th><th class="mc">Model</th>${head}
+      <th class="allh">All</th></tr></thead>
     <tbody>${body}</tbody></table></div>`;
 }
 
