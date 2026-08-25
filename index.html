@@ -208,6 +208,27 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .case table{margin-top:14px;font-size:12.5px}
 .case .tscroll{margin-top:14px}
 
+/* finished dramas: full episodes, so they wait for a click rather than
+   autoplaying the way the short comparison loops do */
+.vshow{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px;margin-top:16px}
+.vshow figure{margin:0}
+.vshow video{width:100%;display:block;border:1px solid var(--line);border-radius:7px;
+  background:#000}
+.vshow figcaption{margin-top:9px;text-align:left}
+.vshow figcaption>b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+.vshow .tags{display:flex;flex-wrap:wrap;align-items:center;gap:5px 7px;margin-top:5px;
+  font-size:11.5px;color:var(--muted)}
+.vshow .tags i{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:.04em;padding:2px 6px;border-radius:9px}
+.vshow .tags i.zh,.vshow .tags i.en{background:var(--accent-wash);color:var(--accent)}
+.vshow .tags i.lv{background:#F2ECE0;color:#8A6410}
+.vshow .tags i.an{background:#EDE7F3;color:#6B4790}
+.vshow .sc-l{display:block;margin-top:5px;font-size:11.5px;color:var(--muted)}
+.vshow .sc-l b{font-family:var(--mono);font-size:12.5px}
+.vshow .sc-l .mut{color:var(--line)}
+.pass{color:#2E8B57;font-weight:700}
+@media (max-width:720px){.vshow{grid-template-columns:1fr}}
+
 /* verbatim storyboard or script text, set apart from the commentary */
 .sb{margin-top:12px;padding:13px 16px;background:var(--sheet);
   border:1px solid var(--line);border-left:3px solid var(--line);border-radius:0 8px 8px 0}
@@ -518,6 +539,50 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
     <p data-l="en" class="fnote">All four runs are end to end and fully automatic — no manual editing, frame picking or re-rolling. Their source encodings differed (ours 720p / 24 fps / 2.0 Mbps, OiiOii 720p / 30 fps / 4.7 Mbps, XiaoYunQue 720p / 30 fps / 9.2 Mbps, Flova 1080p / 30 fps / 13.5 Mbps); all four are re-encoded here to 960×540 at roughly 1 Mbps, which removes bitrate as a confound in what you see. Clip lengths differ because each pipeline decides its own shot durations from the same script.</p>
 <p class="fnote" data-l="zh">四条片子均为端到端全自动，无人工剪辑、挑帧或重跑择优。它们的原始编码规格不同（本链路 720p / 24 fps / 2.0 Mbps，OiiOii 720p / 30 fps / 4.7 Mbps，小云雀 720p / 30 fps / 9.2 Mbps，Flova 1080p / 30 fps / 13.5 Mbps）；此处四条统一转码为 960×540、约 1 Mbps，从而消除码率对观感的干扰。时长不同，是因为各链路从同一份剧本出发自行决定分镜时长。</p>
+
+
+    <p data-l="en"><b>What the pipeline delivers.</b> Four finished dramas, one for each combination of dialogue language and visual style, each the best-scoring run of its drama on the three-annotator episode board. Every one is three episodes assembled end to end with no human editing.</p>
+    <p data-l="zh"><b>这条链路交付的东西。</b>四部成片，对话语言与视觉风格的四种组合各一部，每部都是该剧在三人共识成片榜上得分最高的一次运行。全部为三集连续拼接、端到端生成，无人工剪辑。</p>
+
+    <div class="vshow">
+      <figure>
+        <video src="assets/video/drama-buxihan.mp4" poster="assets/video/drama-buxihan.jpg" controls playsinline preload="none"></video>
+        <figcaption>
+          <b data-l="en">I Don't Want It</b>
+          <b data-l="zh">不稀罕</b>
+          <span class="tags"><i class="zh">中文</i><i class="an" data-l="en">animated</i><i class="an" data-l="zh">动画</i><span data-l="en">swapped heiresses · urban romance</span><span data-l="zh">错换千金 · 都市言情</span></span>
+          <span class="sc-l"><code>seedance-2.0</code> · <span data-l="en">multi-reference</span><span data-l="zh">多参考</span> · <span data-l="en">human</span><span data-l="zh">人工</span> <b class="pass">4.00</b> <span class="mut">(4 / 4 / 4)</span></span>
+        </figcaption>
+      </figure>
+      <figure>
+        <video src="assets/video/drama-chenyuan.mp4" poster="assets/video/drama-chenyuan.jpg" controls playsinline preload="none"></video>
+        <figcaption>
+          <b data-l="en">Chronicle of Buried Injustice</b>
+          <b data-l="zh">沉冤录</b>
+          <span class="tags"><i class="zh">中文</i><i class="lv" data-l="en">live action</i><i class="lv" data-l="zh">真人</i><span data-l="en">court intrigue · historical costume</span><span data-l="zh">古装宫斗</span></span>
+          <span class="sc-l"><code>kling-3.0-omni</code> · <span data-l="en">multi-reference</span><span data-l="zh">多参考</span> · <span data-l="en">human</span><span data-l="zh">人工</span> <b class="pass">3.67</b> <span class="mut">(4 / 4 / 3)</span></span>
+        </figcaption>
+      </figure>
+      <figure>
+        <video src="assets/video/drama-bellboy.mp4" poster="assets/video/drama-bellboy.jpg" controls playsinline preload="none"></video>
+        <figcaption>
+          <b>The Bellboy Owns This Hotel</b>
+          <span class="tags"><i class="en">EN</i><i class="lv" data-l="en">live action</i><i class="lv" data-l="zh">真人</i><span data-l="en">hidden billionaire</span><span data-l="zh">隐藏富豪</span></span>
+          <span class="sc-l"><code>happyhorse-1.1</code> · <span data-l="en">first/last frame</span><span data-l="zh">首尾帧</span> · <span data-l="en">human</span><span data-l="zh">人工</span> <b class="pass">3.67</b> <span class="mut">(3 / 4 / 4)</span></span>
+        </figcaption>
+      </figure>
+      <figure>
+        <video src="assets/video/drama-janitor.mp4" poster="assets/video/drama-janitor.jpg" controls playsinline preload="none"></video>
+        <figcaption>
+          <b>The Janitor's Billion-Dollar Revenge</b>
+          <span class="tags"><i class="en">EN</i><i class="an" data-l="en">animated</i><i class="an" data-l="zh">动画</i><span data-l="en">revenge rise</span><span data-l="zh">复仇逆袭</span></span>
+          <span class="sc-l"><code>seedance-2.0</code> · <span data-l="en">first/last frame</span><span data-l="zh">首尾帧</span> · <span data-l="en">human</span><span data-l="zh">人工</span> <b class="pass">3.33</b> <span class="mut">(3 / 3 / 4)</span></span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="fnote" data-l="en">Scores are the three annotators' overall impression of the assembled episodes, on the same 5-point scale as the board; the individual scores follow in brackets. <i>I Don't Want It</i> at 4.00 is the highest episode-level consensus anywhere in the corpus. Each drama ran under three input paradigms and three or more video models; the run shown is whichever scored highest. Clips are re-encoded to 854×480 and play only when started.</p>
+    <p class="fnote" data-l="zh">分数为三名标注员对成片的综合印象，与榜单同为 5 分制，括号内为三人各自的打分。《不稀罕》的 4.00 是全量语料中成片粒度的最高共识分。每部剧都跑过三种输入范式与三个以上视频模型，此处展示的是其中得分最高的一次。视频统一转码为 854×480，点击才开始播放。</p>
 
     <h3><span data-l="en">DramaChain Labeling System — human reference</span><span data-l="zh">DramaChain 标注系统 —— 人工基准</span></h3>
     <p data-l="en">Three professional annotators score every item independently against a five-point decidable rubric, each deduction tagged from a closed vocabulary and localised in space and time — 17,488 scores and 255,925 reviewable attributions from 543 annotators.</p>
