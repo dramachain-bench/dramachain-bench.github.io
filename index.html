@@ -130,6 +130,13 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
    table's shape lurched on every tab — overflowing at five, half empty at
    one — so the axes sit under the model name instead and the row keeps one
    geometry throughout: rank, name, composite. */
+/* what each chip letter stands for, listed per stage */
+.axkey{display:flex;flex-wrap:wrap;gap:4px 18px;margin:2px 0 2px;
+  font-size:11.5px;color:var(--muted)}
+.axkey span{white-space:nowrap}
+.axkey i{font-style:normal;font-family:var(--mono);font-weight:700;font-size:11px;
+  margin-right:5px}
+
 .lb{margin-top:8px}
 .lb-hd,.lb-row{display:grid;grid-template-columns:26px minmax(0,1fr) 160px;
   align-items:center;column-gap:16px}
@@ -872,6 +879,13 @@ function scoreBlock(v){
 }
 
 function buildTable(stage){
+  /* The chips carry a letter; this says what each letter means, for the axes
+     this stage actually defines. */
+  const live = AXES.filter((_, i) => stage.rows.some(r => r[i + 2] !== null));
+  const key = `<div class="axkey">` + live
+    .map(a => `<span><i class="${a[2]}">${a[0]}</i>${AX_NAME(a)}</span>`)
+    .join('') + '</div>';
+
   let rank = 0;
   const rows = stage.rows.map(r => {
     /* Only † sits outside the ranking. A ‡ model ran a reduced corpus but was
@@ -888,7 +902,7 @@ function buildTable(stage){
       + scoreBlock(r[7]) + '</div>';
   }).join('');
 
-  return `<div class="lb">
+  return key + `<div class="lb">
     <div class="lb-hd"><span></span><span>${t('Model','模型')}</span><span class="h-sc">${t('Composite','综合分')}</span></div>
     ${rows}</div>`;
 }
