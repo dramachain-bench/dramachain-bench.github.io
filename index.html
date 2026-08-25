@@ -806,14 +806,6 @@ function scoreBlock(v){
 }
 
 function buildTable(stage){
-  const live = AXES.map((_, i) => stage.rows.some(r => r[i + 2] !== null));
-  /* With one axis in play the chips would just repeat the composite, so the
-     axis is named in the heading and the chip line is dropped. */
-  const lone = live.filter(Boolean).length === 1 ? AXES[live.indexOf(true)] : null;
-  const scHead = lone
-    ? `Composite <span class="ax ${lone[2]}">${lone[0]}</span> ${lone[1]}`
-    : 'Composite';
-
   let rank = 0;
   const rows = stage.rows.map(r => {
     /* Only † sits outside the ranking. A ‡ model ran a reduced corpus but was
@@ -823,16 +815,15 @@ function buildTable(stage){
     const cls = ['lb-row', isExtra ? 'extra' : '', !isExtra && rank === 1 ? 'top' : '',
                  r[7] && r[7][1].includes('f') ? 'fail' : ''].filter(Boolean).join(' ');
     const mark = r[1] ? `<span class="mk">${r[1]}</span>` : '';
-    const chips = lone ? ''
-      : `<div class="chips">${AXES.map((a, i) => chip(r[i + 2], a)).join('')}</div>`;
+    const chips = AXES.map((a, i) => chip(r[i + 2], a)).join('');
     return `<div class="${cls}">`
       + `<span class="rk">${isExtra ? '+' : rank}</span>`
-      + `<div><span class="nm">${r[0]}</span>${mark}${chips}</div>`
+      + `<div><span class="nm">${r[0]}</span>${mark}<div class="chips">${chips}</div></div>`
       + scoreBlock(r[7]) + '</div>';
   }).join('');
 
   return `<div class="lb">
-    <div class="lb-hd"><span></span><span>Model</span><span class="h-sc">${scHead}</span></div>
+    <div class="lb-hd"><span></span><span>Model</span><span class="h-sc">Composite</span></div>
     ${rows}</div>`;
 }
 
