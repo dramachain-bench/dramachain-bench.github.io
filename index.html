@@ -52,6 +52,13 @@ h1{font-family:var(--serif);font-size:44px;font-weight:600;letter-spacing:-.02em
 .btn:hover{border-color:var(--accent);color:var(--accent);text-decoration:none;
   transform:translateY(-1px)}
 .btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+.btn.lang{font-family:var(--sans);cursor:pointer}
+/* Chinese sets its own line height; the page is typeset for Latin text */
+html[data-lang="zh"] body{line-height:1.85}
+html[data-lang="zh"] .lede{font-family:var(--sans);font-size:16.5px;line-height:1.9}
+html[data-lang="zh"] h1,html[data-lang="zh"] h2,html[data-lang="zh"] .subtitle{
+  font-family:var(--sans);letter-spacing:0}
+html[data-lang="zh"] .tagline{font-style:normal}
 
 /* ── sections ─────────────────────────────────────────────────────────── */
 section{padding:52px 0}
@@ -316,10 +323,10 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
 <header class="masthead">
   <div class="wrap">
-    <div class="eyebrow">Technical Report</div>
+    <div class="eyebrow"><span data-l="en">Technical Report</span><span data-l="zh">技术报告</span></div>
     <h1>DramaChain Bench</h1>
-    <div class="subtitle">An End-to-End Benchmark for Short-Drama Generation</div>
-    <div class="tagline">From Production Pipeline and Annotation System to Validated Automated Evaluation</div>
+    <div class="subtitle"><span data-l="en">An End-to-End Benchmark for Short-Drama Generation</span><span data-l="zh">面向短剧生成的全链路评测基准</span></div>
+    <div class="tagline"><span data-l="en">From Production Pipeline and Annotation System to Validated Automated Evaluation</span><span data-l="zh">从生产链路、标注系统到经过验证的自动化评测</span></div>
 
     <div class="authors">
       Haoyuan Shi<sup>1</sup>, &nbsp;Mingtao Chen<sup>1</sup>, &nbsp;Shuo Jiang<sup>1</sup>, &nbsp;Ziyan Chen<sup>1,2</sup><br>
@@ -327,82 +334,99 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       Jianxiang Lu<sup>1</sup>, &nbsp;Fanyang Lu<sup>1</sup>, &nbsp;Songyuanyi Lu<sup>1</sup>, &nbsp;Xiele Wu<sup>1</sup><br>
       Zhichao Hu<sup>1,†</sup>, &nbsp;Lilin Wang<sup>1</sup>, &nbsp;Yuhong Liu<sup>1</sup>, &nbsp;Richeng Xuan<sup>1,§</sup>
     </div>
-    <div class="affil">
+    <div data-l="en" class="affil">
       <sup>1</sup>Hunyuan, Tencent &nbsp;&nbsp;·&nbsp;&nbsp;
       <sup>2</sup>Beijing Film Academy &nbsp;&nbsp;·&nbsp;&nbsp;
       <sup>3</sup>Peking University &nbsp;&nbsp;·&nbsp;&nbsp;
       <sup>4</sup>Shenzhen University
     </div>
-    <div class="notes"><sup>†</sup>Project Lead &nbsp;&nbsp; <sup>§</sup>Corresponding Author</div>
+<div class="affil" data-l="zh"><sup>1</sup>腾讯混元 &nbsp;&nbsp;·&nbsp;&nbsp;<sup>2</sup>北京电影学院 &nbsp;&nbsp;·&nbsp;&nbsp;<sup>3</sup>北京大学 &nbsp;&nbsp;·&nbsp;&nbsp;<sup>4</sup>深圳大学</div>
+    <div class="notes"><span data-l="en"><sup>†</sup>Project Lead &nbsp;&nbsp; <sup>§</sup>Corresponding Author</span><span data-l="zh"><sup>†</sup>项目负责人 &nbsp;&nbsp; <sup>§</sup>通讯作者</span></div>
 
     <div class="btnrow">
-      <a class="btn" href="#leaderboard">Leaderboard</a>
-      <a class="btn" href="#systems">Systems</a>
-      <a class="btn" href="#cases">Case studies</a>
-      <a class="btn" href="https://github.com/dramachain-bench/dramachain-bench.github.io">Code</a>
+      <a class="btn" href="#leaderboard"><span data-l="en">Leaderboard</span><span data-l="zh">榜单</span></a>
+      <a class="btn" href="#systems"><span data-l="en">Systems</span><span data-l="zh">系统</span></a>
+      <a class="btn" href="#cases"><span data-l="en">Cases</span><span data-l="zh">样例</span></a>
+      <a class="btn" href="https://github.com/dramachain-bench/dramachain-bench.github.io"><span data-l="en">Code</span><span data-l="zh">代码</span></a>
+      <button class="btn lang" id="lang-btn" type="button"><span data-l="en">中文</span><span data-l="zh">English</span></button>
     </div>
   </div>
 </header>
 
 <section id="abstract">
   <div class="wrap">
-    <h2>Abstract</h2>
-    <p class="lede">Commercial short-drama production runs as a chain — script, storyboard, keyframes, shot video, finished drama — but benchmarks score only the video stage, on inputs written for the test rather than produced by a pipeline. So no one can say which stage caused a delivery defect, or how far it travelled.</p>
-    <p class="lede"><b>DramaChain Bench</b> scores every stage of a full production chain, on items that chain itself produced. Five evaluation axes are instantiated at six granularities into 63 leaf dimensions, over 5,785 items. Three professional annotators score each item independently with every defect localised in space and time, giving 17,488 scores and 255,925 traceable attributions. An agentic judge then reproduces that board at a mean PLCC of 0.918 — enough to admit new models at no annotation cost.</p>
+    <h2><span data-l="en">Abstract</span><span data-l="zh">摘要</span></h2>
+    <p data-l="en" class="lede">Commercial short-drama production runs as a chain — script, storyboard, keyframes, shot video, finished drama — but benchmarks score only the video stage, on inputs written for the test rather than produced by a pipeline. So no one can say which stage caused a delivery defect, or how far it travelled.</p>
+<p class="lede" data-l="zh">短剧的商业化生产遵循一条多环节链路——剧本、分镜设计、分镜图、分镜视频，直到最终成片。但现有基准大多只评测其中的视频生成一环，且使用为测试预先写好的题面，而非产线上游的真实产出。于是没有人能说清，一个交付缺陷究竟由哪一环造成，又传导了多远。</p>
+    <p data-l="en" class="lede"><b>DramaChain Bench</b> scores every stage of a full production chain, on items that chain itself produced. Five evaluation axes are instantiated at six granularities into 63 leaf dimensions, over 5,785 items. Three professional annotators score each item independently with every defect localised in space and time, giving 17,488 scores and 255,925 traceable attributions. An agentic judge then reproduces that board at a mean PLCC of 0.918 — enough to admit new models at no annotation cost.</p>
+<p class="lede" data-l="zh"><b>DramaChain Bench</b> 对完整生产链路的每一环都评测，且题面全部由该链路自身产出。五条评测轴在六个粒度上各自实例化，细化为 63 个叶子维度，覆盖 5,785 道题。三名专业标注员对每道题独立打分，所有缺陷都在时空上定位，共产出 17,488 份打分与 255,925 条可追溯的归因记录。随后由 agentic 判官自动复现该榜单，模型级相关达到平均 PLCC 0.918——足以让新模型零标注成本进榜。</p>
 
     <figure>
       <img src="assets/overview.png" alt="DramaChain Bench overview: the dimension system, the production pipeline, the labeling system and the agentic judge" width="820">
-      <figcaption>Five evaluation axes are defined once and instantiated at the six production granularities, resolving into 63 leaf dimensions, and are shared by the pipeline, the annotation system and the automated judge.</figcaption>
+      <figcaption data-l="en">Five evaluation axes are defined once and instantiated at the six production granularities, resolving into 63 leaf dimensions, and are shared by the pipeline, the annotation system and the automated judge.</figcaption>
+<figcaption data-l="zh">五条评测轴只定义一次，再在六个生产粒度上各自实例化，细化为 63 个叶子维度；生产链路、标注系统与自动化判官共用这一套体系。</figcaption>
     </figure>
   </div>
 </section>
 
 <section id="highlights">
   <div class="wrap">
-    <h2>Highlights</h2>
+    <h2><span data-l="en">Highlights</span><span data-l="zh">核心结论</span></h2>
     <div class="hl">
-      <div class="hl-item"><b>The best chain today barely clears the usable line.</b><span><code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>seedance-2.0</code> delivers a finished drama at 3.30, only 0.3 above 3.0.</span></div>
-      <div class="hl-item"><b>Upstream defects accumulate rather than stay local.</b><span>Degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.</span></div>
-      <div class="hl-item"><b>Quality decays along the chain.</b><span>3.78 at storyboard design down to 2.93 at episode video; no pixel or video stage reaches the text stage's mean.</span></div>
-      <div class="hl-item"><b>Composite scores hide dimensional trade-offs.</b><span><code>seedream-5.0-pro</code> and <code>nano-banana-pro</code> differ by 0.02 overall, but by 0.39 and 0.60 on two axes in opposite directions.</span></div>
+      <div data-l="en" class="hl-item"><b>The best chain today barely clears the usable line.</b><span><code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>seedance-2.0</code> delivers a finished drama at 3.30, only 0.3 above 3.0.</span></div>
+<div class="hl-item" data-l="zh"><b>当前最强链路也只是勉强过线。</b><span><code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>seedance-2.0</code> 的成片得 3.30 分，仅比 3.0 可用线高 0.3。</span></div>
+      <div data-l="en" class="hl-item"><b>Upstream defects accumulate rather than stay local.</b><span>Degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.</span></div>
+<div class="hl-item" data-l="zh"><b>上游缺陷会累积传导，而不是留在原地。</b><span>只替换一个上游环节为更弱的模型，单分镜视频掉 0.07–0.13 分，到成片则放大为 0.25–0.83 分。</span></div>
+      <div data-l="en" class="hl-item"><b>Quality decays along the chain.</b><span>3.78 at storyboard design down to 2.93 at episode video; no pixel or video stage reaches the text stage's mean.</span></div>
+<div class="hl-item" data-l="zh"><b>质量沿链路逐级衰减。</b><span>从分镜设计的 3.78 一路降到集分镜视频的 2.93；没有任何像素或视频环节能达到文本环节的均分。</span></div>
+      <div data-l="en" class="hl-item"><b>Composite scores hide dimensional trade-offs.</b><span><code>seedream-5.0-pro</code> and <code>nano-banana-pro</code> differ by 0.02 overall, but by 0.39 and 0.60 on two axes in opposite directions.</span></div>
+<div class="hl-item" data-l="zh"><b>综合分掩盖了维度上的取舍。</b><span><code>seedream-5.0-pro</code> 与 <code>nano-banana-pro</code> 综合分只差 0.02，但在两条轴上分别以 0.39 和 0.60 的差距朝相反方向拉开。</span></div>
     </div>
   </div>
 </section>
 
 <section id="leaderboard">
   <div class="wrap">
-    <h2>Leaderboard</h2>
-    <p>Automated board, 5-point scale, over six production stages and five evaluation axes. <b>All</b> is the cross-axis composite metric.</p>
+    <h2><span data-l="en">Leaderboard</span><span data-l="zh">榜单</span></h2>
+    <p data-l="en">Automated board, 5-point scale, over six production stages and five evaluation axes. <b>All</b> is the cross-axis composite metric.</p>
+<p data-l="zh">自动化评测榜，5 分制，覆盖六个生产环节与五条评测轴。<b>综合分</b>为跨轴汇总指标。</p>
     <div class="legend">
-      <span><i>bold</i> — best value in the column among fully annotated models</span>
-      <span><i class="fail">red</i> — below the 3.0 usable line</span>
-      <span>bars run 2.0–5.0; the notch marks the 3.0 usable line</span>
-      <span>each stage shows only the axes defined at its granularity</span>
+      <span data-l="en"><i>bold</i> — best value in the column among fully annotated models</span>
+<span data-l="zh"><i>加粗</i> —— 有完整人工标注的模型中该轴的最优值</span>
+      <span data-l="en"><i class="fail">red</i> — below the 3.0 usable line</span>
+<span data-l="zh"><i class="fail">红色</i> —— 低于 3.0 可用线</span>
+      <span data-l="en">bars run 2.0–5.0; the notch marks the 3.0 usable line</span>
+<span data-l="zh">条形量程 2.0–5.0，缺口标出 3.0 可用线</span>
+      <span data-l="en">each stage shows only the axes defined at its granularity</span>
+<span data-l="zh">每个环节只显示该粒度下定义的评测轴</span>
     </div>
 
     <div class="tabs" role="tablist" aria-label="Production stage"></div>
     <div id="panels"></div>
 
-    <p class="fnote">
+    <p data-l="en" class="fnote">
       <b>†</b> added after the annotation round and scored automatically only; excluded from agreement metrics and best-column marking. &nbsp;
       <b>‡</b> partial corpus run (reduced dramas, paradigms or styles); scores come from the evaluated subset. &nbsp;
       PLCC and SRCC are model-level correlations against the three-annotator human board.
       Absolute scores for single-shot video and episode keyframes are <b>not</b> comparable with the other granularities, because dimensions were retired from those scales. Values are raw means; the covariate-adjusted variant differs by up to 0.11 points.
     </p>
+<p class="fnote" data-l="zh"><b>†</b> 标注轮次之后新增、仅由自动化评测打分的模型，不计入一致性统计与最优标记。&nbsp;<b>‡</b> 只跑了部分语料（剧目、范式或画风有削减），分数来自其实际评测的子集。&nbsp;PLCC 与 SRCC 为与三人共识人工榜的模型级相关。单分镜视频与集分镜图的绝对分<b>不可</b>与其他粒度横向比较，因为这两个尺度上退役了部分维度。所有数值为原始均分；协变量调整后的口径最多相差 0.11 分。</p>
   </div>
 </section>
 
 <section id="systems">
   <div class="wrap">
-    <h2>The three systems</h2>
+    <h2><span data-l="en">Systems</span><span data-l="zh">系统</span></h2>
 
-    <h3>DramaChain Agent — item sourcing</h3>
-    <p>Generates the 20 dramas and 60 episodes the benchmark rests on, calibrated against real commercial platforms so a flawed pipeline is not itself what gets measured. It forks at exactly the stage under test — competing models receive identical upstream artefacts, everything else stays fixed.</p>
+    <h3><span data-l="en">DramaChain Agent — item sourcing</span><span data-l="zh">DramaChain Agent —— 题面生产</span></h3>
+    <p data-l="en">Generates the 20 dramas and 60 episodes the benchmark rests on, calibrated against real commercial platforms so a flawed pipeline is not itself what gets measured. It forks at exactly the stage under test — competing models receive identical upstream artefacts, everything else stays fixed.</p>
+<p data-l="zh">生成本基准所依托的 20 部短剧、60 集内容，并在流程与成片质量上对标真实商用平台，以免有缺陷的链路本身成为被评测的对象。它只在被测环节分叉——参评模型拿到完全相同的上游产物，其余环节全部固定。</p>
     <figure>
       <img src="assets/agent.png" alt="The DramaChain Agent production pipeline, forking at exactly one stage per run" width="880">
     </figure>
 
-    <p><b>What the calibration means.</b> One script, run end to end by our pipeline and by three commercial short-drama platforms — OiiOii, XiaoYunQue and Flova. Shot segmentation, character and scene consistency, camera language and audio all land in the same band; what differs is house style. This is what licenses the benchmark to treat pipeline output as representative of the product category rather than as a weaker stand-in.</p>
+    <p data-l="en"><b>What the calibration means.</b> One script, run end to end by our pipeline and by three commercial short-drama platforms — OiiOii, XiaoYunQue and Flova. Shot segmentation, character and scene consistency, camera language and audio all land in the same band; what differs is house style. This is what licenses the benchmark to treat pipeline output as representative of the product category rather than as a weaker stand-in.</p>
+<p data-l="zh"><b>对标是什么意思。</b>同一份剧本，由本链路与 OiiOii、小云雀、Flova 三个商用短剧平台各自端到端跑一遍。分镜切分、角色与场景一致性、镜头语言与音轨都落在同一档，差别在于各家的风格取向。正是这一点，让本基准有理由把链路产出视为该品类的代表水平，而不是一个更弱的替身。</p>
 
     <div class="cfig vrow four">
       <figure>
@@ -424,36 +448,48 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <details class="script">
-      <summary>The one script all four received &nbsp;·&nbsp; 3 scenes, 8 shots</summary>
+      <summary><span data-l="en">The one script all four received &nbsp;·&nbsp; 3 scenes, 8 shots</span><span data-l="zh">四条链路拿到的同一份剧本 &nbsp;·&nbsp; 3 场 8 镜</span></summary>
       <div class="script-body">
-        <p class="muted" style="margin-bottom:10px">Abridged from the Chinese source script. Each entry gives the framing and the beat; the delivered script also carried camera movement, dialogue and sound notes.</p>
+        <p data-l="en" class="muted" style="margin-bottom:10px">Abridged from the Chinese source script. Each entry gives the framing and the beat; the delivered script also carried camera movement, dialogue and sound notes.</p>
+<p class="muted" style="margin-bottom:10px" data-l="zh">以下为剧本原文的节选。每条给出景别与该镜的动作；实际下发的剧本还包含运镜、台词与音效标注。</p>
 
-        <h4>Scene 1 — Ambush on the old road (day)</h4>
-        <p><span class="sh">1-1</span>Wide, locked off. Sun beating down, heat haze. A rider drives a horse at full gallop out of the depth of frame, dust everywhere, shouting that the lychees will spoil if he is late.</p>
-        <p><span class="sh">1-2</span>Close-up, handheld. The rider's face streaming sweat, lips cracked; tilt down to the horse foaming at the mouth, whip-pan to the lychee basket rocking loose. He looks back at the road behind and says he cannot go on.</p>
+        <h4><span data-l="en">Scene 1 — Ambush on the old road (day)</span><span data-l="zh">场景 1 · 古道惊魂（日景）</span></h4>
+        <p data-l="en"><span class="sh">1-1</span>Wide, locked off. Sun beating down, heat haze. A rider drives a horse at full gallop out of the depth of frame, dust everywhere, shouting that the lychees will spoil if he is late.</p>
+<p data-l="zh"><span class="sh">1-1</span>全景，固定机位。烈日当空，热浪扭曲空气。一匹快马卷起黄沙从画面深处疾驰而来，骑手嘶哑地喊着误了时辰荔枝就坏了。</p>
+        <p data-l="en"><span class="sh">1-2</span>Close-up, handheld. The rider's face streaming sweat, lips cracked; tilt down to the horse foaming at the mouth, whip-pan to the lychee basket rocking loose. He looks back at the road behind and says he cannot go on.</p>
+<p data-l="zh"><span class="sh">1-2</span>特写，手持跟拍。骑手满脸汗水、嘴唇干裂；镜头下摇到口吐白沫的马，再甩向摇摇欲坠的荔枝筐。他回头望向身后长路，自语说跑不动了。</p>
 
-        <h4>Scene 2 — Relief from the air (day)</h4>
-        <p><span class="sh">2-1</span>POV into a low angle. A buzzing pulls his eyes to the sky; a silver-grey heavy-lift drone drops into a hover above the horse. He forgets to rein in and asks whether the immortals have sent reinforcements.</p>
-        <p><span class="sh">2-2</span>Medium, eye level, man and machine. The drone descends, its grab system lit soft blue. He lifts the basket overhead, the claw locks with a click, the indicator turns green.</p>
-        <p><span class="sh">2-3</span>Aerial, extreme wide. The drone climbs away toward the city with the basket. The pull-back holds both the winding old road and the tiny figure still waving; the score cuts from heavy drums to bright electronica.</p>
+        <h4><span data-l="en">Scene 2 — Relief from the air (day)</span><span data-l="zh">场景 2 · 空中驰援（日景）</span></h4>
+        <p data-l="en"><span class="sh">2-1</span>POV into a low angle. A buzzing pulls his eyes to the sky; a silver-grey heavy-lift drone drops into a hover above the horse. He forgets to rein in and asks whether the immortals have sent reinforcements.</p>
+<p data-l="zh"><span class="sh">2-1</span>主观镜头转仰拍。一阵嗡鸣把他的视线拉向天空，一架银灰色重型物流无人机悬停在马队上方。他忘了勒马，脱口而出问是不是神仙派来的援兵。</p>
+        <p data-l="en"><span class="sh">2-2</span>Medium, eye level, man and machine. The drone descends, its grab system lit soft blue. He lifts the basket overhead, the claw locks with a click, the indicator turns green.</p>
+<p data-l="zh"><span class="sh">2-2</span>中景，平视，人机关系。无人机缓缓下降，抓取系统亮起柔和蓝光。他把荔枝筐举过头顶，机械爪咔哒一声锁定，指示灯转为绿色。</p>
+        <p data-l="en"><span class="sh">2-3</span>Aerial, extreme wide. The drone climbs away toward the city with the basket. The pull-back holds both the winding old road and the tiny figure still waving; the score cuts from heavy drums to bright electronica.</p>
+<p data-l="zh"><span class="sh">2-3</span>航拍，大远景。无人机带着荔枝筐拉升，向城市方向飞去。镜头拉远，画面里既有蜿蜒古道，也有仍在挥手、渺小如蚁的骑手；配乐从沉重鼓点切换为轻快电子乐。</p>
 
-        <h4>Scene 3 — Fresh fruit, delivered (day)</h4>
-        <p><span class="sh">3-1</span>Medium, shooting from inside out. A modern high-rise balcony against the city skyline. The drone lands on the pad and releases the box; a family of three collects it, the mother remarking that the order was placed barely an hour ago.</p>
-        <p><span class="sh">3-2</span>Macro into medium. The red shell splits, juice bursting, translucent flesh beneath. Pull back to the family sharing the fruit on the sofa; the father, eyes closed, begins to recite the old line about the imperial consort's lychees.</p>
-        <p><span class="sh">3-3</span>Close two-shot. Before he can finish, the small boy jumps up with a peeled lychee and cuts him off with the punchline. Both parents laugh; the boy feeds his father the fruit and the frame holds on the family.</p>
+        <h4><span data-l="en">Scene 3 — Fresh fruit, delivered (day)</span><span data-l="zh">场景 3 · 鲜果到家（日景）</span></h4>
+        <p data-l="en"><span class="sh">3-1</span>Medium, shooting from inside out. A modern high-rise balcony against the city skyline. The drone lands on the pad and releases the box; a family of three collects it, the mother remarking that the order was placed barely an hour ago.</p>
+<p data-l="zh"><span class="sh">3-1</span>中景，室内向室外拍。现代高层公寓阳台，窗外是城市天际线。无人机降落在停机坪并释放荔枝箱，一家三口把箱子抱进来，妈妈说刚下单还没半个时辰。</p>
+        <p data-l="en"><span class="sh">3-2</span>Macro into medium. The red shell splits, juice bursting, translucent flesh beneath. Pull back to the family sharing the fruit on the sofa; the father, eyes closed, begins to recite the old line about the imperial consort's lychees.</p>
+<p data-l="zh"><span class="sh">3-2</span>特写转中近景。粗糙红壳被剥开，崩出细密汁水，露出晶莹果肉。镜头拉开，一家人围坐沙发分享荔枝；爸爸闭眼品尝，摇头晃脑念起「一骑红尘妃子笑」。</p>
+        <p data-l="en"><span class="sh">3-3</span>Close two-shot. Before he can finish, the small boy jumps up with a peeled lychee and cuts him off with the punchline. Both parents laugh; the boy feeds his father the fruit and the frame holds on the family.</p>
+<p data-l="zh"><span class="sh">3-3</span>近景双人。还没等他念完，小男孩举着剥好的荔枝从沙发上跳起来，抢话喊出「无人机系荔枝来」。父母大笑，男孩把荔枝塞进爸爸嘴里，画面定格在一家人的互动上。</p>
       </div>
     </details>
 
-    <p class="fnote">All four runs are end to end and fully automatic — no manual editing, frame picking or re-rolling. Their source encodings differed (ours 720p / 24 fps / 2.0 Mbps, OiiOii 720p / 30 fps / 4.7 Mbps, XiaoYunQue 720p / 30 fps / 9.2 Mbps, Flova 1080p / 30 fps / 13.5 Mbps); all four are re-encoded here to 960×540 at roughly 1 Mbps, which removes bitrate as a confound in what you see. Clip lengths differ because each pipeline decides its own shot durations from the same script.</p>
+    <p data-l="en" class="fnote">All four runs are end to end and fully automatic — no manual editing, frame picking or re-rolling. Their source encodings differed (ours 720p / 24 fps / 2.0 Mbps, OiiOii 720p / 30 fps / 4.7 Mbps, XiaoYunQue 720p / 30 fps / 9.2 Mbps, Flova 1080p / 30 fps / 13.5 Mbps); all four are re-encoded here to 960×540 at roughly 1 Mbps, which removes bitrate as a confound in what you see. Clip lengths differ because each pipeline decides its own shot durations from the same script.</p>
+<p class="fnote" data-l="zh">四条片子均为端到端全自动，无人工剪辑、挑帧或重跑择优。它们的原始编码规格不同（本链路 720p / 24 fps / 2.0 Mbps，OiiOii 720p / 30 fps / 4.7 Mbps，小云雀 720p / 30 fps / 9.2 Mbps，Flova 1080p / 30 fps / 13.5 Mbps）；此处四条统一转码为 960×540、约 1 Mbps，从而消除码率对观感的干扰。时长不同，是因为各链路从同一份剧本出发自行决定分镜时长。</p>
 
-    <h3>DramaChain Labeling System — human reference</h3>
-    <p>Three professional annotators score every item independently against a five-point decidable rubric, each deduction tagged from a closed vocabulary and localised in space and time — 17,488 scores and 255,925 reviewable attributions from 543 annotators.</p>
+    <h3><span data-l="en">DramaChain Labeling System — human reference</span><span data-l="zh">DramaChain 标注系统 —— 人工基准</span></h3>
+    <p data-l="en">Three professional annotators score every item independently against a five-point decidable rubric, each deduction tagged from a closed vocabulary and localised in space and time — 17,488 scores and 255,925 reviewable attributions from 543 annotators.</p>
+<p data-l="zh">三名专业标注员依据五分制可判定量表对每道题独立打分，每一处扣分都从封闭词表中选取标签并在时空上定位——共 543 名标注员产出 17,488 份打分与 255,925 条可复核的归因记录。</p>
     <figure>
       <img src="assets/labeling.png" alt="The DramaChain labeling system: rubrics, attribution, spatio-temporal grounding and three-pass quality control" width="880">
     </figure>
 
-    <h3>DramaChain Agentic Judge — automated evaluation</h3>
-    <p>Replicates that reference automatically: routed measurements per dimension, external tools across multiple rounds, then a judgement against a per-item checklist. Mean PLCC against the human panel is 0.918.</p>
+    <h3><span data-l="en">DramaChain Agentic Judge — automated evaluation</span><span data-l="zh">DramaChain Agentic Judge —— 自动化评测</span></h3>
+    <p data-l="en">Replicates that reference automatically: routed measurements per dimension, external tools across multiple rounds, then a judgement against a per-item checklist. Mean PLCC against the human panel is 0.918.</p>
+<p data-l="zh">自动复现上述人工基准：按维度路由取证、多轮调用外部工具，再依据逐题核查清单出分。与人工评审团的平均 PLCC 为 0.918。</p>
     <figure>
       <img src="assets/judge.png" alt="The DramaChain agentic judge: routed measurements, multi-round tool use and per-item checklist judging" width="820">
     </figure>
@@ -462,11 +498,12 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
 <section id="cases">
   <div class="wrap">
-    <h2>Case studies</h2>
+    <h2><span data-l="en">Cases</span><span data-l="zh">样例</span></h2>
 
     <div class="case">
-      <b>Equal scores, different failure modes</b>
-      <p>All four items score 1.3–1.7 on some dimension, so a composite ranks them together. The boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.</p>
+      <b><span data-l="en">Equal scores, different failure modes</span><span data-l="zh"><b>同分，但坏在不同地方</b></span></b>
+      <p data-l="en">All four items score 1.3–1.7 on some dimension, so a composite ranks them together. The boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.</p>
+<p data-l="zh">四道题都在某个维度上得 1.3–1.7 分，综合分会把它们视为同样差。而标注框落在四个互不相交的位置，且每一对里两个模型互换了失败的维度。</p>
       <div class="cfig cg2 r23">
         <figure>
           <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
@@ -487,12 +524,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
           <figcaption><code>wan2.7-image-pro</code> — I-E1 human anatomy <span class="fail">1.33</span>, 10 boxes, all broken hands; subject attributes scored 3.33.</figcaption>
         </figure>
       </div>
-      <p class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them.</p>
+      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them.</p>
+<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。</p>
     </div>
 
     <div class="case">
-      <b>Cross-shot consistency is a separate capability</b>
-      <p>Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.</p>
+      <b><span data-l="en">Cross-shot consistency is a separate capability</span><span data-l="zh"><b>跨镜一致是另一种能力</b></span></b>
+      <p data-l="en">Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.</p>
+<p data-l="zh">同一集、同一套角色设定卡。上排跨镜稳住了两位主角，下排没有——相差 2.66 分。而下排每一格单独看都无可指摘：镜 7 本身没有错，它只是相对镜 5 错了。</p>
 
       <div class="cfig">
         <div class="crow-h">
@@ -527,8 +566,9 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b>What a tier gap looks like in motion</b>
-      <p>The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.</p>
+      <b><span data-l="en">What a tier gap looks like in motion</span><span data-l="zh"><b>档位差距动起来是什么样</b></span></b>
+      <p data-l="en">The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.</p>
+<p data-l="zh">同一集的同一个镜位，三个模型。三名标注员分别标出 30、109、94 处问题——榜首档稳住了角色外观，中段档开始漂移，末档则彻底失守。</p>
       <div class="cfig vrow">
         <figure>
           <video src="assets/video/tier-seedance.mp4" poster="assets/video/tier-seedance.jpg" muted loop playsinline preload="none"></video>
@@ -543,12 +583,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
           <figcaption><span class="vtag t3">BOTTOM TIER</span><b><code>pixverse-c1</code></b>V-C1 character appearance <span class="fail">1.67</span> · 94 problems marked.</figcaption>
         </figure>
       </div>
-      <p class="fnote">Animated drama <i>Gui Ren</i>, episode 2, shot 5. Every model receives the same keyframes and the same prompt.</p>
+      <p data-l="en" class="fnote">Animated drama <i>Gui Ren</i>, episode 2, shot 5. Every model receives the same keyframes and the same prompt.</p>
+<p class="fnote" data-l="zh">动漫短剧《归刃》第 2 集第 5 镜。每个模型拿到的关键帧与提示词完全相同。</p>
     </div>
 
     <div class="case">
-      <b>Shot count decides executability</b>
-      <p>One identical episode script, forked only at the storyboard stage. The three-shot output compresses the episode into 30 s and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement.</p>
+      <b><span data-l="en">Shot count decides executability</span><span data-l="zh"><b>切几个镜决定了能不能拍</b></span></b>
+      <p data-l="en">One identical episode script, forked only at the storyboard stage. The three-shot output compresses the episode into 30 s and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement.</p>
+<p data-l="zh">同一份剧本，只在分镜设计这一环分叉。切 3 个镜的产出把整集压缩进 30 秒、10 轮台词；三名标注员对它的描述可执行性与拍摄节奏都给了 1.00 分，零分歧。</p>
       <div class="tscroll">
         <table>
           <thead><tr>
@@ -569,12 +611,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
           </tbody>
         </table>
       </div>
-      <p class="fnote">Scores are three-annotator consensus means. Every model receives the same script.</p>
+      <p data-l="en" class="fnote">Scores are three-annotator consensus means. Every model receives the same script.</p>
+<p class="fnote" data-l="zh">分数为三人共识均分。每个模型拿到的剧本完全相同。</p>
     </div>
 
     <div class="case">
-      <b>Each input paradigm carries its own failure mode</b>
-      <p>Grid panels omit people; first/last-frame shots change person between the two frames. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than visual style — 1 of 10 failing dimensions against 9 of 15.</p>
+      <b><span data-l="en">Each input paradigm carries its own failure mode</span><span data-l="zh"><b>每种输入范式都有自己的病</b></span></b>
+      <p data-l="en">Grid panels omit people; first/last-frame shots change person between the two frames. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than visual style — 1 of 10 failing dimensions against 9 of 15.</p>
+<p data-l="zh">宫格会漏画人物；首尾帧则在两帧之间换人。这两种失败方式对另一种范式都不成立，这正是难度由范式而非画风决定的原因——不及格维度数首尾帧 1/10，宫格 9/15。</p>
       <div class="cfig cg2 r169">
         <figure>
           <img src="assets/cases/paradigm-grid.jpg" alt="Grid keyframe where cells that should hold three people hold two" loading="lazy">
@@ -597,8 +641,9 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b>An upstream defect is re-expressed downstream, not repaired</b>
-      <p>Rooms drift before people do: all three annotators circled this run for the set dressing while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
+      <b><span data-l="en">An upstream defect is re-expressed downstream, not repaired</span><span data-l="zh"><b>上游缺陷到下游是重演，不是修复</b></span></b>
+      <p data-l="en">Rooms drift before people do: all three annotators circled this run for the set dressing while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
+<p data-l="zh">场景比人物更早漂移：三名标注员都为陈设圈出了这段连续镜头，而人物那一侧稳住了。视频环节不会修复这种漂移——它只会重新演一遍，并一直留存到成片里。</p>
       <div class="cfig">
         <div class="crow-h">
           <b><code>gpt-image-1.5</code></b>
@@ -615,13 +660,15 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><span class="mdl">hy3</span> reproduces the script and does not dramatise it</b>
-      <p>It scores 3.43 against 3.60 for its nearest neighbour <code>doubao-seed-2.1-pro</code>, and the gap is grouped rather than general: it leads on everything that means <em>reproduce the script</em> (dialogue fidelity 4.44) and trails on everything that means <em>turn it into television</em> (emotion 3.64, audiovisual style 3.91, both eighth of nine).</p>
+      <b><span data-l="en"><span class="mdl">hy3</span> reproduces the script and does not dramatise it</span><span data-l="zh"><b><span class="mdl">hy3</span> 忠实复述剧本，但不做戏剧化</b></span></b>
+      <p data-l="en">It scores 3.43 against 3.60 for its nearest neighbour <code>doubao-seed-2.1-pro</code>, and the gap is grouped rather than general: it leads on everything that means <em>reproduce the script</em> (dialogue fidelity 4.44) and trails on everything that means <em>turn it into television</em> (emotion 3.64, audiovisual style 3.91, both eighth of nine).</p>
+<p data-l="zh">它得 3.43 分，最近邻的 <code>doubao-seed-2.1-pro</code> 得 3.60 分，而这个差距是成组的而非普遍的：凡是<em>复述剧本</em>的维度它都领先（对白保真 4.44），凡是<em>把剧本变成影视</em>的维度它都落后（情绪表达 3.64、视听风格 3.91，均为九个模型中的第八）。</p>
     </div>
 
     <div class="case">
-      <b><span class="mdl">seedance-2.5</span> buys episode coherence with single-clip quality</b>
-      <p>On paired items the newer version loses on single-shot video and gains at episode and short-drama granularity. Everything that must hold along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility); everything about joining shots got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already in the prompt is now executed faithfully.</p>
+      <b><span data-l="en"><span class="mdl">seedance-2.5</span> buys episode coherence with single-clip quality</span><span data-l="zh"><b><span class="mdl">seedance-2.5</span> 用单镜质量换来了整集连贯</b></span></b>
+      <p data-l="en">On paired items the newer version loses on single-shot video and gains at episode and short-drama granularity. Everything that must hold along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility); everything about joining shots got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already in the prompt is now executed faithfully.</p>
+<p data-l="zh">在配对样本上，新版本在单分镜视频上失分，却在集分镜视频与成片两个粒度上得分。凡是需要沿时间轴持续保持的都变差了（声画同步 −0.658、运动流畅度、镜头合理性）；凡是关于把镜头接起来的都变好了（跨镜风格一致 +1.143）。原因是它更字面地遵循提示词，于是提示词里本就存在的缺陷被忠实执行了出来。</p>
       <div class="cfig vrow two">
         <figure>
           <video src="assets/video/sd25-lipsync.mp4" poster="assets/video/sd25-lipsync.jpg" muted loop playsinline preload="none"></video>
@@ -635,8 +682,9 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b>Automated scoring drifts where there is no reference to check against</b>
-      <p>Every dimension with a reference to check against is right; the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, noise, blur, ghosting.</p>
+      <b><span data-l="en">Automated scoring drifts where there is no reference to check against</span><span data-l="zh"><b>没有参照物可核对时，自动化打分会漂</b></span></b>
+      <p data-l="en">Every dimension with a reference to check against is right; the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, noise, blur, ghosting.</p>
+<p data-l="zh">凡是有参照物可核对的维度都判对了；唯一一个纯感知维度则朝宽松方向偏了近四分。三名标注员给技术质量打了 1 / 1 / 2 分，并一致标注为结构畸变、噪点、模糊、重影。</p>
       <div class="cfig cjf">
         <img src="assets/cases/judgefail.jpg" alt="The nano-banana-pro keyframe whose technical quality the judge overestimated" loading="lazy">
         <div class="tscroll">
@@ -660,8 +708,9 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
 <section id="citation">
   <div class="wrap">
-    <h2>Release &amp; citation</h2>
-    <p>DramaChain Bench supports extensible evaluation rather than static benchmarking. Stage-level branching plus model-consistent automatic scoring lets a new model enter the board with single-stage generation only, requiring no additional human annotation. We will release <b>DramaChain Dimensions</b>, the <b>DramaChain Agentic Judge</b> framework, and a curated subset of the benchmark data.</p>
+    <h2><span data-l="en">Release &amp; citation</span><span data-l="zh">开放与引用</span></h2>
+    <p data-l="en">DramaChain Bench supports extensible evaluation rather than static benchmarking. Stage-level branching plus model-consistent automatic scoring lets a new model enter the board with single-stage generation only, requiring no additional human annotation. We will release <b>DramaChain Dimensions</b>, the <b>DramaChain Agentic Judge</b> framework, and a curated subset of the benchmark data.</p>
+<p data-l="zh">DramaChain Bench 支持可扩展的持续评测，而非一次性的静态基准。环节级分叉机制加上模型一致的自动化打分，使新模型只需生成单个环节即可进榜，无需额外人工标注。我们将开放 <b>DramaChain Dimensions</b> 维度体系、<b>DramaChain Agentic Judge</b> 框架，以及一份经过筛选的基准数据子集。</p>
 <pre>@techreport{shi2026dramachain,
   title       = {DramaChain Bench: An End-to-End Benchmark for Short-Drama Generation},
   author      = {Shi, Haoyuan and Chen, Mingtao and Jiang, Shuo and Chen, Ziyan and
@@ -689,10 +738,26 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 </div>
 
 <script>
+let LANG = 'en';
+const t = (en, zh) => LANG === 'zh' ? zh : en;
+
 const AXES = [
-  ['F','Input fidelity','axF'], ['C','Internal consistency','axC'],
-  ['P','Generation plausibility','axP'], ['Q','Visual quality','axQ'],
-  ['E','Cinematic expressiveness','axE']
+  ['F','Input fidelity','axF','输入遵循'],
+  ['C','Internal consistency','axC','内部一致'],
+  ['P','Generation plausibility','axP','生成合理'],
+  ['Q','Visual quality','axQ','视觉质量'],
+  ['E','Cinematic expressiveness','axE','影视表现力']
+];
+const AX_NAME = a => t(a[1], a[3]);
+
+/* Stage labels, keyed to the order of STAGES below. */
+const STAGE_ZH = [
+  ['分镜设计', '文本 → 文本'],
+  ['单分镜图', '文本 + 参考图 → 像素'],
+  ['集分镜图', '整集的帧图'],
+  ['单分镜视频', '像素 → 时序 + 音轨'],
+  ['集分镜视频', '连续多镜'],
+  ['短剧成片', '最终成片']
 ];
 
 /* Each row: [model, flags, F, C, P, Q, E, All].
@@ -789,7 +854,8 @@ function chip(v, axis){
   const [score, marks] = v;
   const cls = ['chip', marks.includes('b') ? 'best' : '', marks.includes('f') ? 'fail' : '']
     .filter(Boolean).join(' ');
-  return `<span class="${cls}"><i class="${axis[2]}">${axis[0]}</i>${score.toFixed(2)}</span>`;
+  return `<span class="${cls}" title="${AX_NAME(axis)}">`
+    + `<i class="${axis[2]}">${axis[0]}</i>${score.toFixed(2)}</span>`;
 }
 
 /* Bars run 2.0–5.0 rather than 0–5, so the spread between models is visible
@@ -823,38 +889,70 @@ function buildTable(stage){
   }).join('');
 
   return `<div class="lb">
-    <div class="lb-hd"><span></span><span>Model</span><span class="h-sc">Composite</span></div>
+    <div class="lb-hd"><span></span><span>${t('Model','模型')}</span><span class="h-sc">${t('Composite','综合分')}</span></div>
     ${rows}</div>`;
 }
 
 const tabs = document.querySelector('.tabs');
 const panels = document.getElementById('panels');
 
-STAGES.forEach((stage, i) => {
-  const tab = document.createElement('button');
-  tab.className = 'tab';
-  tab.type = 'button';
-  tab.role = 'tab';
-  tab.id = `tab-${i}`;
-  tab.setAttribute('aria-controls', `panel-${i}`);
-  tab.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-  tab.tabIndex = i === 0 ? 0 : -1;
-  tab.innerHTML = `<span class="tnum">${CIRCLED[i]}</span>${stage.n}`;
-  tabs.appendChild(tab);
+function renderBoard(active = 0){
+  tabs.innerHTML = '';
+  panels.innerHTML = '';
 
-  const panel = document.createElement('div');
-  panel.className = 'panel';
-  panel.id = `panel-${i}`;
-  panel.role = 'tabpanel';
-  panel.setAttribute('aria-labelledby', `tab-${i}`);
-  panel.hidden = i !== 0;
-  panel.innerHTML = `<div class="pmeta">
-      <span class="pm-k">${stage.io}</span>
-      <span>PLCC <b>${stage.plcc}</b></span>
-      <span>SRCC <b>${stage.srcc}</b></span>
-    </div>` + buildTable(stage);
-  panels.appendChild(panel);
-});
+  STAGES.forEach((stage, i) => {
+    const [name, io] = LANG === 'zh' ? STAGE_ZH[i] : [stage.n, stage.io];
+
+    const tab = document.createElement('button');
+    tab.className = 'tab';
+    tab.type = 'button';
+    tab.role = 'tab';
+    tab.id = `tab-${i}`;
+    tab.setAttribute('aria-controls', `panel-${i}`);
+    tab.setAttribute('aria-selected', i === active ? 'true' : 'false');
+    tab.tabIndex = i === active ? 0 : -1;
+    tab.innerHTML = `<span class="tnum">${CIRCLED[i]}</span>${name}`;
+    tabs.appendChild(tab);
+
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.id = `panel-${i}`;
+    panel.role = 'tabpanel';
+    panel.setAttribute('aria-labelledby', `tab-${i}`);
+    panel.hidden = i !== active;
+    panel.innerHTML = `<div class="pmeta">
+        <span class="pm-k">${io}</span>
+        <span>PLCC <b>${stage.plcc}</b></span>
+        <span>SRCC <b>${stage.srcc}</b></span>
+      </div>` + buildTable(stage);
+    panels.appendChild(panel);
+  });
+}
+
+renderBoard();
+
+/* ── language switch ─────────────────────────────────────────────────
+   Every translatable string ships in both languages and one side is
+   hidden, so a switch never refetches and never loses scroll position. */
+function setLang(lang){
+  LANG = lang;
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.documentElement.dataset.lang = lang;
+  document.querySelectorAll('[data-l]').forEach(el => {
+    el.hidden = el.dataset.l !== lang;
+  });
+  const open = [...document.querySelectorAll('.tab')]
+    .findIndex(t => t.getAttribute('aria-selected') === 'true');
+  renderBoard(Math.max(0, open));
+  try { localStorage.setItem('dcb-lang', lang); } catch (e) {}
+}
+
+document.getElementById('lang-btn')
+  .addEventListener('click', () => setLang(LANG === 'zh' ? 'en' : 'zh'));
+
+let saved = 'en';
+try { saved = localStorage.getItem('dcb-lang') || 'en'; } catch (e) {}
+setLang(saved);
 
 function select(i){
   document.querySelectorAll('.tab').forEach((t, j) => {
