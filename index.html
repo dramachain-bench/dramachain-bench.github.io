@@ -126,6 +126,36 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .case table{margin-top:14px;font-size:12.5px}
 .case .tscroll{margin-top:14px}
 
+/* ── case figures ─────────────────────────────────────────────────────── */
+.cfig{margin-top:15px}
+.crow{display:flex;gap:6px}
+.crow figure{flex:1 1 0;min-width:0;margin:0}
+.crow img{width:100%;border:1px solid var(--line);border-radius:5px}
+.crow figcaption{margin-top:4px;font-size:10.5px;text-align:center;color:var(--muted)}
+.crow-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 11px;
+  margin-bottom:6px;font-size:12.5px;color:var(--ink-2)}
+.crow-h b{display:inline;font-size:12.5px}
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+/* column widths track the two panels' aspect ratios so they render the same height */
+.cg2.r23{grid-template-columns:0.40fr 0.60fr}
+.cg2.r169{grid-template-columns:0.36fr 0.64fr}
+.cg2 figure{margin:0}
+.cg2 img{width:100%;border:1px solid var(--line);border-radius:6px}
+.cg2 figcaption{margin-top:6px;font-size:11.5px;text-align:left;color:var(--muted);
+  line-height:1.58}
+.cjf{display:grid;grid-template-columns:0.36fr 0.64fr;gap:15px;align-items:start}
+.cjf img{width:100%;border:1px solid var(--line);border-radius:6px}
+.cjf table{margin-top:0}
+.pass{color:#2E8B57;font-weight:700;font-family:var(--mono)}
+.case .fail{font-family:var(--mono);font-weight:700}
+/* prose columns inside a case table wrap instead of widening it past the page */
+.case th.tl,.case td.tl{text-align:left;font-family:var(--sans);white-space:normal}
+.case td.tl{min-width:150px}
+@media (max-width:720px){
+  .cg2,.cg2.r23,.cg2.r169,.cjf{grid-template-columns:1fr}
+  .crow{flex-wrap:wrap}.crow figure{flex:1 1 28%}
+}
+
 /* ── citation ─────────────────────────────────────────────────────────── */
 pre{background:#26231D;color:#E8E4DA;border-radius:10px;padding:18px 20px;
   overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65}
@@ -253,11 +283,63 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     <div class="case">
       <b>Equal scores, different failure modes</b>
       <p>Four items all score 1.3–1.7 on some dimension, so a composite ranks them together — but the localised defect boxes fall in four disjoint places: on faces, on limbs mid-action, on people who should not be present, and on hands with the wrong number of fingers. Within each pair the two models trade which dimension they fail: the model that loses identity holds action at 3.0, and the model that loses action holds identity at 3.33.</p>
+      <div class="cfig cg2 r23">
+        <figure>
+          <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
+          <figcaption><code>wan2.7-image-pro</code> — I-C1 face identity <span class="fail">1.67</span>, 15 boxes, every one on a face; action interaction scored 3.0.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/cases/boxed-action.jpg" alt="Keyframe with thirteen annotator boxes, every one on a limb mid-action" loading="lazy">
+          <figcaption><code>gpt-image-1.5</code> — I-B2 action interaction <span class="fail">1.33</span>, 13 boxes, every one on a limb; face identity scored 3.33.</figcaption>
+        </figure>
+      </div>
+      <div class="cfig cg2">
+        <figure>
+          <img src="assets/cases/boxed-extra.jpg" alt="Keyframe with twelve annotator boxes, all marking extra subjects" loading="lazy">
+          <figcaption><code>seedream-5.0-lite</code> — I-B1 subject attributes <span class="fail">1.33</span>, 12 boxes, all “extra subject”; human anatomy scored 3.0.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/cases/boxed-hands.jpg" alt="Keyframe with ten annotator boxes, all marking malformed hands" loading="lazy">
+          <figcaption><code>wan2.7-image-pro</code> — I-E1 human anatomy <span class="fail">1.33</span>, 10 boxes, all broken hands; subject attributes scored 3.33.</figcaption>
+        </figure>
+      </div>
+      <p class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them.</p>
     </div>
 
     <div class="case">
       <b>Cross-shot consistency is a separate capability</b>
       <p>Two models draw the same episode from the same character sheets. The top-tier row holds its two leads across shots; the bottom-tier row does not, a 2.66-point gap on cross-shot character consistency. The important property is that every individual panel in the failing row is defensible — nothing in shot 7 alone is wrong, it is wrong relative to shot 5. A single-asset board is not under-reporting cross-shot quality; it is measuring a different quantity.</p>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b>T1 <code>gpt-image-2</code></b>
+          <span>MI-D1 cross-shot character consistency <span class="pass">4.33</span></span>
+          <span>alternate shots, 1, 3, … 11 of 13</span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5" loading="lazy"><figcaption>shot 5</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7" loading="lazy"><figcaption>shot 7</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b>T4 <code>wan2.7-image-pro</code></b>
+          <span>MI-D1 cross-shot character consistency <span class="fail">1.67</span></span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators" loading="lazy"><figcaption>shot 5</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators" loading="lazy"><figcaption>shot 7</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
+        </div>
+      </div>
     </div>
 
     <div class="case">
@@ -270,16 +352,16 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
             <th><span class="mdl">mimo-v2.5-pro</span><br>3 shots</th>
             <th><span class="mdl">gpt-5.5-xhigh</span><br>6 shots</th>
             <th><span class="mdl">claude-opus-4.8-max</span><br>12 shots</th>
-            <th style="text-align:left">Behaviour</th>
+            <th class="tl">Behaviour</th>
           </tr></thead>
           <tbody>
-            <tr><td>S-A2 dialogue fidelity</td><td class="axF">F</td><td class="fail">1.33</td><td class="best">5.00</td><td class="best">5.00</td><td style="text-align:left;font-family:var(--sans)">stops losing lines at 6 shots</td></tr>
-            <tr><td>S-A1 event coverage</td><td class="axF">F</td><td class="fail">2.67</td><td class="best">4.67</td><td class="best">4.67</td><td style="text-align:left;font-family:var(--sans)">same</td></tr>
-            <tr><td>S-B1 executability</td><td class="axP">P</td><td class="fail">1.00</td><td>3.00</td><td class="best">4.00</td><td style="text-align:left;font-family:var(--sans)">rises monotonically with shot count</td></tr>
-            <tr><td>S-C2 shooting rhythm</td><td class="axE">E</td><td class="fail">1.00</td><td class="best">3.67</td><td class="best">3.67</td><td style="text-align:left;font-family:var(--sans)">6 shots is already enough</td></tr>
-            <tr><td>Overall impression</td><td class="na">—</td><td class="fail">1.67</td><td class="best">4.00</td><td class="best">4.00</td><td style="text-align:left;font-family:var(--sans)">—</td></tr>
-            <tr><td>Problems marked</td><td class="na">—</td><td>23</td><td>18</td><td>15</td><td style="text-align:left;font-family:var(--sans)">fewer, and they change in kind</td></tr>
-            <tr><td>Annotator disagreement</td><td class="na">—</td><td>1.75</td><td>0.75</td><td>0.63</td><td style="text-align:left;font-family:var(--sans)">worse artefacts are harder to score</td></tr>
+            <tr><td>S-A2 dialogue fidelity</td><td class="axF">F</td><td class="fail">1.33</td><td class="best">5.00</td><td class="best">5.00</td><td class="tl">stops losing lines at 6 shots</td></tr>
+            <tr><td>S-A1 event coverage</td><td class="axF">F</td><td class="fail">2.67</td><td class="best">4.67</td><td class="best">4.67</td><td class="tl">same</td></tr>
+            <tr><td>S-B1 executability</td><td class="axP">P</td><td class="fail">1.00</td><td>3.00</td><td class="best">4.00</td><td class="tl">rises monotonically with shot count</td></tr>
+            <tr><td>S-C2 shooting rhythm</td><td class="axE">E</td><td class="fail">1.00</td><td class="best">3.67</td><td class="best">3.67</td><td class="tl">6 shots is already enough</td></tr>
+            <tr><td>Overall impression</td><td class="na">—</td><td class="fail">1.67</td><td class="best">4.00</td><td class="best">4.00</td><td class="tl">—</td></tr>
+            <tr><td>Problems marked</td><td class="na">—</td><td>23</td><td>18</td><td>15</td><td class="tl">fewer, and they change in kind</td></tr>
+            <tr><td>Annotator disagreement</td><td class="na">—</td><td>1.75</td><td>0.75</td><td>0.63</td><td class="tl">worse artefacts are harder to score</td></tr>
           </tbody>
         </table>
       </div>
@@ -288,7 +370,44 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
     <div class="case">
       <b>Each input paradigm carries its own failure mode</b>
-      <p>Grid panels omit people, because one image must fill several cells; first/last-frame shots change person between the two frames, because the frames are not produced in one pass and identity is not held across them. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than by visual style.</p>
+      <p>Grid panels omit people, because one image must fill several cells; first/last-frame shots change person between the two frames, because the frames are not produced in one pass and identity is not held across them. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than by visual style — 1 of 10 failing dimensions for first/last frame against 9 of 15 for grid.</p>
+      <div class="cfig cg2 r169">
+        <figure>
+          <img src="assets/cases/paradigm-grid.jpg" alt="Grid keyframe where cells that should hold three people hold two" loading="lazy">
+          <figcaption><b>Grid panel omits people.</b> <code>wan2.7-image-pro</code>, I-B1 subject attributes <span class="fail">1.33</span>: cells that should hold three people hold two.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/cases/paradigm-ff.jpg" alt="First and last frame of one shot showing a different person in each" loading="lazy">
+          <figcaption><b>First/last frame changes person between frames.</b> <code>nano-banana-pro</code>, I-C1 face identity <span class="fail">1.33</span>: three annotators boxed it independently, and <em>nothing constrains the last frame against the first</em>.</figcaption>
+        </figure>
+      </div>
+      <div class="cfig">
+        <div class="crow-h"><span>The input for the first/last-frame case: the shot's own first frame, then three character sheets.</span></div>
+        <div class="crow">
+          <figure><img src="assets/cases/paradigm-ref.jpg" alt="The shot's own first frame" loading="lazy"><figcaption>first frame</figcaption></figure>
+          <figure><img src="assets/cases/paradigm-card-a.jpg" alt="Character sheet A" loading="lazy"><figcaption>character sheet</figcaption></figure>
+          <figure><img src="assets/cases/paradigm-card-b.jpg" alt="Character sheet B" loading="lazy"><figcaption>character sheet</figcaption></figure>
+          <figure><img src="assets/cases/paradigm-card-c.jpg" alt="Character sheet C" loading="lazy"><figcaption>character sheet</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <b>An upstream defect is re-expressed downstream, not repaired</b>
+      <p>Rooms drift before people do. All three annotators circled this run of four consecutive shots for the set dressing while the characters held. Corpus-wide, cross-shot <em>scene</em> consistency at 2.42 is the lowest of the four episode-level dimensions, and the video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
+      <div class="cfig">
+        <div class="crow-h">
+          <b><code>gpt-image-1.5</code></b>
+          <span>four consecutive shots</span>
+          <span>MI-D3 scene <span class="fail">2.00</span> vs MI-D1 character <span class="pass">3.67</span></span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/drift-1.jpg" alt="Consecutive shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
+          <figure><img src="assets/cases/drift-2.jpg" alt="Consecutive shot 2" loading="lazy"><figcaption>shot 2</figcaption></figure>
+          <figure><img src="assets/cases/drift-3.jpg" alt="Consecutive shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
+          <figure><img src="assets/cases/drift-4.jpg" alt="Consecutive shot 4" loading="lazy"><figcaption>shot 4</figcaption></figure>
+        </div>
+      </div>
     </div>
 
     <div class="case">
@@ -303,7 +422,24 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
     <div class="case">
       <b>Automated scoring drifts where there is no reference to check against</b>
-      <p>In one item, every dimension with a reference is scored correctly while the single purely perceptual dimension is overestimated by 3.67 points in the lenient direction — the item-level form of what metric validation found across the population.</p>
+      <p>One <code>nano-banana-pro</code> panel, all four scored dimensions shown: every dimension with a reference to check against is right, and the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, visible noise, blur, ghosting. This is the item-level form of what metric validation found across the population.</p>
+      <div class="cfig cjf">
+        <img src="assets/cases/judgefail.jpg" alt="The nano-banana-pro keyframe whose technical quality the judge overestimated" loading="lazy">
+        <div class="tscroll">
+          <table>
+            <thead><tr>
+              <th class="tl">Dimension</th><th>human</th><th>judge</th><th>err</th>
+              <th class="tl"></th>
+            </tr></thead>
+            <tbody>
+              <tr><td>I-B1 subject attributes</td><td>2.00</td><td>2</td><td class="pass">0.00</td><td class="tl">correct</td></tr>
+              <tr><td>I-C2 appearance, costume</td><td>2.33</td><td>2</td><td class="pass">0.33</td><td class="tl">correct</td></tr>
+              <tr><td>I-B3 scene and layout</td><td>2.67</td><td>3</td><td class="pass">0.33</td><td class="tl">correct</td></tr>
+              <tr><td>I-A1 technical quality</td><td class="fail">1.33</td><td class="fail">5</td><td class="fail">3.67</td><td class="tl"><b>overestimated</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </section>

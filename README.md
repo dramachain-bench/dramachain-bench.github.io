@@ -206,11 +206,72 @@ The judge replicates the human reference automatically. It aggregates routed mea
 
 ## Case studies
 
-**Equal scores, different failure modes.** Four items all score 1.3–1.7 on some dimension, so a composite ranks them together — but the localised defect boxes fall in four disjoint places: on faces, on limbs mid-action, on people who should not be present, and on hands with the wrong number of fingers. Within each pair the two models trade which dimension they fail: the model that loses identity holds action at 3.0, and the model that loses action holds identity at 3.33.
+### Equal scores, different failure modes
 
-**Cross-shot consistency is a separate capability.** Two models draw the same episode from the same character sheets. The top-tier row holds its two leads across shots; the bottom-tier row does not, a 2.66-point gap on cross-shot character consistency. The important property is that every individual panel in the failing row is defensible — nothing in shot 7 alone is wrong, it is wrong relative to shot 5. A single-asset board is not under-reporting cross-shot quality; it is measuring a different quantity.
+Four items all score 1.3–1.7 on some dimension, so a composite ranks them together — but the localised defect boxes fall in four disjoint places: on faces, on limbs mid-action, on people who should not be present, and on hands with the wrong number of fingers. Within each pair the two models trade which dimension they fail: the model that loses identity holds action at 3.0, and the model that loses action holds identity at 3.33.
 
-**Shot count decides executability.** One identical episode script, forked only at the storyboard stage:
+<table>
+<tr>
+<td width="40%"><img src="assets/cases/boxed-face.jpg" alt="Fifteen annotator boxes, every one on a face"></td>
+<td width="60%"><img src="assets/cases/boxed-action.jpg" alt="Thirteen annotator boxes, every one on a limb mid-action"></td>
+</tr>
+<tr>
+<td><code>wan2.7-image-pro</code> — I-C1 face identity <b>1.67</b>, 15 boxes, every one on a face; action interaction scored 3.0.</td>
+<td><code>gpt-image-1.5</code> — I-B2 action interaction <b>1.33</b>, 13 boxes, every one on a limb; face identity scored 3.33.</td>
+</tr>
+<tr>
+<td><img src="assets/cases/boxed-extra.jpg" alt="Twelve annotator boxes, all marking extra subjects"></td>
+<td><img src="assets/cases/boxed-hands.jpg" alt="Ten annotator boxes, all marking malformed hands"></td>
+</tr>
+<tr>
+<td><code>seedream-5.0-lite</code> — I-B1 subject attributes <b>1.33</b>, 12 boxes, all “extra subject”; human anatomy scored 3.0.</td>
+<td><code>wan2.7-image-pro</code> — I-E1 human anatomy <b>1.33</b>, 10 boxes, all broken hands; subject attributes scored 3.33.</td>
+</tr>
+</table>
+
+Boxes are drawn independently by the three annotators; colour distinguishes them.
+
+### Cross-shot consistency is a separate capability
+
+Two models draw the same episode from the same character sheets. The top-tier row holds its two leads across shots; the bottom-tier row does not, a 2.66-point gap on cross-shot character consistency. The important property is that every individual panel in the failing row is defensible — nothing in shot 7 alone is wrong, it is wrong relative to shot 5. A single-asset board is not under-reporting cross-shot quality; it is measuring a different quantity.
+
+**T1 `gpt-image-2`** — MI-D1 cross-shot character consistency **4.33**, alternate shots 1, 3, … 11 of 13
+
+<table>
+<tr>
+<td><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1"></td>
+<td><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3"></td>
+<td><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5"></td>
+<td><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7"></td>
+<td><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9"></td>
+<td><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
+<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
+</tr>
+</table>
+
+**T4 `wan2.7-image-pro`** — MI-D1 cross-shot character consistency **1.67**
+
+<table>
+<tr>
+<td><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1"></td>
+<td><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3"></td>
+<td><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators"></td>
+<td><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators"></td>
+<td><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9"></td>
+<td><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
+<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
+</tr>
+</table>
+
+### Shot count decides executability
+
+One identical episode script, forked only at the storyboard stage:
 
 | Dimension | Axis | `mimo-v2.5-pro`<br>3 shots | `gpt-5.5-xhigh`<br>6 shots | `claude-opus-4.8-max`<br>12 shots | Behaviour |
 |---|---|---|---|---|---|
@@ -224,13 +285,75 @@ The judge replicates the human reference automatically. It aggregates routed mea
 
 The three-shot output compresses the episode into 30 s of self-declared duration and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement, marking the same few defects every time — several actions in one shot, blocking too complex to execute, no reaction shot.
 
-**Each input paradigm carries its own failure mode.** Grid panels omit people, because one image must fill several cells; first/last-frame shots change person between the two frames, because the frames are not produced in one pass and identity is not held across them. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than by visual style.
+### Each input paradigm carries its own failure mode
 
-**`hy3` reproduces the script and does not dramatise it.** It scores 3.43 on storyboard design against 3.60 for its nearest neighbour `doubao-seed-2.1-pro`, and the gap is grouped rather than general. Over the eight leaf dimensions on the same 533 items, `hy3` leads on everything that means *reproduce the script* — dialogue fidelity reaches 4.44, only 0.20 behind the leader — and trails on everything that means *turn it into television*, with emotional expression at 3.64 and audiovisual style at 3.91, both eighth of nine.
+Grid panels omit people, because one image must fill several cells; first/last-frame shots change person between the two frames, because the frames are not produced in one pass and identity is not held across them. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than by visual style — 1 of 10 failing dimensions for first/last frame against 9 of 15 for grid.
 
-**`seedance-2.5` buys episode coherence with single-clip quality.** On paired items the newer version loses on single-shot video and gains at both episode and short-drama granularity. Everything that must hold continuously along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility) and everything about joining shots together got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already present in the prompt is now executed faithfully.
+<table>
+<tr>
+<td width="42%"><img src="assets/cases/paradigm-grid.jpg" alt="Grid keyframe where cells that should hold three people hold two"></td>
+<td width="58%"><img src="assets/cases/paradigm-ff.jpg" alt="First and last frame of one shot showing a different person in each"></td>
+</tr>
+<tr>
+<td><b>Grid panel omits people.</b> <code>wan2.7-image-pro</code>, I-B1 subject attributes <b>1.33</b>: cells that should hold three people hold two.</td>
+<td><b>First/last frame changes person between frames.</b> <code>nano-banana-pro</code>, I-C1 face identity <b>1.33</b>: three annotators boxed it independently, and <em>nothing constrains the last frame against the first</em>.</td>
+</tr>
+</table>
 
-**Automated scoring drifts where there is no reference to check against.** In one item, every dimension with a reference is scored correctly while the single purely perceptual dimension is overestimated by 3.67 points in the lenient direction — the item-level form of what metric validation found across the population.
+The input for the first/last-frame case — the shot's own first frame, then three character sheets:
+
+<table>
+<tr>
+<td><img src="assets/cases/paradigm-ref.jpg" alt="The shot's own first frame"></td>
+<td><img src="assets/cases/paradigm-card-a.jpg" alt="Character sheet A"></td>
+<td><img src="assets/cases/paradigm-card-b.jpg" alt="Character sheet B"></td>
+<td><img src="assets/cases/paradigm-card-c.jpg" alt="Character sheet C"></td>
+</tr>
+<tr>
+<td align="center">first frame</td><td align="center">character sheet</td>
+<td align="center">character sheet</td><td align="center">character sheet</td>
+</tr>
+</table>
+
+### An upstream defect is re-expressed downstream, not repaired
+
+Rooms drift before people do. All three annotators circled this run of four consecutive shots for the set dressing while the characters held. Corpus-wide, cross-shot *scene* consistency at 2.42 is the lowest of the four episode-level dimensions, and the video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
+
+**`gpt-image-1.5`**, four consecutive shots — MI-D3 scene **2.00** vs MI-D1 character **3.67**
+
+<table>
+<tr>
+<td><img src="assets/cases/drift-1.jpg" alt="Consecutive shot 1"></td>
+<td><img src="assets/cases/drift-2.jpg" alt="Consecutive shot 2"></td>
+<td><img src="assets/cases/drift-3.jpg" alt="Consecutive shot 3"></td>
+<td><img src="assets/cases/drift-4.jpg" alt="Consecutive shot 4"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 2</td>
+<td align="center">shot 3</td><td align="center">shot 4</td>
+</tr>
+</table>
+
+### `hy3` reproduces the script and does not dramatise it
+
+It scores 3.43 on storyboard design against 3.60 for its nearest neighbour `doubao-seed-2.1-pro`, and the gap is grouped rather than general. Over the eight leaf dimensions on the same 533 items, `hy3` leads on everything that means *reproduce the script* — dialogue fidelity reaches 4.44, only 0.20 behind the leader — and trails on everything that means *turn it into television*, with emotional expression at 3.64 and audiovisual style at 3.91, both eighth of nine.
+
+### `seedance-2.5` buys episode coherence with single-clip quality
+
+On paired items the newer version loses on single-shot video and gains at both episode and short-drama granularity. Everything that must hold continuously along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility) and everything about joining shots together got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already present in the prompt is now executed faithfully.
+
+### Automated scoring drifts where there is no reference to check against
+
+One `nano-banana-pro` panel, all four scored dimensions shown: every dimension with a reference to check against is right, and the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, visible noise, blur, ghosting. This is the item-level form of what metric validation found across the population.
+
+<img src="assets/cases/judgefail.jpg" alt="The nano-banana-pro keyframe whose technical quality the judge overestimated" width="360">
+
+| Dimension | human | judge | err | |
+|---|---|---|---|---|
+| I-B1 subject attributes | 2.00 | 2 | 0.00 | correct |
+| I-C2 appearance, costume | 2.33 | 2 | 0.33 | correct |
+| I-B3 scene and layout | 2.67 | 3 | 0.33 | correct |
+| I-A1 technical quality | *1.33* | *5* | *3.67* | **overestimated** |
 
 ---
 
