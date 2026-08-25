@@ -282,6 +282,11 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .vrow.two{grid-template-columns:1fr 1fr}
 .vrow.four{grid-template-columns:repeat(4,1fr);gap:9px}
+.vrow.six{grid-template-columns:repeat(6,1fr);gap:7px}
+.vrow.six figcaption{font-size:10.5px;text-align:center}
+.sbgrid.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:720px){.vrow.six{grid-template-columns:repeat(3,1fr)}
+  .sbgrid.three{grid-template-columns:1fr}}
 .vrow.four figcaption{font-size:11px;text-align:center}
 .vrow.four figcaption b{display:inline;font-size:12px}
 .vrow.four figcaption .dur{display:block;font-family:var(--mono);font-size:10.5px;
@@ -541,8 +546,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <p class="fnote" data-l="zh">四条片子均为端到端全自动，无人工剪辑、挑帧或重跑择优。它们的原始编码规格不同（本链路 720p / 24 fps / 2.0 Mbps，OiiOii 720p / 30 fps / 4.7 Mbps，小云雀 720p / 30 fps / 9.2 Mbps，Flova 1080p / 30 fps / 13.5 Mbps）；此处四条统一转码为 960×540、约 1 Mbps，从而消除码率对观感的干扰。时长不同，是因为各链路从同一份剧本出发自行决定分镜时长。</p>
 
 
-    <p data-l="en"><b>What the pipeline delivers.</b> Four finished dramas, one for each combination of dialogue language and visual style, each the best-scoring run of its drama on the three-annotator episode board. Every one is three episodes assembled end to end with no human editing.</p>
-    <p data-l="zh"><b>这条链路交付的东西。</b>四部成片，对话语言与视觉风格的四种组合各一部，每部都是该剧在三人共识成片榜上得分最高的一次运行。全部为三集连续拼接、端到端生成，无人工剪辑。</p>
+    <p data-l="en"><b>What the pipeline delivers.</b> Four finished dramas, covering both dialogue languages and both visual styles, each the best-scoring run of its drama on the three-annotator episode board. Every one is three episodes assembled end to end with no human editing.</p>
+    <p data-l="zh"><b>这条链路交付的东西。</b>四部成片，覆盖两种对话语言与两种视觉风格，每部都是该剧在三人共识成片榜上得分最高的一次运行。全部为三集连续拼接、端到端生成，无人工剪辑。</p>
 
     <div class="vshow">
       <figure>
@@ -564,11 +569,12 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
         </figcaption>
       </figure>
       <figure>
-        <video src="assets/video/drama-wife.mp4" poster="assets/video/drama-wife.jpg" controls playsinline preload="none"></video>
+        <video src="assets/video/drama-guiren.mp4" poster="assets/video/drama-guiren.jpg" controls playsinline preload="none"></video>
         <figcaption>
-          <b>The Billionaire's Two-Year Wife</b>
-          <span class="tags"><i class="en">EN</i><i class="lv" data-l="en">live action</i><i class="lv" data-l="zh">真人</i><span data-l="en">contract marriage</span><span data-l="zh">契约婚姻</span></span>
-          <span class="sc-l"><code>happyhorse-1.1</code> · <span data-l="en">multi-reference</span><span data-l="zh">多参考</span> · <span data-l="en">human</span><span data-l="zh">人工</span> <b class="pass">3.33</b> <span class="mut">(3 / 3 / 4)</span></span>
+          <b data-l="en">Blade Reclaimed</b>
+          <b data-l="zh">归刃</b>
+          <span class="tags"><i class="zh">中文</i><i class="an" data-l="en">animated</i><i class="an" data-l="zh">动画</i><span data-l="en">war god returns · contemporary urban</span><span data-l="zh">战神归来 · 都市</span></span>
+          <span class="sc-l"><code>kling-3.0-omni</code> · <span data-l="en">first/last frame</span><span data-l="zh">首尾帧</span> · <span data-l="en">human</span><span data-l="zh">人工</span> <b class="pass">3.67</b> <span class="mut">(4 / 3 / 4)</span></span>
         </figcaption>
       </figure>
       <figure>
@@ -628,8 +634,20 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
           <figcaption><code>wan2.7-image-pro</code> — I-E1 human anatomy <span class="fail">1.33</span>, 10 boxes, all broken hands; subject attributes scored 3.33.</figcaption>
         </figure>
       </div>
-      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them.</p>
-<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。</p>
+      <div class="cfig">
+        <div class="crow-h">
+          <span data-l="en">The character sheets both models were given. Identity and costume are specified here; what the boxes mark is the gap between these and what came back.</span>
+          <span data-l="zh">两个模型拿到的角色设定卡。身份与服装在这里就已经定死，标注框标出的正是它与产出之间的落差。</span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao" loading="lazy"><figcaption>龚啸</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan" loading="lazy"><figcaption>江临渊</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia" loading="lazy"><figcaption>沈知夏</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian" loading="lazy"><figcaption>江念念</figcaption></figure>
+        </div>
+      </div>
+      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them. In the face-identity item the same white-coated woman is boxed again and again — the identity drifts from panel to panel while the sheet above never changes.</p>
+<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。人脸身份那一题里，同一位白大褂女性在四格中被反复框出——设定卡自始至终没变，身份却在格与格之间漂移。</p>
     </div>
 
     <div class="case">
@@ -747,8 +765,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
             <p data-l="zh">成片按整集单独出题，标注员并未看过镜头级的那道题。他们标到的是<em>同样两句</em>：一个角色的台词由另一个角色说了出来，前后两处。两人都标了「人物指认错乱」，成片综合 <span class="fail">2.33</span> 分。</p>
             <div class="cfig vrow one">
               <figure>
-                <video src="assets/video/chain-episode.mp4" poster="assets/video/chain-episode.jpg" muted loop playsinline preload="none"></video>
-                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">The finished drama, episodes 1–3, 3 min 35 s · composite <span class="fail">2.33</span>. Note that the audio drops out entirely from 1:50 to 2:30 — forty silent seconds inside episode 2, in the delivered file itself.</span><span data-l="zh">成片，第 1–3 集，3 分 35 秒 · 综合 <span class="fail">2.33</span>。注意 1:50 到 2:30 之间完全没有声音——第 2 集里有整整 40 秒静音，这是交付文件本身的状态。</span></figcaption>
+                <video src="assets/video/chain-ep3.mp4" poster="assets/video/chain-ep3.jpg" muted loop playsinline preload="none"></video>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">The finished drama, final episode, 1 min 05 s · episode composite <span class="fail">2.33</span></span><span data-l="zh">成片的最后一集，1 分 05 秒 · 整集综合 <span class="fail">2.33</span></span></figcaption>
               </figure>
             </div>
           </div>
@@ -758,43 +776,35 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       <p class="fnote" data-l="zh">三个环节各自独立出题，标注员只看到自己那一道。这处缺陷被标出三次，是因为它确实存在三次，而不是一次判断顺延到了下一环。</p>
     </div>
 
-    <div class="case">
-      <b data-l="en">Fourteen dialogue turns go in; none come out</b>
-      <b data-l="zh">剧本 14 段对白进去，脚本 0 段出来</b>
-      <p data-l="en">A 2,086-character episode script carrying 14 dialogue turns across five characters. The storyboard that came back runs 922 characters over four shots and contains <b>no dialogue at all</b> — not one <code>says:</code>, not one quotation mark. All three annotators put dialogue fidelity at <span class="fail">1.00</span> (1 / 1 / 1, zero disagreement) while event coverage held at 3.67: the events are all there, nobody speaks.</p>
-      <p data-l="zh">一份 2,086 字的分集剧本，含 14 段对白、分属五个角色。产出的分镜脚本 922 字、4 个镜头，<b>一段对白都没有</b>——没有一处 <code>says:</code>，没有一对引号。三名标注员在对白保真上一致给 <span class="fail">1.00</span> 分（1 / 1 / 1，分歧 0），而同一份产物的事件覆盖仍有 3.67 分：事件都在，只是没人说话。</p>
-
-      <div class="sbgrid">
-        <div class="sb">
-          <div class="sb-h"><span data-l="en">In — the script, scene 1-1, abridged</span><span data-l="zh">输入 · 剧本第 1-1 场（节选）</span></div>
-          <p class="sb-v" data-l="en">△ A blood-orange shaft of light cuts through humid mist, rotting leaves everywhere. Chen Yu lands hard on the gravel…</p>
-          <p class="sb-v" data-l="zh">△ 血橙色光柱斜切进湿热雾气，腐叶满地。陈屿摔在碎石上……</p>
-          <p class="sb-l" data-l="en"><b>Chen Yu</b> <i>(terrified)</i>: “What— where is this—”</p>
-          <p class="sb-l" data-l="zh"><b>陈屿</b> <i>（惊恐）</i>：什么……这是哪 ——</p>
-          <p class="sb-l" data-l="en"><b>Chen Yu</b> <i>(voice-over)</i>: “Dinosaurs… the Cretaceous? I didn't die, and I'm about to be eaten.”</p>
-          <p class="sb-l" data-l="zh"><b>陈屿</b> <i>（OS）</i>：恐龙……白垩纪？我没死，可下一秒就要被吃了！</p>
-          <p class="sb-l" data-l="en"><b>Chen Yu</b> <i>(gasping)</i>: “Light, body size, single hooked claw — velociraptor. Afraid of fire? I'll bet on it.”</p>
-          <p class="sb-l" data-l="zh"><b>陈屿</b> <i>（急喘）</i>：光照、体型、单趾钩爪 —— 迅猛龙，怕不怕火我赌一把！</p>
-          <p class="sb-n" data-l="en">14 dialogue turns across the episode, belonging to five characters.</p>
-          <p class="sb-n" data-l="zh">全集 14 段对白，分属陈屿、阿石、卜阴、老岩、苗禾五个角色。</p>
-        </div>
-
-        <div class="sb">
-          <div class="sb-h"><span data-l="en">Out — storyboard shot 1, unabridged</span><span data-l="zh">产出 · 分镜脚本镜头 1（未省略）</span></div>
-          <p class="sb-v" data-l="en">Visual: (fast multi-angle cutting) tracking shot — a blood-orange shaft pierces humid mist, Chen Yu <i>(a thin boy in a washed-grey school tee)</i> is thrown into frame and lands hard on gravel, uniform tearing. Whip tilt up; through a shrill clatter a dark green blur breaks low out of the ferns on the left — Feng Ren <i>(a dark green velociraptor with slit pupils and gold markings)</i>, close on the amber slit eye. Cut to Chen Yu's shaking POV as he scrambles behind deadfall. Fast cut to medium: his eyes flick, he grabs a sharp stone and strikes volcanic rock, sparks flying (close on sparks). He tears a plastic bag off his pack and lights dry leaves (close on hands); flame lifts. Whip-pan to Feng Ren, which brakes hard, the down on its neck standing up (close on the down), growls, retreats. Chen Yu drops to his knees by the fire, spent, the corners of his mouth naturally upturned.</p>
-          <p class="sb-v" data-l="zh">画面：（快节奏多视角剪辑）动态跟拍镜头：血橙光柱穿透湿热雾气，〈陈屿〉（穿发灰白色校服 T 恤的瘦削少年）被抛入画面，重重摔在碎石地上，校服撕裂。镜头急速上摇，刺耳的咔咔声中，一道墨绿色残影压低身形从左侧蕨丛扑出 ——〈风刃〉（竖瞳金纹墨绿迅猛龙）琥珀金竖瞳特写。镜头切为陈屿主观晃动视角，他连滚带爬躲到枯木堆后。急速切换至中景：陈屿眼睛飞快一转，抓起尖石狠砸火山岩，火星四溅（特写火星）。他撕下背包塑料袋点燃枯叶（手部特写），一团火腾起。镜头猛地甩向〈风刃〉，它急刹，颈侧绒羽根根炸立（绒羽特写），低吼后退。〈陈屿〉虚脱地跪在火边，嘴角天生上扬。</p>
-          <p class="sb-n" data-l="en">All four shots read like this: pure visual description.</p>
-          <p class="sb-n" data-l="zh">四个镜头全是画面描述，一句台词都没有。</p>
-        </div>
-      </div>
-
-      <p class="fnote" data-l="en"><code>mimo-v2.5-pro</code> on animated <i>Baiè Kaihuang</i> episode 1. The three annotators landed in the same place independently — “dialogue missing throughout”, “shots 1 to 4, dialogue absent”, “shots 1–4: character dialogue missing”. Whether a line is present does not depend on taste, which is why the text stage is where automation does best: 0.509 against a human baseline of 0.217, better than baseline on 8 of 8 dimensions.</p>
-      <p class="fnote" data-l="zh"><code>mimo-v2.5-pro</code>，动画短剧《白垩开荒》第 1 集。三名标注员各自独立作业，落点完全一样——「全文缺漏台词」「镜头 1 到镜头 4 对白缺失」「镜头 1-4：人物对白缺失」。「有没有这句台词」不依赖审美，这正是自动化在文本侧做得最好的那类判据：逐题一致性 0.509，人工基线 0.217，8 / 8 个维度优于基线。</p>
-    </div>
+    
     <div class="case">
       <b><span data-l="en">Shot count decides executability</span><span data-l="zh"><b>切几个镜决定了能不能拍</b></span></b>
       <p data-l="en">One identical episode script, forked only at the storyboard stage. The three-shot output compresses the episode into 30 s and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement.</p>
 <p data-l="zh">同一份剧本，只在分镜设计这一环分叉。切 3 个镜的产出把整集压缩进 30 秒、10 轮台词；三名标注员对它的描述可执行性与拍摄节奏都给了 1.00 分，零分歧。</p>
+      <div class="sbgrid three">
+        <div class="sb">
+          <div class="sb-h"><span data-l="en">3 shots &nbsp;·&nbsp; <code>mimo-v2.5-pro</code></span><span data-l="zh">3 镜 &nbsp;·&nbsp; <code>mimo-v2.5-pro</code></span></div>
+          <p class="sb-v" data-l="en">Shot 1, about 12 s. Opening on a wide of the bike shed, the camera pushes slowly in… finally settling on Gu Yan and Zhou Zi'an face to face. Gu Yan, wheeling his bicycle: “Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.” Zhou Zi'an, clutching a slip of paper, steps forward, ears red: “…Whose handwriting is bad.” As Gu Yan makes to leave, the camera pans right and Qi Xiangbei enters frame edge, head down: “The Walkman… I fixed it.” Both turn to look off right. Qi Xiangbei: “…I know. I didn't change it. He copied it wrong; it's not mine to fix.” Hold on Zhou Zi'an's stunned face.</p>
+          <p class="sb-v" data-l="zh">【镜头 1】画面：一个长约 12 秒的镜头，从自行车棚的中远景开始，镜头缓慢向前推进……最终推近至〈顾砚〉与〈周子安〉的对峙。〈顾砚〉推着自行车……他说：「林知夏的随身听坏了，我帮她送去修。修好取回来时，里头夹着这张抄错的歌词 —— 字丑得很有特色。」〈周子安〉攥着一张纸条，上前一步，耳根泛红，说：「……谁字丑了。」〈顾砚〉推车欲走时，镜头向右微摇，〈祁向北〉的侧脸进入画面边缘，他低着头……轻声说：「随身听……是我修的。」〈顾砚〉与〈周子安〉同时转头看向画外右侧。〈祁向北〉说：「……知道。我没改。是他抄的，我不能替他改。」镜头最后定格在〈周子安〉怔住的脸部特写上。</p>
+          <p class="sb-n" data-l="en">1,348 characters over three shots; 4 / 2 / 4 dialogue turns; the model's own durations 12 / 10 / 8 s. Shots 2 and 3 are written the same way.</p>
+          <p class="sb-n" data-l="zh">三个镜头共 1,348 字，每镜 4 / 2 / 4 段对白，模型自标 12 / 10 / 8 秒。镜头 2 与镜头 3 是同样的写法。</p>
+        </div>
+        <div class="sb">
+          <div class="sb-h"><span data-l="en">6 shots &nbsp;·&nbsp; <code>gpt-5.5-xhigh</code></span><span data-l="zh">6 镜 &nbsp;·&nbsp; <code>gpt-5.5-xhigh</code></span></div>
+          <p class="sb-v" data-l="en">The same exchange is split across shots, one beat to a shot, so no shot has to carry more than it can hold. Dialogue fidelity and event coverage recover outright at this density; executability reaches 3.00 and shooting rhythm 3.67.</p>
+          <p class="sb-v" data-l="zh">同一段戏被拆到多个镜头里，一个镜头承担一个节拍，没有哪一镜需要装下超过它能装的量。到这个密度，对白保真与事件覆盖直接恢复满血；描述可执行性到 3.00，拍摄节奏到 3.67。</p>
+          <p class="sb-n" data-l="en">Six shots is already enough for the two F-axis dimensions and for rhythm; only executability keeps climbing beyond it.</p>
+          <p class="sb-n" data-l="zh">六个镜头已经足够两条 F 轴维度和拍摄节奏；再往上，只有描述可执行性还在继续涨。</p>
+        </div>
+        <div class="sb">
+          <div class="sb-h"><span data-l="en">12 shots &nbsp;·&nbsp; <code>claude-opus-4.8-max</code></span><span data-l="zh">12 镜 &nbsp;·&nbsp; <code>claude-opus-4.8-max</code></span></div>
+          <p class="sb-v" data-l="en">Each question and each answer gets its own shot, which is what removes the ambiguity the three-shot version created: with one speaker per shot, nothing downstream has to infer who is talking.</p>
+          <p class="sb-v" data-l="zh">一问一答各自成镜，这正好消除了三镜版本制造的歧义：一镜一个说话人，下游不需要再自己去认谁在说话。</p>
+          <p class="sb-n" data-l="en">Executability 4.00, the only dimension that twelve shots buys over six.</p>
+          <p class="sb-n" data-l="zh">描述可执行性 4.00，这是十二镜相对六镜唯一多买到的东西。</p>
+        </div>
+      </div>
+
       <div class="tscroll">
         <table>
           <thead><tr>
@@ -846,30 +856,20 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
 
     <div class="case">
-      <b data-l="en">Four shots clear the line; the sequence they form does not</b>
-      <b data-l="zh">四个镜头单看都过线，连成一段却不成立</b>
-      <p data-l="en">Same episode, same model, same batch of output. Scored one shot at a time, all four sit above the usable line. Scored as a sequence, cross-shot scene and props fall to <span class="fail">1.33</span>, character to <span class="fail">2.00</span>, action to <span class="fail">2.33</span>, and the segment composite to <span class="fail">2.67</span>. This is the argument for evaluating a granularity that no single-asset board reaches.</p>
-      <p data-l="zh">同一集、同一个模型、同一批产物。按单镜评，四个镜头全部在可用线以上；同一批产物按整段评，场景道具跨镜只剩 <span class="fail">1.33</span>、角色跨镜 <span class="fail">2.00</span>、动作跨镜 <span class="fail">2.33</span>，整段综合 <span class="fail">2.67</span>。这正是必须评一个单素材榜够不到的粒度的理由。</p>
-      <div class="cfig vrow four">
-        <figure>
-          <video src="assets/video/xcut-1.mp4" poster="assets/video/xcut-1.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><span data-l="en">shot 1</span><span data-l="zh">镜 1</span><span class="dur">3.77</span></figcaption>
-        </figure>
-        <figure>
-          <video src="assets/video/xcut-7.mp4" poster="assets/video/xcut-7.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><span data-l="en">shot 7</span><span data-l="zh">镜 7</span><span class="dur">3.92</span></figcaption>
-        </figure>
-        <figure>
-          <video src="assets/video/xcut-8.mp4" poster="assets/video/xcut-8.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><span data-l="en">shot 8</span><span data-l="zh">镜 8</span><span class="dur">4.22</span></figcaption>
-        </figure>
-        <figure>
-          <video src="assets/video/xcut-9.mp4" poster="assets/video/xcut-9.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><span data-l="en">shot 9</span><span data-l="zh">镜 9</span><span class="dur">4.02</span></figcaption>
-        </figure>
+      <b data-l="en">The same character, a different face two shots later</b>
+      <b data-l="zh">同一个角色，隔两个镜头换了张脸</b>
+      <p data-l="en">Six consecutive shots of one episode. The three annotators land on one phenomenon and time-stamp it: “at 8 s the woman's face is wrong”, “at 3 s the man's face changes”, “at 3 s the woman's face changes”, plus “character flickers” and “character disappears”. Their tags concentrate on appearance differing across segments, faces breaking or swapping, and costume changing style. Cross-shot character consistency scores <span class="fail">1.33</span>.</p>
+      <p data-l="zh">一集里连续六个镜头。三名标注员指向同一个现象，并各自标出了时间点：「8 秒 女士长相不对」「3 秒 男士长相改变」「3 秒 女士长相改变」，另有「人物闪现」「人物消失」。标签集中在跨段长相不一、人物崩坏换脸、服装款式变化。角色跨镜一致 <span class="fail">1.33</span> 分。</p>
+      <div class="cfig vrow six">
+        <figure><video src="assets/video/xface-0.mp4" poster="assets/video/xface-0.jpg" muted loop playsinline preload="none"></video><figcaption><span data-l="en">shot 0</span><span data-l="zh">镜 0</span></figcaption></figure>
+        <figure><video src="assets/video/xface-1.mp4" poster="assets/video/xface-1.jpg" muted loop playsinline preload="none"></video><figcaption><span data-l="en">shot 1</span><span data-l="zh">镜 1</span></figcaption></figure>
+        <figure><video src="assets/video/xface-2.mp4" poster="assets/video/xface-2.jpg" muted loop playsinline preload="none"></video><figcaption><span data-l="en">shot 2</span><span data-l="zh">镜 2</span></figcaption></figure>
+        <figure><video src="assets/video/xface-3.mp4" poster="assets/video/xface-3.jpg" muted loop playsinline preload="none"></video><figcaption><span data-l="en">shot 3</span><span data-l="zh">镜 3</span></figcaption></figure>
+        <figure><video src="assets/video/xface-4.mp4" poster="assets/video/xface-4.jpg" muted loop playsinline preload="none"></video><figcaption><span data-l="en">shot 4</span><span data-l="zh">镜 4</span></figcaption></figure>
+        <figure><video src="assets/video/xface-5.mp4" poster="assets/video/xface-5.jpg" muted loop playsinline preload="none"></video><figcaption><span data-l="en">shot 5</span><span data-l="zh">镜 5</span></figcaption></figure>
       </div>
-      <p class="fnote" data-l="en"><code>seedance-2.0</code>, the video leader, on animated <i>Bu Xihan</i> episode 3. Figures under each clip are its own single-shot mean; the episode runs 11 shots, of which these four were set as individual items.</p>
-      <p class="fnote" data-l="zh"><code>seedance-2.0</code>，视频主榜榜首档，动漫短剧《不稀罕》第 3 集。每条下方为它自己那一题的单分镜视频均分；整段共 11 个镜头，其中这四个被单独出过题。</p>
+      <p data-l="en" class="fnote"><code>pixverse-c1</code>, multi-reference, live-action <i>Chronicle of Buried Injustice</i> episode 3. Watch the woman across shots 1, 3 and 5, and the man across 0 and 2. Each shot on its own is unremarkable; the episode is scored on whether they are the same people throughout.</p>
+      <p class="fnote" data-l="zh"><code>pixverse-c1</code>，多参考范式，真人《沉冤录》第 3 集。盯着镜 1、3、5 里的女性和镜 0、2 里的男性看。每个镜头单独看都不出奇，整集评的是他们从头到尾是不是同一个人。</p>
     </div>
 
     <div class="case">
@@ -888,8 +888,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
     <div class="case">
       <b><span data-l="en">An upstream defect is re-expressed downstream, not repaired</span><span data-l="zh"><b>上游缺陷到下游是重演，不是修复</b></span></b>
-      <p data-l="en">Rooms drift before people do: all three annotators circled this run for the set dressing while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
-<p data-l="zh">场景比人物更早漂移：三名标注员都为陈设圈出了这段连续镜头，而人物那一侧稳住了。视频环节不会修复这种漂移——它只会重新演一遍，并一直留存到成片里。</p>
+      <p data-l="en">Rooms drift before people do. Follow the desk, the table lamp and the wooden box across the four shots: all three annotators reported them changing — “the desk changes”, “the lamp and the wooden box change in every shot, and so does the sense of depth”, plus set-dressing, lighting and scene-continuity tags. Two of them separately caught the window showing a bedroom outside. The characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
+<p data-l="zh">场景比人物更早漂移。盯着四个镜头里的桌子、台灯和木盒看：三名标注员都报告了它们在变——「桌子有变化」「台灯与木盒每个镜头都在变，纵深感变化幅度也大」，另有陈设变化、光线色调变化、场景切换混乱三类标签；其中两人还各自发现了同一处穿帮：窗户外面是卧室。而人物那一侧稳住了。视频环节不会修复这种漂移——它只会重新演一遍，并一直留存到成片里。</p>
       <div class="cfig">
         <div class="crow-h">
           <b><code>gpt-image-1.5</code></b>
@@ -905,29 +905,9 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       </div>
     </div>
 
-    <div class="case">
-      <b><span data-l="en"><span class="mdl">hy3</span> reproduces the script and does not dramatise it</span><span data-l="zh"><b><span class="mdl">hy3</span> 忠实复述剧本，但不做戏剧化</b></span></b>
-      <p data-l="en">It scores 3.43 against 3.60 for its nearest neighbour <code>doubao-seed-2.1-pro</code>, and the gap is grouped rather than general: it leads on everything that means <em>reproduce the script</em> (dialogue fidelity 4.44) and trails on everything that means <em>turn it into television</em> (emotion 3.64, audiovisual style 3.91, both eighth of nine).</p>
-<p data-l="zh">它得 3.43 分，最近邻的 <code>doubao-seed-2.1-pro</code> 得 3.60 分，而这个差距是成组的而非普遍的：凡是<em>复述剧本</em>的维度它都领先（对白保真 4.44），凡是<em>把剧本变成影视</em>的维度它都落后（情绪表达 3.64、视听风格 3.91，均为九个模型中的第八）。</p>
-      <p data-l="en">One paired item shows the mechanism. From the same 2,019-character episode script carrying 20 dialogue turns, <code>hy3</code> cut 10 shots in 1,306 characters and reproduced <b>all 20 turns verbatim</b>; <code>doubao-seed-2.1-pro</code> cut 7 shots in 2,586 characters and reproduced <b>3</b>. The three annotators split exactly along that line — dialogue fidelity 4.67 against 3.33, emotional expression 3.33 against 4.33, audiovisual style 3.33 against 4.00. Every one of <code>hy3</code>'s ten shot descriptions opens with the same phrase, “rapid cut”.</p>
-      <p data-l="zh">一道配对题就能看到机制。同一份 2,019 字、含 20 段对白的分集剧本：<code>hy3</code> 切 10 镜、1,306 字，20 段对白<b>逐字一致</b>；<code>doubao-seed-2.1-pro</code> 切 7 镜、2,586 字，逐字一致的<b>只有 3 段</b>。三名标注员的判断正好沿这条线分开——对白保真 4.67 对 3.33，情绪表达 3.33 对 4.33，视听风格处理 3.33 对 4.00。而 <code>hy3</code> 那十个镜头的画面描述，全部以「快速切镜」起手。</p>
-    </div>
+    
 
-    <div class="case">
-      <b><span data-l="en"><span class="mdl">seedance-2.5</span> buys episode coherence with single-clip quality</span><span data-l="zh"><b><span class="mdl">seedance-2.5</span> 用单镜质量换来了整集连贯</b></span></b>
-      <p data-l="en">On paired items the newer version loses on single-shot video and gains at episode and short-drama granularity. Everything that must hold along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility); everything about joining shots got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already in the prompt is now executed faithfully.</p>
-<p data-l="zh">在配对样本上，新版本在单分镜视频上失分，却在集分镜视频与成片两个粒度上得分。凡是需要沿时间轴持续保持的都变差了（声画同步 −0.658、运动流畅度、镜头合理性）；凡是关于把镜头接起来的都变好了（跨镜风格一致 +1.143）。原因是它更字面地遵循提示词，于是提示词里本就存在的缺陷被忠实执行了出来。</p>
-      <div class="cfig vrow two">
-        <figure>
-          <video src="assets/video/sd25-lipsync.mp4" poster="assets/video/sd25-lipsync.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><b>The prompt said film her from behind, so it did</b>The character delivers her lines with her back to camera — faithful to the prompt, and there is no mouth to sync to.</figcaption>
-        </figure>
-        <figure>
-          <video src="assets/video/sd25-cuts.mp4" poster="assets/video/sd25-cuts.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><b>Four internal cuts inside one 25 s shot</b>Single shots went from 15 s to 30 s, so one clip now carries several cuts while the score stays a single number.</figcaption>
-        </figure>
-      </div>
-    </div>
+    
 
     <div class="case">
       <b><span data-l="en">Automated scoring drifts where there is no reference to check against</span><span data-l="zh"><b>没有参照物可核对时，自动化打分会漂</b></span></b>
