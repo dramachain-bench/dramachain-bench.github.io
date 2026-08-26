@@ -203,6 +203,9 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
   padding:18px 21px;margin-bottom:13px}
 /* only a case's own heading is a block; bold inside prose stays inline */
 .case>b{display:block;font-size:15px;margin-bottom:6px}
+.case>b .cn{font-family:var(--mono);font-style:normal;font-size:12px;font-weight:700;
+  color:var(--accent);letter-spacing:.04em;margin-right:9px}
+.case-lead{font-size:13px;color:var(--muted);line-height:1.7;margin:-2px 0 4px}
 .case p b,.case figcaption b,.case td b{display:inline}
 .case p{font-size:14px;color:var(--ink-2);margin-bottom:0;line-height:1.7}
 .case table{margin-top:14px;font-size:12.5px}
@@ -423,7 +426,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       Haoyuan Shi<sup>1</sup>, &nbsp;Mingtao Chen<sup>1</sup>, &nbsp;Shuo Jiang<sup>1</sup>, &nbsp;Ziyan Chen<sup>1,2</sup><br>
       Xuyi Sheng<sup>3</sup>, &nbsp;Yiming Liu<sup>1</sup>, &nbsp;Ying Zhang<sup>1</sup>, &nbsp;Miao Wang<sup>1,4</sup><br>
       Jianxiang Lu<sup>1</sup>, &nbsp;Fanyang Lu<sup>1</sup>, &nbsp;Songyuanyi Lu<sup>1</sup>, &nbsp;Xiele Wu<sup>1</sup><br>
-      Zhichao Hu<sup>1,†</sup>, &nbsp;Lilin Wang<sup>1</sup>, &nbsp;Yuhong Liu<sup>1</sup>, &nbsp;Richeng Xuan<sup>1,§</sup>
+      Zhichao Hu<sup>1,†</sup>, &nbsp;Yuhong Liu<sup>1</sup>, &nbsp;Richeng Xuan<sup>1,§</sup>
     </div>
     <div data-l="en" class="affil">
       <sup>1</sup>Hunyuan, Tencent &nbsp;&nbsp;·&nbsp;&nbsp;
@@ -569,8 +572,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <p class="fnote" data-l="zh">四条片子均为端到端全自动，无人工剪辑、挑帧或重跑择优。它们的原始编码规格不同（本链路 720p / 24 fps / 2.0 Mbps，OiiOii 720p / 30 fps / 4.7 Mbps，小云雀 720p / 30 fps / 9.2 Mbps，Flova 1080p / 30 fps / 13.5 Mbps）；此处四条统一转码为 960×540、约 1 Mbps，从而消除码率对观感的干扰。时长不同，是因为各链路从同一份剧本出发自行决定分镜时长。</p>
 
 
-    <p data-l="en"><b>What the pipeline delivers.</b> Four finished dramas, covering both dialogue languages and both visual styles, each the best-scoring run of its drama on the three-annotator episode board. Every one is three episodes assembled end to end with no human editing.</p>
-    <p data-l="zh"><b>这条链路交付的东西。</b>四部成片，覆盖两种对话语言与两种视觉风格，每部都是该剧在三人共识成片榜上得分最高的一次运行。全部为三集连续拼接、端到端生成，无人工剪辑。</p>
+    <p data-l="en"><b>Pipeline output.</b> Four finished dramas covering both dialogue languages and both visual styles, each three episodes generated end to end without human editing.</p>
+    <p data-l="zh"><b>链路产出。</b>四部成片，覆盖两种对话语言与两种视觉风格，均为三集连续、端到端生成，无人工剪辑。</p>
 
     <div class="vshow">
       <figure>
@@ -632,188 +635,11 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <section id="cases">
   <div class="wrap">
     <h2><span data-l="en">Cases</span><span data-l="zh">样例</span></h2>
+    <p class="case-lead" data-l="en">Ordered along the chain — storyboard, keyframes, then shot video. The last three cover what a stage inherits from the one before it, and what the automated judge makes of all of it.</p>
+    <p class="case-lead" data-l="zh">按链路顺序排列：分镜、关键帧、分镜视频依次展开。末尾三例分别关于某一环节从上一环节继承到了什么，以及自动化评测对这一切的判断。</p>
 
     <div class="case">
-      <b><span data-l="en">Equal scores, different failure modes</span><span data-l="zh"><b>同分，但坏在不同地方</b></span></b>
-      <p data-l="en">Two separate items, two models each. All four score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.</p>
-<p data-l="zh">两道彼此独立的题，每题两个模型。四者都在某个维度上得 1.3–1.7 分，综合分会把它们视为同样差——但标注框落在四个互不相交的位置，且每一对里两个模型互换了失败的维度。</p>
-
-      <div class="cfig">
-        <div class="crow-h">
-          <b data-l="en">Item 1 — input</b><b data-l="zh">第一题 · 输入</b>
-          <span data-l="en">the four character sheets, shared by both models below; identity and costume are fixed here</span>
-          <span data-l="zh">四张角色设定卡，下面两个模型共用；身份与服装在这里就已经定死</span>
-        </div>
-        <div class="crow">
-          <figure><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao" loading="lazy"><figcaption>龚啸</figcaption></figure>
-          <figure><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan" loading="lazy"><figcaption>江临渊</figcaption></figure>
-          <figure><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia" loading="lazy"><figcaption>沈知夏</figcaption></figure>
-          <figure><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian" loading="lazy"><figcaption>江念念</figcaption></figure>
-        </div>
-        <div class="cg2 r23">
-          <figure>
-            <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
-            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-C1 face identity <span class="fail">1.67</span>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</span><span data-l="zh">—— I-C1 人脸身份 <span class="fail">1.67</span>，三人共 15 个框，全部落在脸上；同一题的动作交互反而有 3.0 分。</span></figcaption>
-          </figure>
-          <figure>
-            <img src="assets/cases/boxed-action.jpg" alt="Keyframe with thirteen annotator boxes, every one on a limb mid-action" loading="lazy">
-            <figcaption><code>gpt-image-1.5</code> <span data-l="en">— I-B2 action interaction <span class="fail">1.33</span>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</span><span data-l="zh">—— I-B2 动作交互 <span class="fail">1.33</span>，三人共 13 个框，全部落在肢体与动作上；同一题的人脸身份有 3.33 分。</span></figcaption>
-          </figure>
-        </div>
-      </div>
-      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them. The same white-coated woman is boxed again and again — her identity drifts from panel to panel while the sheets above never change.</p>
-<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。同一位白大褂女性在四格中被反复框出——设定卡自始至终没变，身份却在格与格之间漂移。</p>
-
-      <div class="cfig">
-        <div class="crow-h">
-          <b data-l="en">Item 2</b><b data-l="zh">第二题</b>
-          <span data-l="en">a different item, a different pair of models — and a different pair of dimensions</span>
-          <span data-l="zh">另一道题、另一对模型，坏的也是另一对维度</span>
-        </div>
-        <div class="cg2">
-          <figure>
-            <img src="assets/cases/boxed-extra.jpg" alt="Keyframe with twelve annotator boxes, all marking extra subjects" loading="lazy">
-            <figcaption><code>seedream-5.0-lite</code> <span data-l="en">— I-B1 subject attributes <span class="fail">1.33</span>, 12 boxes, all “extra subject”; human anatomy on this same item scored 3.0.</span><span data-l="zh">—— I-B1 主体属性 <span class="fail">1.33</span>，三人共 12 个框，全部是「多出主体」「主体数量错」；同一题的人体结构有 3.0 分。</span></figcaption>
-          </figure>
-          <figure>
-            <img src="assets/cases/boxed-hands.jpg" alt="Keyframe with ten annotator boxes, all marking malformed hands" loading="lazy">
-            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-E1 human anatomy <span class="fail">1.33</span>, 10 boxes, all broken hands; subject attributes on this same item scored 3.33.</span><span data-l="zh">—— I-E1 人体结构合理性 <span class="fail">1.33</span>，三人共 10 个框，全部是「肢体扭曲粘连」「多指 / 少指畸形」；同一题的主体属性有 3.33 分。</span></figcaption>
-          </figure>
-        </div>
-      </div>
-      <p data-l="en" class="fnote">The count is right here and the hands are not, which is the mirror image of the pair above: same band of scores, nothing in common about what went wrong.</p>
-<p class="fnote" data-l="zh">这一对是人数对、手画坏，正好和上面那对互为镜像：分数落在同一档，出错的地方毫无交集。</p>
-    </div>
-
-    <div class="case">
-      <b><span data-l="en">Cross-shot consistency is a separate capability</span><span data-l="zh"><b>跨镜一致是另一种能力</b></span></b>
-      <p data-l="en">Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.</p>
-<p data-l="zh">同一集、同一套角色设定卡。上排跨镜稳住了两位主角，下排没有——相差 2.66 分。而下排每一格单独看都无可指摘：镜 7 本身没有错，它只是相对镜 5 错了。</p>
-
-      <div class="cfig">
-        <div class="crow-h">
-          <b>T1 <code>gpt-image-2</code></b>
-          <span>MI-D1 cross-shot character consistency <span class="pass">4.33</span></span>
-          <span>alternate shots, 1, 3, … 11 of 13</span>
-        </div>
-        <div class="crow">
-          <figure><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5" loading="lazy"><figcaption>shot 5</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7" loading="lazy"><figcaption>shot 7</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
-        </div>
-      </div>
-
-      <div class="cfig">
-        <div class="crow-h">
-          <b>T4 <code>wan2.7-image-pro</code></b>
-          <span>MI-D1 cross-shot character consistency <span class="fail">1.67</span></span>
-        </div>
-        <div class="crow">
-          <figure><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators" loading="lazy"><figcaption>shot 5</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators" loading="lazy"><figcaption>shot 7</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
-        </div>
-      </div>
-    </div>
-
-    <div class="case">
-      <b><span data-l="en">What a tier gap looks like in motion</span><span data-l="zh"><b>档位差距动起来是什么样</b></span></b>
-      <p data-l="en">The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.</p>
-<p data-l="zh">同一集的同一个镜位，三个模型。三名标注员分别标出 30、109、94 处问题——榜首档稳住了角色外观，中段档开始漂移，末档则彻底失守。</p>
-      <div class="cfig vrow">
-        <figure>
-          <video src="assets/video/tier-seedance.mp4" poster="assets/video/tier-seedance.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><span class="vtag t1">TOP TIER</span><b><code>seedance-2.0</code></b>V-C1 character appearance <span class="pass">5.00</span> · 30 problems marked, the fewest of any model here.</figcaption>
-        </figure>
-        <figure>
-          <video src="assets/video/tier-kling.mp4" poster="assets/video/tier-kling.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><span class="vtag tm">MID TIER</span><b><code>kling-3.0-omni</code></b>V-C1 character appearance <span class="fail">2.33</span> · 109 problems marked; visual quality and identity both 2.33.</figcaption>
-        </figure>
-        <figure>
-          <video src="assets/video/tier-pixverse.mp4" poster="assets/video/tier-pixverse.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><span class="vtag t3">BOTTOM TIER</span><b><code>pixverse-c1</code></b>V-C1 character appearance <span class="fail">1.67</span> · 94 problems marked.</figcaption>
-        </figure>
-      </div>
-      <p data-l="en" class="fnote">Animated drama <i>Gui Ren</i>, episode 2, shot 5. Every model receives the same keyframes and the same prompt.</p>
-<p class="fnote" data-l="zh">动漫短剧《归刃》第 2 集第 5 镜。每个模型拿到的关键帧与提示词完全相同。</p>
-    </div>
-
-
-    <div class="case">
-      <b data-l="en">One defect, followed from storyboard to delivery</b>
-      <b data-l="zh">一处缺陷，从分镜一路跟到成片</b>
-      <p data-l="en">The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action <i>That Summer's Cicadas</i>, episode 3.</p>
-      <p data-l="zh">环节之间并非彼此独立，最清楚的证据就是这个：同一部剧、同一处错误，在三个连续粒度上各留下一次痕迹。真人短剧《那年蝉鸣》第 3 集。</p>
-
-      <div class="chain">
-        <div class="chain-step">
-          <span class="cs-n">1</span>
-          <div>
-            <b data-l="en">Upstream — the storyboard packs a three-turn exchange into one shot</b>
-            <b data-l="zh">上游 —— 分镜把三人的一问一答压进同一镜</b>
-            <p data-l="en"><code>gpt-5.5-xhigh</code>, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker.</p>
-            <p data-l="zh"><code>gpt-5.5-xhigh</code> 作为该环节榜首，把镜头 3 写成三段对白、分属两个角色。谁说哪一句，只靠「戴细金属框眼镜的清瘦少年」「胸袋别螺丝刀的瘦高少年」这类描述来指认，此外没有任何标记。</p>
-            <div class="sb">
-              <div class="sb-h"><span data-l="en">Shot 3, as the storyboard model wrote it</span><span data-l="zh">镜头 3 · 分镜模型写出的原文</span></div>
-              <p class="sb-v" data-l="en">A crisp whip-pan carries off the profiles of Gu Yan and Zhou Zi'an toward the shadow at the back right of the bike shed, revealing Qi Xiangbei standing by a row of bicycles… Late sun cuts narrow strips through the corrugated roof, falling between the three of them.</p>
-              <p class="sb-v" data-l="zh">镜头以一个干脆的甩 pan 从〈顾砚〉和〈周子安〉的侧脸扫向车棚右后方阴影，揭出〈祁向北〉站在一排自行车旁……夕阳从铁皮棚缝隙切下窄窄光线，照在三人之间。</p>
-              <p class="sb-l" data-l="en"><b>Qi Xiangbei</b> <i>(the tall thin boy with a screwdriver in his chest pocket, very quietly)</i>, head down: “The Walkman… I was the one who fixed it.”</p>
-              <p class="sb-l" data-l="zh"><b>祁向北</b> <i>（胸袋别螺丝刀的瘦高少年，声音很轻）</i>低头：「随身听……是我修的。」</p>
-              <p class="sb-l" data-l="en"><b>Gu Yan</b> <i>(the slim boy in thin metal-framed glasses, stopping to press him)</i>, turning slightly toward Qi Xiangbei: “Then you'd know the original line of that lyric too.”</p>
-              <p class="sb-l" data-l="zh"><b>顾砚</b> <i>（戴细金属框眼镜的清瘦少年，顿住追问）</i>微微侧身面对祁向北：「那这句歌词，你也该知道原句。」</p>
-              <p class="sb-l" data-l="en"><b>Qi Xiangbei</b> <i>(the tall thin boy with a screwdriver in his chest pocket, admitting it under his breath)</i>, fingers against the hem of his uniform, avoiding eye contact: “…I know. I didn't change it. He copied it wrong; it's not mine to fix.”</p>
-              <p class="sb-l" data-l="zh"><b>祁向北</b> <i>（胸袋别螺丝刀的瘦高少年，低声承认）</i>手指贴着校服边缘，避开视线：「……知道。我没改。是他抄的，我不能替他改。」</p>
-              <p class="sb-n" data-l="en">Three dialogue turns in one shot, belonging to two characters. Not a line of it is wrong — the fault is that a three-turn exchange was put in a single shot, leaving the speaker for a downstream video model to infer. Given the same script, a model that cut twelve shots gave each turn its own.</p>
-              <p class="sb-n" data-l="zh">同一镜内 3 段对白，分属 2 个角色。没有写错任何一句，问题在于把三人的一问一答放进了同一个镜头，说话人只能由下游的视频模型自己认。同一份剧本切到 12 镜的模型，把一问一答分到了各自的镜头里。</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="chain-step">
-          <span class="cs-n">2</span>
-          <div>
-            <b data-l="en">Midstream — the generated clip gives the lines to the wrong people</b>
-            <b data-l="zh">中游 —— 这一镜生成出来，台词分给了错的人</b>
-            <p data-l="en">Two annotators working independently marked the same thing. Speech quality lands at <span class="fail">2.00</span> (2 / 3 / 1) while the shot's composite is 3.00 — the picture holds, the speaker does not.</p>
-            <p data-l="zh">两名标注员独立作业，标到的是同一处。语音质量人工共识只有 <span class="fail">2.00</span> 分（三人 2 / 3 / 1），而这一镜的综合分是 3.00 —— 画面立得住，说话人认错了。</p>
-            <div class="cfig vrow one">
-              <figure>
-                <video src="assets/video/chain-shot.mp4" poster="assets/video/chain-shot.jpg" muted loop playsinline preload="none"></video>
-                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">Single-shot video, shot 2 · V-E1 speech quality <span class="fail">2.00</span>, shot composite 3.00</span><span data-l="zh">单分镜视频，镜 2 · V-E1 语音质量 <span class="fail">2.00</span>，该镜综合 3.00</span></figcaption>
-              </figure>
-            </div>
-          </div>
-        </div>
-
-        <div class="chain-step">
-          <span class="cs-n">3</span>
-          <div>
-            <b data-l="en">Downstream — the finished drama still misattributes the same two lines</b>
-            <b data-l="zh">下游 —— 整集成片里，同样两句还是说错人</b>
-            <p data-l="en">The episode is scored on its own, by annotators who did not see the shot-level task. They marked <em>the same two lines</em>: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is <span class="fail">2.33</span>.</p>
-            <p data-l="zh">成片按整集单独出题，标注员并未看过镜头级的那道题。他们标到的是<em>同样两句</em>：一个角色的台词由另一个角色说了出来，前后两处。两人都标了「人物指认错乱」，成片综合 <span class="fail">2.33</span> 分。</p>
-            <div class="cfig vrow one">
-              <figure>
-                <video src="assets/video/chain-ep3.mp4" poster="assets/video/chain-ep3.jpg" muted loop playsinline preload="none"></video>
-                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">The finished drama, final episode, 1 min 05 s · episode composite <span class="fail">2.33</span></span><span data-l="zh">成片的最后一集，1 分 05 秒 · 整集综合 <span class="fail">2.33</span></span></figcaption>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class="fnote" data-l="en">Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.</p>
-      <p class="fnote" data-l="zh">三个环节各自独立出题，标注员只看到自己那一道。这处缺陷被标出三次，是因为它确实存在三次，而不是一次判断顺延到了下一环。</p>
-    </div>
-
-    
-    <div class="case">
-      <b><span data-l="en">Shot count decides executability</span><span data-l="zh"><b>切几个镜决定了能不能拍</b></span></b>
+      <b><i class="cn">01</i><span data-l="en">Shot count decides executability</span><span data-l="zh">切几个镜决定了能不能拍</span></b>
       <p data-l="en">One identical episode script, forked only at the storyboard stage. All three columns below are verbatim model output covering the <em>same opening beat</em> — a question and its answer. At three shots the question is deleted outright and the scene opens on the answer; at six and at twelve it survives in shot 1.</p>
 <p data-l="zh">同一份剧本，只在分镜设计这一环分叉。下面三栏都是模型原文，覆盖<em>同一个开场节拍</em>——一问一答。切 3 个镜时，那个提问被整句删掉，直接从回答开始；切 6 镜和 12 镜时，它都还在镜头 1 里。</p>
       <div class="sbgrid three">
@@ -887,7 +713,96 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><span data-l="en">Difficulty is set by the input paradigm, not the visual style</span><span data-l="zh"><b>决定难度的是输入范式，不是画风</b></span></b>
+      <b><i class="cn">02</i><span data-l="en">Equal scores, different failure modes</span><span data-l="zh">同分，但坏在不同地方</span></b>
+      <p data-l="en">Two separate items, two models each. All four score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.</p>
+<p data-l="zh">两道彼此独立的题，每题两个模型。四者都在某个维度上得 1.3–1.7 分，综合分会把它们视为同样差——但标注框落在四个互不相交的位置，且每一对里两个模型互换了失败的维度。</p>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b data-l="en">Item 1 — input</b><b data-l="zh">第一题 · 输入</b>
+          <span data-l="en">the four character sheets, shared by both models below; identity and costume are fixed here</span>
+          <span data-l="zh">四张角色设定卡，下面两个模型共用；身份与服装在这里就已经定死</span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao" loading="lazy"><figcaption>龚啸</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan" loading="lazy"><figcaption>江临渊</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia" loading="lazy"><figcaption>沈知夏</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian" loading="lazy"><figcaption>江念念</figcaption></figure>
+        </div>
+        <div class="cg2 r23">
+          <figure>
+            <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
+            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-C1 face identity <span class="fail">1.67</span>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</span><span data-l="zh">—— I-C1 人脸身份 <span class="fail">1.67</span>，三人共 15 个框，全部落在脸上；同一题的动作交互反而有 3.0 分。</span></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/cases/boxed-action.jpg" alt="Keyframe with thirteen annotator boxes, every one on a limb mid-action" loading="lazy">
+            <figcaption><code>gpt-image-1.5</code> <span data-l="en">— I-B2 action interaction <span class="fail">1.33</span>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</span><span data-l="zh">—— I-B2 动作交互 <span class="fail">1.33</span>，三人共 13 个框，全部落在肢体与动作上；同一题的人脸身份有 3.33 分。</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them. The same white-coated woman is boxed again and again — her identity drifts from panel to panel while the sheets above never change.</p>
+<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。同一位白大褂女性在四格中被反复框出——设定卡自始至终没变，身份却在格与格之间漂移。</p>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b data-l="en">Item 2</b><b data-l="zh">第二题</b>
+          <span data-l="en">a different item, a different pair of models — and a different pair of dimensions</span>
+          <span data-l="zh">另一道题、另一对模型，坏的也是另一对维度</span>
+        </div>
+        <div class="cg2">
+          <figure>
+            <img src="assets/cases/boxed-extra.jpg" alt="Keyframe with twelve annotator boxes, all marking extra subjects" loading="lazy">
+            <figcaption><code>seedream-5.0-lite</code> <span data-l="en">— I-B1 subject attributes <span class="fail">1.33</span>, 12 boxes, all “extra subject”; human anatomy on this same item scored 3.0.</span><span data-l="zh">—— I-B1 主体属性 <span class="fail">1.33</span>，三人共 12 个框，全部是「多出主体」「主体数量错」；同一题的人体结构有 3.0 分。</span></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/cases/boxed-hands.jpg" alt="Keyframe with ten annotator boxes, all marking malformed hands" loading="lazy">
+            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-E1 human anatomy <span class="fail">1.33</span>, 10 boxes, all broken hands; subject attributes on this same item scored 3.33.</span><span data-l="zh">—— I-E1 人体结构合理性 <span class="fail">1.33</span>，三人共 10 个框，全部是「肢体扭曲粘连」「多指 / 少指畸形」；同一题的主体属性有 3.33 分。</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <p data-l="en" class="fnote">The count is right here and the hands are not, which is the mirror image of the pair above: same band of scores, nothing in common about what went wrong.</p>
+<p class="fnote" data-l="zh">这一对是人数对、手画坏，正好和上面那对互为镜像：分数落在同一档，出错的地方毫无交集。</p>
+    </div>
+
+    <div class="case">
+      <b><i class="cn">03</i><span data-l="en">Cross-shot consistency is a separate capability</span><span data-l="zh">跨镜一致是另一种能力</span></b>
+      <p data-l="en">Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.</p>
+<p data-l="zh">同一集、同一套角色设定卡。上排跨镜稳住了两位主角，下排没有——相差 2.66 分。而下排每一格单独看都无可指摘：镜 7 本身没有错，它只是相对镜 5 错了。</p>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b>T1 <code>gpt-image-2</code></b>
+          <span>MI-D1 cross-shot character consistency <span class="pass">4.33</span></span>
+          <span>alternate shots, 1, 3, … 11 of 13</span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5" loading="lazy"><figcaption>shot 5</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7" loading="lazy"><figcaption>shot 7</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b>T4 <code>wan2.7-image-pro</code></b>
+          <span>MI-D1 cross-shot character consistency <span class="fail">1.67</span></span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators" loading="lazy"><figcaption>shot 5</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators" loading="lazy"><figcaption>shot 7</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <b><i class="cn">04</i><span data-l="en">Difficulty is set by the input paradigm, not the visual style</span><span data-l="zh">决定难度的是输入范式，不是画风</span></b>
       <p data-l="en">One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>kling-v3-omni</code>; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.</p>
 <p data-l="zh">同一集里的同一个镜头，完整跑过三种范式。剧目、集数、镜号，以及分镜、图像、视频三个模型全部固定为 <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>kling-v3-omni</code>，唯一的变量是交到视频模型手里的东西。两张帧图、一张宫格、五张参考，给出的是同一个节拍的三种调度、三个不同的配角，以及 12 秒、12 秒、7 秒三种时长。全量语料上的不及格维度数：首尾帧 1/10，宫格 9/15。</p>
       <div class="cfig vrow pset">
@@ -925,10 +840,44 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       <p class="fnote" data-l="zh">真人《赘婿无锋》第 1 集第 3 镜。每条片子上方的缩略图就是该范式的全部输入，没有别的东西。首尾帧下评了 6 个模型，宫格 4 个，多参考 5 个；第四种范式「多关键帧」已定义，本期未评测。</p>
     </div>
 
+    <div class="case">
+      <b><i class="cn">05</i><span data-l="en">What a tier gap looks like in motion</span><span data-l="zh">档位差距动起来是什么样</span></b>
+      <p data-l="en">The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.</p>
+<p data-l="zh">同一集的同一个镜位，三个模型。三名标注员分别标出 30、109、94 处问题——榜首档稳住了角色外观，中段档开始漂移，末档则彻底失守。</p>
+      <div class="cfig vrow">
+        <figure>
+          <video src="assets/video/tier-seedance.mp4" poster="assets/video/tier-seedance.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span class="vtag t1">TOP TIER</span><b><code>seedance-2.0</code></b>V-C1 character appearance <span class="pass">5.00</span> · 30 problems marked, the fewest of any model here.</figcaption>
+        </figure>
+        <figure>
+          <video src="assets/video/tier-kling.mp4" poster="assets/video/tier-kling.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span class="vtag tm">MID TIER</span><b><code>kling-3.0-omni</code></b>V-C1 character appearance <span class="fail">2.33</span> · 109 problems marked; visual quality and identity both 2.33.</figcaption>
+        </figure>
+        <figure>
+          <video src="assets/video/tier-pixverse.mp4" poster="assets/video/tier-pixverse.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span class="vtag t3">BOTTOM TIER</span><b><code>pixverse-c1</code></b>V-C1 character appearance <span class="fail">1.67</span> · 94 problems marked.</figcaption>
+        </figure>
+      </div>
+      <p data-l="en" class="fnote">Animated drama <i>Gui Ren</i>, episode 2, shot 5. Every model receives the same keyframes and the same prompt.</p>
+<p class="fnote" data-l="zh">动漫短剧《归刃》第 2 集第 5 镜。每个模型拿到的关键帧与提示词完全相同。</p>
+    </div>
 
     <div class="case">
-      <b data-l="en">The same character, a different face two shots later</b>
-      <b data-l="zh">同一个角色，隔两个镜头换了张脸</b>
+      <b><i class="cn">06</i><span data-l="en">Sound design is specified and simply not produced</span><span data-l="zh">音效写在提示词里，一条都没做出来</span></b>
+      <p data-l="en">The prompt carries explicit <code>[Sound Effect]</code> lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score <span class="fail">1.67</span>.</p>
+      <p data-l="zh">提示词里逐镜写明了 <code>[Sound Effect]</code>：包厢内低沉的餐厅环境声、远处空调轻响、餐具与酒杯轻微碰响；素圈戒指轻叩桌面的短促声；酒杯细微震响。标注员逐条对着核，每一条都标了「没有体现」。另一名标注员标了反向的问题——出现了一个杯子碰撞的音效，但画面中没有这个动作。音效与配乐 <span class="fail">1.67</span> 分。</p>
+      <div class="cfig vrow two">
+        <figure>
+          <video src="assets/video/audio-miss.mp4" poster="assets/video/audio-miss.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><b><code>pixverse-c1</code></b><span data-l="en">V-E3 sound &amp; music <span class="fail">1.67</span> · live-action <i>Chong Lai Bu Du</i>, episode 3, shot 6, grid paradigm</span><span data-l="zh">V-E3 音效与配乐 <span class="fail">1.67</span> · 真人《重来不渡》第 3 集第 6 镜，宫格范式</span></figcaption>
+        </figure>
+      </div>
+      <p class="fnote" data-l="en">The grid previews here are silent by design; open the clip to hear what was and was not produced.</p>
+      <p class="fnote" data-l="zh">网格里的预览默认静音，点开可以听到实际做出了什么、没做出什么。</p>
+    </div>
+
+    <div class="case">
+      <b><i class="cn">07</i><span data-l="en">The same character, a different face two shots later</span><span data-l="zh">同一个角色，隔两个镜头换了张脸</span></b>
       <p data-l="en">Six consecutive shots of one episode. The three annotators land on one phenomenon and time-stamp it: “at 8 s the woman's face is wrong”, “at 3 s the man's face changes”, “at 3 s the woman's face changes”, plus “character flickers” and “character disappears”. Their tags concentrate on appearance differing across segments, faces breaking or swapping, and costume changing style. Cross-shot character consistency scores <span class="fail">1.33</span>.</p>
       <p data-l="zh">一集里连续六个镜头。三名标注员指向同一个现象，并各自标出了时间点：「8 秒 女士长相不对」「3 秒 男士长相改变」「3 秒 女士长相改变」，另有「人物闪现」「人物消失」。标签集中在跨段长相不一、人物崩坏换脸、服装款式变化。角色跨镜一致 <span class="fail">1.33</span> 分。</p>
       <div class="cfig vrow six">
@@ -944,21 +893,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b data-l="en">Sound design is specified and simply not produced</b>
-      <b data-l="zh">音效写在提示词里，一条都没做出来</b>
-      <p data-l="en">The prompt carries explicit <code>[Sound Effect]</code> lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score <span class="fail">1.67</span>.</p>
-      <p data-l="zh">提示词里逐镜写明了 <code>[Sound Effect]</code>：包厢内低沉的餐厅环境声、远处空调轻响、餐具与酒杯轻微碰响；素圈戒指轻叩桌面的短促声；酒杯细微震响。标注员逐条对着核，每一条都标了「没有体现」。另一名标注员标了反向的问题——出现了一个杯子碰撞的音效，但画面中没有这个动作。音效与配乐 <span class="fail">1.67</span> 分。</p>
-      <div class="cfig vrow two">
-        <figure>
-          <video src="assets/video/audio-miss.mp4" poster="assets/video/audio-miss.jpg" muted loop playsinline preload="none"></video>
-          <figcaption><b><code>pixverse-c1</code></b><span data-l="en">V-E3 sound &amp; music <span class="fail">1.67</span> · live-action <i>Chong Lai Bu Du</i>, episode 3, shot 6, grid paradigm</span><span data-l="zh">V-E3 音效与配乐 <span class="fail">1.67</span> · 真人《重来不渡》第 3 集第 6 镜，宫格范式</span></figcaption>
-        </figure>
-      </div>
-      <p class="fnote" data-l="en">The grid previews here are silent by design; open the clip to hear what was and was not produced.</p>
-      <p class="fnote" data-l="zh">网格里的预览默认静音，点开可以听到实际做出了什么、没做出什么。</p>
-    </div>
-    <div class="case">
-      <b><span data-l="en">An upstream defect is re-expressed downstream, not repaired</span><span data-l="zh"><b>上游缺陷到下游是重演，不是修复</b></span></b>
+      <b><i class="cn">08</i><span data-l="en">An upstream defect is re-expressed downstream, not repaired</span><span data-l="zh">上游缺陷到下游是重演，不是修复</span></b>
       <p data-l="en">Rooms drift before people do. Follow the desk, the table lamp and the wooden box across the four shots: all three annotators reported them changing — “the desk changes”, “the lamp and the wooden box change in every shot, and so does the sense of depth”, plus set-dressing, lighting and scene-continuity tags. Two of them separately caught the window showing a bedroom outside. The characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
 <p data-l="zh">场景比人物更早漂移。盯着四个镜头里的桌子、台灯和木盒看：三名标注员都报告了它们在变——「桌子有变化」「台灯与木盒每个镜头都在变，纵深感变化幅度也大」，另有陈设变化、光线色调变化、场景切换混乱三类标签；其中两人还各自发现了同一处穿帮：窗户外面是卧室。而人物那一侧稳住了。视频环节不会修复这种漂移——它只会重新演一遍，并一直留存到成片里。</p>
       <div class="cfig">
@@ -976,12 +911,73 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       </div>
     </div>
 
-    
+    <div class="case">
+      <b><i class="cn">09</i><span data-l="en">One defect, followed from storyboard to delivery</span><span data-l="zh">一处缺陷，从分镜一路跟到成片</span></b>
+      <p data-l="en">The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action <i>That Summer's Cicadas</i>, episode 3.</p>
+      <p data-l="zh">环节之间并非彼此独立，最清楚的证据就是这个：同一部剧、同一处错误，在三个连续粒度上各留下一次痕迹。真人短剧《那年蝉鸣》第 3 集。</p>
 
-    
+      <div class="chain">
+        <div class="chain-step">
+          <span class="cs-n">1</span>
+          <div>
+            <b data-l="en">Upstream — the storyboard packs a three-turn exchange into one shot</b>
+            <b data-l="zh">上游 —— 分镜把三人的一问一答压进同一镜</b>
+            <p data-l="en"><code>gpt-5.5-xhigh</code>, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker.</p>
+            <p data-l="zh"><code>gpt-5.5-xhigh</code> 作为该环节榜首，把镜头 3 写成三段对白、分属两个角色。谁说哪一句，只靠「戴细金属框眼镜的清瘦少年」「胸袋别螺丝刀的瘦高少年」这类描述来指认，此外没有任何标记。</p>
+            <div class="sb">
+              <div class="sb-h"><span data-l="en">Shot 3, as the storyboard model wrote it</span><span data-l="zh">镜头 3 · 分镜模型写出的原文</span></div>
+              <p class="sb-v" data-l="en">A crisp whip-pan carries off the profiles of Gu Yan and Zhou Zi'an toward the shadow at the back right of the bike shed, revealing Qi Xiangbei standing by a row of bicycles… Late sun cuts narrow strips through the corrugated roof, falling between the three of them.</p>
+              <p class="sb-v" data-l="zh">镜头以一个干脆的甩 pan 从〈顾砚〉和〈周子安〉的侧脸扫向车棚右后方阴影，揭出〈祁向北〉站在一排自行车旁……夕阳从铁皮棚缝隙切下窄窄光线，照在三人之间。</p>
+              <p class="sb-l" data-l="en"><b>Qi Xiangbei</b> <i>(the tall thin boy with a screwdriver in his chest pocket, very quietly)</i>, head down: “The Walkman… I was the one who fixed it.”</p>
+              <p class="sb-l" data-l="zh"><b>祁向北</b> <i>（胸袋别螺丝刀的瘦高少年，声音很轻）</i>低头：「随身听……是我修的。」</p>
+              <p class="sb-l" data-l="en"><b>Gu Yan</b> <i>(the slim boy in thin metal-framed glasses, stopping to press him)</i>, turning slightly toward Qi Xiangbei: “Then you'd know the original line of that lyric too.”</p>
+              <p class="sb-l" data-l="zh"><b>顾砚</b> <i>（戴细金属框眼镜的清瘦少年，顿住追问）</i>微微侧身面对祁向北：「那这句歌词，你也该知道原句。」</p>
+              <p class="sb-l" data-l="en"><b>Qi Xiangbei</b> <i>(the tall thin boy with a screwdriver in his chest pocket, admitting it under his breath)</i>, fingers against the hem of his uniform, avoiding eye contact: “…I know. I didn't change it. He copied it wrong; it's not mine to fix.”</p>
+              <p class="sb-l" data-l="zh"><b>祁向北</b> <i>（胸袋别螺丝刀的瘦高少年，低声承认）</i>手指贴着校服边缘，避开视线：「……知道。我没改。是他抄的，我不能替他改。」</p>
+              <p class="sb-n" data-l="en">Three dialogue turns in one shot, belonging to two characters. Not a line of it is wrong — the fault is that a three-turn exchange was put in a single shot, leaving the speaker for a downstream video model to infer. Given the same script, a model that cut twelve shots gave each turn its own.</p>
+              <p class="sb-n" data-l="zh">同一镜内 3 段对白，分属 2 个角色。没有写错任何一句，问题在于把三人的一问一答放进了同一个镜头，说话人只能由下游的视频模型自己认。同一份剧本切到 12 镜的模型，把一问一答分到了各自的镜头里。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chain-step">
+          <span class="cs-n">2</span>
+          <div>
+            <b data-l="en">Midstream — the generated clip gives the lines to the wrong people</b>
+            <b data-l="zh">中游 —— 这一镜生成出来，台词分给了错的人</b>
+            <p data-l="en">Two annotators working independently marked the same thing. Speech quality lands at <span class="fail">2.00</span> (2 / 3 / 1) while the shot's composite is 3.00 — the picture holds, the speaker does not.</p>
+            <p data-l="zh">两名标注员独立作业，标到的是同一处。语音质量人工共识只有 <span class="fail">2.00</span> 分（三人 2 / 3 / 1），而这一镜的综合分是 3.00 —— 画面立得住，说话人认错了。</p>
+            <div class="cfig vrow one">
+              <figure>
+                <video src="assets/video/chain-shot.mp4" poster="assets/video/chain-shot.jpg" muted loop playsinline preload="none"></video>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">Single-shot video, shot 2 · V-E1 speech quality <span class="fail">2.00</span>, shot composite 3.00</span><span data-l="zh">单分镜视频，镜 2 · V-E1 语音质量 <span class="fail">2.00</span>，该镜综合 3.00</span></figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="chain-step">
+          <span class="cs-n">3</span>
+          <div>
+            <b data-l="en">Downstream — the finished drama still misattributes the same two lines</b>
+            <b data-l="zh">下游 —— 整集成片里，同样两句还是说错人</b>
+            <p data-l="en">The episode is scored on its own, by annotators who did not see the shot-level task. They marked <em>the same two lines</em>: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is <span class="fail">2.33</span>.</p>
+            <p data-l="zh">成片按整集单独出题，标注员并未看过镜头级的那道题。他们标到的是<em>同样两句</em>：一个角色的台词由另一个角色说了出来，前后两处。两人都标了「人物指认错乱」，成片综合 <span class="fail">2.33</span> 分。</p>
+            <div class="cfig vrow one">
+              <figure>
+                <video src="assets/video/chain-ep3.mp4" poster="assets/video/chain-ep3.jpg" muted loop playsinline preload="none"></video>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">The finished drama, final episode, 1 min 05 s · episode composite <span class="fail">2.33</span></span><span data-l="zh">成片的最后一集，1 分 05 秒 · 整集综合 <span class="fail">2.33</span></span></figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="fnote" data-l="en">Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.</p>
+      <p class="fnote" data-l="zh">三个环节各自独立出题，标注员只看到自己那一道。这处缺陷被标出三次，是因为它确实存在三次，而不是一次判断顺延到了下一环。</p>
+    </div>
 
     <div class="case">
-      <b><span data-l="en">Automated scoring drifts where there is no reference to check against</span><span data-l="zh"><b>没有参照物可核对时，自动化打分会漂</b></span></b>
+      <b><i class="cn">10</i><span data-l="en">Automated scoring drifts where there is no reference to check against</span><span data-l="zh">没有参照物可核对时，自动化打分会漂</span></b>
       <p data-l="en">Every dimension with a reference to check against is right; the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, noise, blur, ghosting.</p>
 <p data-l="zh">凡是有参照物可核对的维度都判对了；唯一一个纯感知维度则朝宽松方向偏了近四分。三名标注员给技术质量打了 1 / 1 / 2 分，并一致标注为结构畸变、噪点、模糊、重影。</p>
       <div class="cfig cjf">
@@ -1008,14 +1004,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <section id="citation">
   <div class="wrap">
     <h2><span data-l="en">Release &amp; citation</span><span data-l="zh">开放与引用</span></h2>
-    <p data-l="en">DramaChain Bench supports extensible evaluation rather than static benchmarking. Stage-level branching plus model-consistent automatic scoring lets a new model enter the board with single-stage generation only, requiring no additional human annotation. We will release <b>DramaChain Dimensions</b>, the <b>DramaChain Agentic Judge</b> framework, and a curated subset of the benchmark data.</p>
-<p data-l="zh">DramaChain Bench 支持可扩展的持续评测，而非一次性的静态基准。环节级分叉机制加上模型一致的自动化打分，使新模型只需生成单个环节即可进榜，无需额外人工标注。我们将开放 <b>DramaChain Dimensions</b> 维度体系、<b>DramaChain Agentic Judge</b> 框架，以及一份经过筛选的基准数据子集。</p>
+    <p data-l="en">DramaChain Bench supports extensible evaluation rather than static benchmarking. The dimension set, the judge framework and a subset of the data will follow.</p>
+<p data-l="zh">DramaChain Bench 支持可扩展的持续评测，而非一次性的静态基准。维度体系、评测框架与部分数据将陆续开放。</p>
 <pre>@techreport{shi2026dramachain,
   title       = {DramaChain Bench: An End-to-End Benchmark for Short-Drama Generation},
   author      = {Shi, Haoyuan and Chen, Mingtao and Jiang, Shuo and Chen, Ziyan and
                  Sheng, Xuyi and Liu, Yiming and Zhang, Ying and Wang, Miao and
                  Lu, Jianxiang and Lu, Fanyang and Lu, Songyuanyi and Wu, Xiele and
-                 Hu, Zhichao and Wang, Lilin and Liu, Yuhong and Xuan, Richeng},
+                 Hu, Zhichao and Liu, Yuhong and Xuan, Richeng},
   institution = {Hunyuan, Tencent},
   year        = {2026}
 }</pre>

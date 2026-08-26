@@ -9,7 +9,7 @@
 Haoyuan Shi<sup>1</sup> &nbsp; Mingtao Chen<sup>1</sup> &nbsp; Shuo Jiang<sup>1</sup> &nbsp; Ziyan Chen<sup>1,2</sup><br>
 Xuyi Sheng<sup>3</sup> &nbsp; Yiming Liu<sup>1</sup> &nbsp; Ying Zhang<sup>1</sup> &nbsp; Miao Wang<sup>1,4</sup><br>
 Jianxiang Lu<sup>1</sup> &nbsp; Fanyang Lu<sup>1</sup> &nbsp; Songyuanyi Lu<sup>1</sup> &nbsp; Xiele Wu<sup>1</sup><br>
-Zhichao Hu<sup>1,†</sup> &nbsp; Lilin Wang<sup>1</sup> &nbsp; Yuhong Liu<sup>1</sup> &nbsp; Richeng Xuan<sup>1,§</sup>
+Zhichao Hu<sup>1,†</sup> &nbsp; Yuhong Liu<sup>1</sup> &nbsp; Richeng Xuan<sup>1,§</sup>
 
 <sup>1</sup>Hunyuan, Tencent &nbsp;&nbsp; <sup>2</sup>Beijing Film Academy &nbsp;&nbsp; <sup>3</sup>Peking University &nbsp;&nbsp; <sup>4</sup>Shenzhen University
 
@@ -216,111 +216,9 @@ The judge replicates the human reference automatically. It aggregates routed mea
 
 ## Case studies
 
-### Equal scores, different failure modes
+Ordered along the chain — storyboard, keyframes, then shot video. The last three cover what a stage inherits from the one before it, and what the automated judge makes of all of it.
 
-Two separate items, two models each. All four score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.
-
-**Item 1 — input.** The four character sheets, shared by both models below; identity and costume are fixed here.
-
-<table>
-<tr>
-<td><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao"></td>
-<td><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan"></td>
-<td><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia"></td>
-<td><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian"></td>
-</tr>
-<tr>
-<td align="center">龚啸</td><td align="center">江临渊</td>
-<td align="center">沈知夏</td><td align="center">江念念</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td width="40%"><img src="assets/cases/boxed-face.jpg" alt="Fifteen annotator boxes, every one on a face"></td>
-<td width="60%"><img src="assets/cases/boxed-action.jpg" alt="Thirteen annotator boxes, every one on a limb mid-action"></td>
-</tr>
-<tr>
-<td><code>wan2.7-image-pro</code> — I-C1 face identity <b>1.67</b>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</td>
-<td><code>gpt-image-1.5</code> — I-B2 action interaction <b>1.33</b>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</td>
-</tr>
-</table>
-
-Boxes are drawn independently by the three annotators; colour distinguishes them. The same white-coated woman is boxed again and again — her identity drifts from panel to panel while the sheets above never change.
-
-**Item 2.** A different item, a different pair of models — and a different pair of dimensions.
-
-<table>
-<tr>
-<td width="50%"><img src="assets/cases/boxed-extra.jpg" alt="Twelve annotator boxes, all marking extra subjects"></td>
-<td width="50%"><img src="assets/cases/boxed-hands.jpg" alt="Ten annotator boxes, all marking malformed hands"></td>
-</tr>
-<tr>
-<td><code>seedream-5.0-lite</code> — I-B1 subject attributes <b>1.33</b>, 12 boxes, all “extra subject”; human anatomy on this same item scored 3.0.</td>
-<td><code>wan2.7-image-pro</code> — I-E1 human anatomy <b>1.33</b>, 10 boxes, all broken hands; subject attributes on this same item scored 3.33.</td>
-</tr>
-</table>
-
-The count is right here and the hands are not, which is the mirror image of the pair above: same band of scores, nothing in common about what went wrong.
-
-### Cross-shot consistency is a separate capability
-
-Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.
-
-**T1 `gpt-image-2`** — MI-D1 cross-shot character consistency **4.33**, alternate shots 1, 3, … 11 of 13
-
-<table>
-<tr>
-<td><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1"></td>
-<td><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3"></td>
-<td><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5"></td>
-<td><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7"></td>
-<td><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9"></td>
-<td><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11"></td>
-</tr>
-<tr>
-<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
-<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
-</tr>
-</table>
-
-**T4 `wan2.7-image-pro`** — MI-D1 cross-shot character consistency **1.67**
-
-<table>
-<tr>
-<td><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1"></td>
-<td><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3"></td>
-<td><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators"></td>
-<td><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators"></td>
-<td><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9"></td>
-<td><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11"></td>
-</tr>
-<tr>
-<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
-<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
-</tr>
-</table>
-
-### What a tier gap looks like in motion
-
-The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.
-
-<table>
-<tr>
-<td width="33%"><a href="assets/video/tier-seedance.mp4"><img src="assets/video/tier-seedance.jpg" alt="Play: top tier, seedance-2.0"></a></td>
-<td width="33%"><a href="assets/video/tier-kling.mp4"><img src="assets/video/tier-kling.jpg" alt="Play: mid tier, kling-3.0-omni"></a></td>
-<td width="33%"><a href="assets/video/tier-pixverse.mp4"><img src="assets/video/tier-pixverse.jpg" alt="Play: bottom tier, pixverse-c1"></a></td>
-</tr>
-<tr>
-<td><b>Top tier</b> — <code>seedance-2.0</code><br>V-C1 character appearance <b>5.00</b>, 30 problems marked. <a href="assets/video/tier-seedance.mp4">▶ play</a></td>
-<td><b>Mid tier</b> — <code>kling-3.0-omni</code><br>V-C1 character appearance <b>2.33</b>, 109 problems marked. <a href="assets/video/tier-kling.mp4">▶ play</a></td>
-<td><b>Bottom tier</b> — <code>pixverse-c1</code><br>V-C1 character appearance <b>1.67</b>, 94 problems marked. <a href="assets/video/tier-pixverse.mp4">▶ play</a></td>
-</tr>
-</table>
-
-Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyframes and the same prompt.
-
-### Shot count decides executability
+### 01 · Shot count decides executability
 
 One identical episode script, forked only at the storyboard stage. All three columns below are verbatim model output covering the *same opening beat* — a question and its answer. At three shots the question is deleted outright and the scene opens on the answer; at six and at twelve it survives in shot 1.
 
@@ -392,7 +290,92 @@ Question and answer take a shot each, with room left over for two pure reaction 
 
 The three-shot output compresses the episode into 30 s of self-declared duration and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement, marking the same few defects every time — several actions in one shot, blocking too complex to execute, no reaction shot.
 
-### Difficulty is set by the input paradigm, not the visual style
+### 02 · Equal scores, different failure modes
+
+Two separate items, two models each. All four score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.
+
+**Item 1 — input.** The four character sheets, shared by both models below; identity and costume are fixed here.
+
+<table>
+<tr>
+<td><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao"></td>
+<td><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan"></td>
+<td><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia"></td>
+<td><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian"></td>
+</tr>
+<tr>
+<td align="center">龚啸</td><td align="center">江临渊</td>
+<td align="center">沈知夏</td><td align="center">江念念</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="40%"><img src="assets/cases/boxed-face.jpg" alt="Fifteen annotator boxes, every one on a face"></td>
+<td width="60%"><img src="assets/cases/boxed-action.jpg" alt="Thirteen annotator boxes, every one on a limb mid-action"></td>
+</tr>
+<tr>
+<td><code>wan2.7-image-pro</code> — I-C1 face identity <b>1.67</b>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</td>
+<td><code>gpt-image-1.5</code> — I-B2 action interaction <b>1.33</b>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</td>
+</tr>
+</table>
+
+Boxes are drawn independently by the three annotators; colour distinguishes them. The same white-coated woman is boxed again and again — her identity drifts from panel to panel while the sheets above never change.
+
+**Item 2.** A different item, a different pair of models — and a different pair of dimensions.
+
+<table>
+<tr>
+<td width="50%"><img src="assets/cases/boxed-extra.jpg" alt="Twelve annotator boxes, all marking extra subjects"></td>
+<td width="50%"><img src="assets/cases/boxed-hands.jpg" alt="Ten annotator boxes, all marking malformed hands"></td>
+</tr>
+<tr>
+<td><code>seedream-5.0-lite</code> — I-B1 subject attributes <b>1.33</b>, 12 boxes, all “extra subject”; human anatomy on this same item scored 3.0.</td>
+<td><code>wan2.7-image-pro</code> — I-E1 human anatomy <b>1.33</b>, 10 boxes, all broken hands; subject attributes on this same item scored 3.33.</td>
+</tr>
+</table>
+
+The count is right here and the hands are not, which is the mirror image of the pair above: same band of scores, nothing in common about what went wrong.
+
+### 03 · Cross-shot consistency is a separate capability
+
+Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.
+
+**T1 `gpt-image-2`** — MI-D1 cross-shot character consistency **4.33**, alternate shots 1, 3, … 11 of 13
+
+<table>
+<tr>
+<td><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1"></td>
+<td><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3"></td>
+<td><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5"></td>
+<td><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7"></td>
+<td><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9"></td>
+<td><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
+<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
+</tr>
+</table>
+
+**T4 `wan2.7-image-pro`** — MI-D1 cross-shot character consistency **1.67**
+
+<table>
+<tr>
+<td><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1"></td>
+<td><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3"></td>
+<td><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators"></td>
+<td><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators"></td>
+<td><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9"></td>
+<td><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
+<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
+</tr>
+</table>
+
+### 04 · Difficulty is set by the input paradigm, not the visual style
 
 One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at `gpt-5.5-xhigh` → `gpt-image-2` → `kling-v3-omni`; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.
 
@@ -421,7 +404,58 @@ One shot of one episode, run through all three paradigms end to end. Drama, epis
 
 Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are the complete input for that paradigm — there is nothing else. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
 
-### An upstream defect is re-expressed downstream, not repaired
+### 05 · What a tier gap looks like in motion
+
+The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.
+
+<table>
+<tr>
+<td width="33%"><a href="assets/video/tier-seedance.mp4"><img src="assets/video/tier-seedance.jpg" alt="Play: top tier, seedance-2.0"></a></td>
+<td width="33%"><a href="assets/video/tier-kling.mp4"><img src="assets/video/tier-kling.jpg" alt="Play: mid tier, kling-3.0-omni"></a></td>
+<td width="33%"><a href="assets/video/tier-pixverse.mp4"><img src="assets/video/tier-pixverse.jpg" alt="Play: bottom tier, pixverse-c1"></a></td>
+</tr>
+<tr>
+<td><b>Top tier</b> — <code>seedance-2.0</code><br>V-C1 character appearance <b>5.00</b>, 30 problems marked. <a href="assets/video/tier-seedance.mp4">▶ play</a></td>
+<td><b>Mid tier</b> — <code>kling-3.0-omni</code><br>V-C1 character appearance <b>2.33</b>, 109 problems marked. <a href="assets/video/tier-kling.mp4">▶ play</a></td>
+<td><b>Bottom tier</b> — <code>pixverse-c1</code><br>V-C1 character appearance <b>1.67</b>, 94 problems marked. <a href="assets/video/tier-pixverse.mp4">▶ play</a></td>
+</tr>
+</table>
+
+Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyframes and the same prompt.
+
+### 06 · Sound design is specified and simply not produced
+
+The prompt carries explicit `[Sound Effect]` lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score **1.67**.
+
+<table>
+<tr>
+<td width="50%"><a href="assets/video/audio-miss.mp4"><img src="assets/video/audio-miss.jpg" alt="Play: the shot whose specified sound design was never produced"></a></td>
+<td width="50%"><code>pixverse-c1</code> — V-E3 sound &amp; music <b>1.67</b><br>Live-action <i>Chong Lai Bu Du</i>, episode 3, shot 6, grid paradigm. Open the clip to hear what was and was not produced. <a href="assets/video/audio-miss.mp4">▶ play</a></td>
+</tr>
+</table>
+
+### 07 · The same character, a different face two shots later
+
+Six consecutive shots of one episode. The three annotators land on one phenomenon and time-stamp it: “at 8 s the woman's face is wrong”, “at 3 s the man's face changes”, “at 3 s the woman's face changes”, plus “character flickers” and “character disappears”. Their tags concentrate on appearance differing across segments, faces breaking or swapping, and costume changing style. Cross-shot character consistency scores **1.33**.
+
+<table>
+<tr>
+<td><a href="assets/video/xface-0.mp4"><img src="assets/video/xface-0.jpg" alt="Play: shot 0"></a></td>
+<td><a href="assets/video/xface-1.mp4"><img src="assets/video/xface-1.jpg" alt="Play: shot 1"></a></td>
+<td><a href="assets/video/xface-2.mp4"><img src="assets/video/xface-2.jpg" alt="Play: shot 2"></a></td>
+<td><a href="assets/video/xface-3.mp4"><img src="assets/video/xface-3.jpg" alt="Play: shot 3"></a></td>
+<td><a href="assets/video/xface-4.mp4"><img src="assets/video/xface-4.jpg" alt="Play: shot 4"></a></td>
+<td><a href="assets/video/xface-5.mp4"><img src="assets/video/xface-5.jpg" alt="Play: shot 5"></a></td>
+</tr>
+<tr>
+<td align="center">shot 0</td><td align="center">shot 1</td><td align="center">shot 2</td>
+<td align="center">shot 3</td><td align="center">shot 4</td><td align="center">shot 5</td>
+</tr>
+</table>
+
+`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3. Watch the woman across shots 1, 3 and 5, and the man across 0 and 2. Each shot on its own is unremarkable; the episode is scored on whether they are the same people throughout.
+
+### 08 · An upstream defect is re-expressed downstream, not repaired
 
 Rooms drift before people do: all three annotators circled this run for the set dressing while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
 
@@ -440,26 +474,30 @@ Rooms drift before people do: all three annotators circled this run for the set 
 </tr>
 </table>
 
-### `hy3` reproduces the script and does not dramatise it
+### 09 · One defect, followed from storyboard to delivery
 
-It scores 3.43 against 3.60 for its nearest neighbour `doubao-seed-2.1-pro`, and the gap is grouped rather than general: it leads on everything that means *reproduce the script* (dialogue fidelity 4.44) and trails on everything that means *turn it into television* (emotion 3.64, audiovisual style 3.91, both eighth of nine).
+The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action *That Summer's Cicadas*, episode 3.
 
-### `seedance-2.5` buys episode coherence with single-clip quality
+**1 — Upstream: the storyboard packs a three-turn exchange into one shot.** `gpt-5.5-xhigh`, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker. Not a line of it is wrong; the fault is that a three-turn exchange was put in a single shot, leaving the speaker for a downstream video model to infer. Given the same script, a model that cut twelve shots gave each turn its own.
 
-On paired items the newer version loses on single-shot video and gains at episode and short-drama granularity. Everything that must hold along a timeline got worse (audio-visual sync −0.658, motion smoothness, camera plausibility); everything about joining shots got better (cross-shot style consistency +1.143). It follows the prompt more literally, so a deficiency already in the prompt is now executed faithfully.
+**2 — Midstream: the generated clip gives the lines to the wrong people.** Two annotators working independently marked the same thing. Speech quality lands at **2.00** (2 / 3 / 1) while the shot's composite is 3.00 — the picture holds, the speaker does not.
+
+**3 — Downstream: the finished drama still misattributes the same two lines.** The episode is scored on its own, by annotators who did not see the shot-level task. They marked *the same two lines*: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is **2.33**.
 
 <table>
 <tr>
-<td width="50%"><a href="assets/video/sd25-lipsync.mp4"><img src="assets/video/sd25-lipsync.jpg" alt="Play: the character delivers her lines with her back to camera"></a></td>
-<td width="50%"><a href="assets/video/sd25-cuts.mp4"><img src="assets/video/sd25-cuts.jpg" alt="Play: four internal cuts inside one 25-second shot"></a></td>
+<td width="50%"><a href="assets/video/chain-shot.mp4"><img src="assets/video/chain-shot.jpg" alt="Play: the single shot that misassigns the lines"></a></td>
+<td width="50%"><a href="assets/video/chain-ep3.mp4"><img src="assets/video/chain-ep3.jpg" alt="Play: the finished episode carrying the same defect"></a></td>
 </tr>
 <tr>
-<td><b>The prompt said film her from behind, so it did.</b> There is no mouth to sync the dialogue to. <a href="assets/video/sd25-lipsync.mp4">▶ play</a></td>
-<td><b>Four internal cuts inside one 25 s shot.</b> Single shots went from 15 s to 30 s while the score stays one number. <a href="assets/video/sd25-cuts.mp4">▶ play</a></td>
+<td><b>Midstream</b> — <code>happyhorse-1.1</code>, single-shot video, shot 2. V-E1 speech quality <b>2.00</b>, shot composite 3.00. <a href="assets/video/chain-shot.mp4">▶ play</a></td>
+<td><b>Downstream</b> — <code>happyhorse-1.1</code>, the finished drama, final episode, 1 min 05 s. Episode composite <b>2.33</b>. <a href="assets/video/chain-ep3.mp4">▶ play</a></td>
 </tr>
 </table>
 
-### Automated scoring drifts where there is no reference to check against
+Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.
+
+### 10 · Automated scoring drifts where there is no reference to check against
 
 Every dimension with a reference to check against is right; the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, noise, blur, ghosting.
 
@@ -476,9 +514,7 @@ Every dimension with a reference to check against is right; the one purely perce
 
 ## Release
 
-DramaChain Bench supports extensible evaluation rather than static benchmarking. Stage-level branching plus model-consistent automatic scoring lets a new model enter the board with single-stage generation only, requiring no additional human annotation.
-
-We will release **DramaChain Dimensions**, the **DramaChain Agentic Judge** framework, and a curated subset of the benchmark data.
+DramaChain Bench supports extensible evaluation rather than static benchmarking. The dimension set, the judge framework and a subset of the data will follow.
 
 ## Citation
 
@@ -488,7 +524,7 @@ We will release **DramaChain Dimensions**, the **DramaChain Agentic Judge** fram
   author      = {Shi, Haoyuan and Chen, Mingtao and Jiang, Shuo and Chen, Ziyan and
                  Sheng, Xuyi and Liu, Yiming and Zhang, Ying and Wang, Miao and
                  Lu, Jianxiang and Lu, Fanyang and Lu, Songyuanyi and Wu, Xiele and
-                 Hu, Zhichao and Wang, Lilin and Liu, Yuhong and Xuan, Richeng},
+                 Hu, Zhichao and Liu, Yuhong and Xuan, Richeng},
   institution = {Hunyuan, Tencent},
   year        = {2026}
 }
