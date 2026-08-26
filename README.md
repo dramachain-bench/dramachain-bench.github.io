@@ -425,7 +425,7 @@ Rooms drift before people do. Across the four shots the desk, the table lamp and
 </tr>
 </table>
 
-### 08 · The same defect recurs along the storyboard–keyframe–finished-drama chain
+### 08 · The same defect recurs along the storyboard–shot-video–finished-drama chain
 
 The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action *That Summer's Cicadas*, episode 3.
 
