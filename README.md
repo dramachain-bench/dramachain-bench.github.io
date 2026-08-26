@@ -451,9 +451,7 @@ The item is a whole episode — its thirteen shot videos, judged only on whether
 </tr>
 </table>
 
-`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3, shots 0–5 of 13. Watch the woman across shots 1, 3 and 5, and the man across 0 and 2. Each shot on its own is unremarkable; the episode is scored on whether they are the same people throughout.
-
-Most marks also carry a second offset — “at 8 s the woman's face is wrong”, “at 3 s the man's face changes”. Those seconds cannot be resolved to a shot: each shot was watched as its own clip and the marker schema stored no shot id beside the note. The report treats this as a defect in the labelling, not a finding: for a cross-shot item the unit of marking should be a shot number or a shot range.
+`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3, shots 0–5 of 13. The woman appears in shots 1, 3 and 5, the man in shots 0 and 2. Compare their faces and their costumes between those appearances: neither holds. No single shot is defective in itself — the mismatch exists only between them.
 
 ### 08 · An upstream defect is re-expressed downstream, not repaired
 
