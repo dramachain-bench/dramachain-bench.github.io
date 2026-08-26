@@ -216,9 +216,9 @@ The judge replicates the human reference automatically. It aggregates routed mea
 
 ## Case studies
 
-Ordered along the chain — storyboard, keyframes, then shot video. The last two cover what a stage inherits from the one before it.
+Nine cases: what a single stage decides, what fails only across shots, how a defect travels downstream, and what a single score hides.
 
-### 01 · Shot count decides executability
+### 01 · Shot-planning quality constrains chain executability
 
 One identical episode script, forked only at the storyboard stage. All three columns below are verbatim model output covering the *same opening beat* — a question and its answer. At three shots the question is deleted outright and the scene opens on the answer; at six and at twelve it survives in shot 1.
 
@@ -288,7 +288,167 @@ Question and answer take a shot each, with room left over for two pure reaction 
 
 The three-shot output compresses the episode into 30 s of self-declared duration and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement, marking the same few defects every time — several actions in one shot, blocking too complex to execute, no reaction shot.
 
-### 02 · Equal scores, different failure modes
+### 02 · Task difficulty is dominated by the input paradigm
+
+One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at `gpt-5.5-xhigh` → `gpt-image-2` → `kling-v3-omni`; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.
+
+<table>
+<tr>
+<th width="33%">first / last frame — 2 inputs</th>
+<th width="33%">grid — 1 input</th>
+<th width="33%">multi-reference — 5 inputs</th>
+</tr>
+<tr>
+<td><img src="assets/cases/para3-ff-a.jpg" alt="First frame: a man signing a demolition agreement"><img src="assets/cases/para3-ff-b.jpg" alt="Last frame of the same shot"></td>
+<td><img src="assets/cases/para3-grid.jpg" alt="One composite image holding the shot's four cuts as a 2x2 grid"></td>
+<td><img src="assets/cases/para3-ref-1.jpg" alt="Character sheet, Shen Zhixing"><img src="assets/cases/para3-ref-2.jpg" alt="Character sheet, Su Jinxiu"><img src="assets/cases/para3-ref-3.jpg" alt="Scene reference, the Su family dining room"><img src="assets/cases/para3-ref-4.jpg" alt="Prop reference, the demolition notice"><img src="assets/cases/para3-ref-5.jpg" alt="Prop reference, the divorce agreement"></td>
+</tr>
+<tr>
+<td><a href="assets/video/para3-ff.mp4"><img src="assets/video/para3-ff.jpg" alt="Play: first/last-frame output"></a></td>
+<td><a href="assets/video/para3-grid.mp4"><img src="assets/video/para3-grid.jpg" alt="Play: grid output"></a></td>
+<td><a href="assets/video/para3-mref.mp4"><img src="assets/video/para3-mref.jpg" alt="Play: multi-reference output"></a></td>
+</tr>
+<tr>
+<td>Pinned at both ends, the clip only has to travel between two fixed compositions. It drifts off the document and lands on the seated man exactly as the last frame specifies — a camera move, not a scene. <a href="assets/video/para3-ff.mp4">▶ play</a></td>
+<td>Four cuts arrive as one 2×2 image, so the model reads its own coverage off the panels — a wide two-shot across the dinner table, nothing like the close-up on the left. <a href="assets/video/para3-grid.mp4">▶ play</a></td>
+<td>No frame is given at all — characters, set and props arrive as three separate channels and the framing is left open. Su Jinxiu, referenced here and in neither of the other two runs, is the only one of the three clips she appears in. It runs 7 s, not 12. <a href="assets/video/para3-mref.mp4">▶ play</a></td>
+</tr>
+</table>
+
+Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are the complete input for that paradigm; no other material was supplied. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
+
+### 03 · Model tier differences are observable in a single-shot output
+
+The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.
+
+<table>
+<tr>
+<td width="33%"><a href="assets/video/tier-seedance.mp4"><img src="assets/video/tier-seedance.jpg" alt="Play: top tier, seedance-2.0"></a></td>
+<td width="33%"><a href="assets/video/tier-kling.mp4"><img src="assets/video/tier-kling.jpg" alt="Play: mid tier, kling-3.0-omni"></a></td>
+<td width="33%"><a href="assets/video/tier-pixverse.mp4"><img src="assets/video/tier-pixverse.jpg" alt="Play: bottom tier, pixverse-c1"></a></td>
+</tr>
+<tr>
+<td><b>Top tier</b> — <code>seedance-2.0</code><br>V-C1 character appearance <b>5.00</b>, 30 problems marked. <a href="assets/video/tier-seedance.mp4">▶ play</a></td>
+<td><b>Mid tier</b> — <code>kling-3.0-omni</code><br>V-C1 character appearance <b>2.33</b>, 109 problems marked. <a href="assets/video/tier-kling.mp4">▶ play</a></td>
+<td><b>Bottom tier</b> — <code>pixverse-c1</code><br>V-C1 character appearance <b>1.67</b>, 94 problems marked. <a href="assets/video/tier-pixverse.mp4">▶ play</a></td>
+</tr>
+</table>
+
+Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyframes and the same prompt.
+
+### 04 · Prompt-specified sound requirements remain poorly realised
+
+The prompt carries explicit `[Sound Effect]` lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score **1.67**.
+
+<table>
+<tr>
+<td width="50%"><a href="assets/video/audio-miss.mp4"><img src="assets/video/audio-miss.jpg" alt="Play: the shot whose specified sound design was never produced"></a></td>
+<td width="50%"><code>pixverse-c1</code> — V-E3 sound &amp; music <b>1.67</b><br>Live-action <i>Chong Lai Bu Du</i>, episode 3, shot 6, grid paradigm. Open the clip to hear what was and was not produced. <a href="assets/video/audio-miss.mp4">▶ play</a></td>
+</tr>
+</table>
+
+### 05 · Adequate single-shot quality does not guarantee cross-shot stability
+
+Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.
+
+**T1 `gpt-image-2`** — MI-D1 cross-shot character consistency **4.33**, alternate shots 1, 3, … 11 of 13
+
+<table>
+<tr>
+<td><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1"></td>
+<td><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3"></td>
+<td><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5"></td>
+<td><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7"></td>
+<td><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9"></td>
+<td><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
+<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
+</tr>
+</table>
+
+**T4 `wan2.7-image-pro`** — MI-D1 cross-shot character consistency **1.67**
+
+<table>
+<tr>
+<td><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1"></td>
+<td><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3"></td>
+<td><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators"></td>
+<td><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators"></td>
+<td><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9"></td>
+<td><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
+<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
+</tr>
+</table>
+
+### 06 · Long sequences struggle to hold character and background stable across shots
+
+The item is a whole episode — its thirteen shot videos, judged only on whether the people hold across them. Six are shown here. Three annotators scored cross-shot character consistency 2 / 1 / 1, a mean of **1.33**, and left 28 marks on that one dimension, tagged appearance differing across segments, faces breaking or swapping, and costume changing colour or style. The plainest of them needs no timestamp: “a scar on his face that was not there in the earlier shots”. Others read “character flickers”, “character disappears”, “the characters' positions in the space are a mess”.
+
+<table>
+<tr>
+<td><a href="assets/video/xface-0.mp4"><img src="assets/video/xface-0.jpg" alt="Play: shot 0"></a></td>
+<td><a href="assets/video/xface-1.mp4"><img src="assets/video/xface-1.jpg" alt="Play: shot 1"></a></td>
+<td><a href="assets/video/xface-2.mp4"><img src="assets/video/xface-2.jpg" alt="Play: shot 2"></a></td>
+<td><a href="assets/video/xface-3.mp4"><img src="assets/video/xface-3.jpg" alt="Play: shot 3"></a></td>
+<td><a href="assets/video/xface-4.mp4"><img src="assets/video/xface-4.jpg" alt="Play: shot 4"></a></td>
+<td><a href="assets/video/xface-5.mp4"><img src="assets/video/xface-5.jpg" alt="Play: shot 5"></a></td>
+</tr>
+<tr>
+<td align="center">shot 0</td><td align="center">shot 1</td><td align="center">shot 2</td>
+<td align="center">shot 3</td><td align="center">shot 4</td><td align="center">shot 5</td>
+</tr>
+</table>
+
+`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3, shots 0–5 of 13. The woman appears in shots 1, 3 and 5, the man in shots 0 and 2. Compare their faces and their costumes between those appearances: neither holds. No single shot is defective in itself — the mismatch exists only between them.
+
+### 07 · Upstream defects propagate and mutate downstream rather than self-correcting
+
+Rooms drift before people do. Across the four shots the desk, the table lamp and the wooden box all change, and all three annotators reported it, while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
+
+**`gpt-image-1.5`**, four consecutive shots — MI-D3 scene **2.00** vs MI-D1 character **3.67**
+
+<table>
+<tr>
+<td><img src="assets/cases/drift-1.jpg" alt="Consecutive shot 1"></td>
+<td><img src="assets/cases/drift-2.jpg" alt="Consecutive shot 2"></td>
+<td><img src="assets/cases/drift-3.jpg" alt="Consecutive shot 3"></td>
+<td><img src="assets/cases/drift-4.jpg" alt="Consecutive shot 4"></td>
+</tr>
+<tr>
+<td align="center">shot 1</td><td align="center">shot 2</td>
+<td align="center">shot 3</td><td align="center">shot 4</td>
+</tr>
+</table>
+
+### 08 · The same defect recurs along the storyboard–keyframe–finished-drama chain
+
+The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action *That Summer's Cicadas*, episode 3.
+
+**1 — Upstream: the storyboard packs a three-turn exchange into one shot.** `gpt-5.5-xhigh`, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker. Not a line of it is wrong; the fault is that a three-turn exchange was put in a single shot, leaving the speaker for a downstream video model to infer. Given the same script, a model that cut twelve shots gave each turn its own.
+
+**2 — Midstream: the generated clip gives the lines to the wrong people.** Two annotators working independently marked the same thing. Speech quality lands at **2.00** (2 / 3 / 1) while the shot's composite is 3.00 — the image is sound, the speaker attribution is not.
+
+**3 — Downstream: the finished drama still misattributes the same two lines.** The episode is scored on its own, by annotators who did not see the shot-level task. They marked *the same two lines*: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is **2.33**.
+
+<table>
+<tr>
+<td width="50%"><a href="assets/video/chain-shot.mp4"><img src="assets/video/chain-shot.jpg" alt="Play: the single shot that misassigns the lines"></a></td>
+<td width="50%"><a href="assets/video/chain-ep3.mp4"><img src="assets/video/chain-ep3.jpg" alt="Play: the finished episode carrying the same defect"></a></td>
+</tr>
+<tr>
+<td><b>Midstream</b> — <code>happyhorse-1.1</code>, single-shot video, shot 2. V-E1 speech quality <b>2.00</b>, shot composite 3.00. <a href="assets/video/chain-shot.mp4">▶ play</a></td>
+<td><b>Downstream</b> — <code>happyhorse-1.1</code>, the finished drama, final episode, 1 min 05 s. Episode composite <b>2.33</b>. <a href="assets/video/chain-ep3.mp4">▶ play</a></td>
+</tr>
+</table>
+
+Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.
+
+### 09 · Items with equal scores can carry different defect patterns
 
 One item, two models. Both score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in two disjoint places, and the two models trade which dimension they fail.
 
@@ -334,166 +494,6 @@ One item, two models. Both score 1.3–1.7 on some dimension, so a composite ran
 </details>
 
 Boxes are drawn independently by the three annotators; colour distinguishes them. In bold above are the actions the prompt asks for: `gpt-image-1.5` holds every face and does not perform them, while `wan2.7-image-pro` performs them and loses the faces — the same white-coated woman is boxed again and again as her identity drifts panel to panel, though the sheets never change.
-
-### 03 · Cross-shot consistency is a separate capability
-
-Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.
-
-**T1 `gpt-image-2`** — MI-D1 cross-shot character consistency **4.33**, alternate shots 1, 3, … 11 of 13
-
-<table>
-<tr>
-<td><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1"></td>
-<td><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3"></td>
-<td><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5"></td>
-<td><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7"></td>
-<td><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9"></td>
-<td><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11"></td>
-</tr>
-<tr>
-<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
-<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
-</tr>
-</table>
-
-**T4 `wan2.7-image-pro`** — MI-D1 cross-shot character consistency **1.67**
-
-<table>
-<tr>
-<td><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1"></td>
-<td><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3"></td>
-<td><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators"></td>
-<td><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators"></td>
-<td><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9"></td>
-<td><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11"></td>
-</tr>
-<tr>
-<td align="center">shot 1</td><td align="center">shot 3</td><td align="center">shot 5</td>
-<td align="center">shot 7</td><td align="center">shot 9</td><td align="center">shot 11</td>
-</tr>
-</table>
-
-### 04 · Difficulty is set by the input paradigm, not the visual style
-
-One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at `gpt-5.5-xhigh` → `gpt-image-2` → `kling-v3-omni`; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.
-
-<table>
-<tr>
-<th width="33%">first / last frame — 2 inputs</th>
-<th width="33%">grid — 1 input</th>
-<th width="33%">multi-reference — 5 inputs</th>
-</tr>
-<tr>
-<td><img src="assets/cases/para3-ff-a.jpg" alt="First frame: a man signing a demolition agreement"><img src="assets/cases/para3-ff-b.jpg" alt="Last frame of the same shot"></td>
-<td><img src="assets/cases/para3-grid.jpg" alt="One composite image holding the shot's four cuts as a 2x2 grid"></td>
-<td><img src="assets/cases/para3-ref-1.jpg" alt="Character sheet, Shen Zhixing"><img src="assets/cases/para3-ref-2.jpg" alt="Character sheet, Su Jinxiu"><img src="assets/cases/para3-ref-3.jpg" alt="Scene reference, the Su family dining room"><img src="assets/cases/para3-ref-4.jpg" alt="Prop reference, the demolition notice"><img src="assets/cases/para3-ref-5.jpg" alt="Prop reference, the divorce agreement"></td>
-</tr>
-<tr>
-<td><a href="assets/video/para3-ff.mp4"><img src="assets/video/para3-ff.jpg" alt="Play: first/last-frame output"></a></td>
-<td><a href="assets/video/para3-grid.mp4"><img src="assets/video/para3-grid.jpg" alt="Play: grid output"></a></td>
-<td><a href="assets/video/para3-mref.mp4"><img src="assets/video/para3-mref.jpg" alt="Play: multi-reference output"></a></td>
-</tr>
-<tr>
-<td>Pinned at both ends, the clip only has to travel between two fixed compositions. It drifts off the document and lands on the seated man exactly as the last frame specifies — a camera move, not a scene. <a href="assets/video/para3-ff.mp4">▶ play</a></td>
-<td>Four cuts arrive as one 2×2 image, so the model reads its own coverage off the panels — a wide two-shot across the dinner table, nothing like the close-up on the left. <a href="assets/video/para3-grid.mp4">▶ play</a></td>
-<td>No frame is given at all — characters, set and props arrive as three separate channels and the framing is left open. Su Jinxiu, referenced here and in neither of the other two runs, is the only one of the three clips she appears in. It runs 7 s, not 12. <a href="assets/video/para3-mref.mp4">▶ play</a></td>
-</tr>
-</table>
-
-Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are the complete input for that paradigm; no other material was supplied. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
-
-### 05 · Tier separation is visible within a single shot
-
-The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.
-
-<table>
-<tr>
-<td width="33%"><a href="assets/video/tier-seedance.mp4"><img src="assets/video/tier-seedance.jpg" alt="Play: top tier, seedance-2.0"></a></td>
-<td width="33%"><a href="assets/video/tier-kling.mp4"><img src="assets/video/tier-kling.jpg" alt="Play: mid tier, kling-3.0-omni"></a></td>
-<td width="33%"><a href="assets/video/tier-pixverse.mp4"><img src="assets/video/tier-pixverse.jpg" alt="Play: bottom tier, pixverse-c1"></a></td>
-</tr>
-<tr>
-<td><b>Top tier</b> — <code>seedance-2.0</code><br>V-C1 character appearance <b>5.00</b>, 30 problems marked. <a href="assets/video/tier-seedance.mp4">▶ play</a></td>
-<td><b>Mid tier</b> — <code>kling-3.0-omni</code><br>V-C1 character appearance <b>2.33</b>, 109 problems marked. <a href="assets/video/tier-kling.mp4">▶ play</a></td>
-<td><b>Bottom tier</b> — <code>pixverse-c1</code><br>V-C1 character appearance <b>1.67</b>, 94 problems marked. <a href="assets/video/tier-pixverse.mp4">▶ play</a></td>
-</tr>
-</table>
-
-Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyframes and the same prompt.
-
-### 06 · Specified sound design is not realised
-
-The prompt carries explicit `[Sound Effect]` lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score **1.67**.
-
-<table>
-<tr>
-<td width="50%"><a href="assets/video/audio-miss.mp4"><img src="assets/video/audio-miss.jpg" alt="Play: the shot whose specified sound design was never produced"></a></td>
-<td width="50%"><code>pixverse-c1</code> — V-E3 sound &amp; music <b>1.67</b><br>Live-action <i>Chong Lai Bu Du</i>, episode 3, shot 6, grid paradigm. Open the clip to hear what was and was not produced. <a href="assets/video/audio-miss.mp4">▶ play</a></td>
-</tr>
-</table>
-
-### 07 · Character identity does not hold across the shots of one episode
-
-The item is a whole episode — its thirteen shot videos, judged only on whether the people hold across them. Six are shown here. Three annotators scored cross-shot character consistency 2 / 1 / 1, a mean of **1.33**, and left 28 marks on that one dimension, tagged appearance differing across segments, faces breaking or swapping, and costume changing colour or style. The plainest of them needs no timestamp: “a scar on his face that was not there in the earlier shots”. Others read “character flickers”, “character disappears”, “the characters' positions in the space are a mess”.
-
-<table>
-<tr>
-<td><a href="assets/video/xface-0.mp4"><img src="assets/video/xface-0.jpg" alt="Play: shot 0"></a></td>
-<td><a href="assets/video/xface-1.mp4"><img src="assets/video/xface-1.jpg" alt="Play: shot 1"></a></td>
-<td><a href="assets/video/xface-2.mp4"><img src="assets/video/xface-2.jpg" alt="Play: shot 2"></a></td>
-<td><a href="assets/video/xface-3.mp4"><img src="assets/video/xface-3.jpg" alt="Play: shot 3"></a></td>
-<td><a href="assets/video/xface-4.mp4"><img src="assets/video/xface-4.jpg" alt="Play: shot 4"></a></td>
-<td><a href="assets/video/xface-5.mp4"><img src="assets/video/xface-5.jpg" alt="Play: shot 5"></a></td>
-</tr>
-<tr>
-<td align="center">shot 0</td><td align="center">shot 1</td><td align="center">shot 2</td>
-<td align="center">shot 3</td><td align="center">shot 4</td><td align="center">shot 5</td>
-</tr>
-</table>
-
-`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3, shots 0–5 of 13. The woman appears in shots 1, 3 and 5, the man in shots 0 and 2. Compare their faces and their costumes between those appearances: neither holds. No single shot is defective in itself — the mismatch exists only between them.
-
-### 08 · An upstream defect is re-expressed downstream, not repaired
-
-Rooms drift before people do. Across the four shots the desk, the table lamp and the wooden box all change, and all three annotators reported it, while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
-
-**`gpt-image-1.5`**, four consecutive shots — MI-D3 scene **2.00** vs MI-D1 character **3.67**
-
-<table>
-<tr>
-<td><img src="assets/cases/drift-1.jpg" alt="Consecutive shot 1"></td>
-<td><img src="assets/cases/drift-2.jpg" alt="Consecutive shot 2"></td>
-<td><img src="assets/cases/drift-3.jpg" alt="Consecutive shot 3"></td>
-<td><img src="assets/cases/drift-4.jpg" alt="Consecutive shot 4"></td>
-</tr>
-<tr>
-<td align="center">shot 1</td><td align="center">shot 2</td>
-<td align="center">shot 3</td><td align="center">shot 4</td>
-</tr>
-</table>
-
-### 09 · One defect recorded at three consecutive granularities
-
-The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action *That Summer's Cicadas*, episode 3.
-
-**1 — Upstream: the storyboard packs a three-turn exchange into one shot.** `gpt-5.5-xhigh`, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker. Not a line of it is wrong; the fault is that a three-turn exchange was put in a single shot, leaving the speaker for a downstream video model to infer. Given the same script, a model that cut twelve shots gave each turn its own.
-
-**2 — Midstream: the generated clip gives the lines to the wrong people.** Two annotators working independently marked the same thing. Speech quality lands at **2.00** (2 / 3 / 1) while the shot's composite is 3.00 — the image is sound, the speaker attribution is not.
-
-**3 — Downstream: the finished drama still misattributes the same two lines.** The episode is scored on its own, by annotators who did not see the shot-level task. They marked *the same two lines*: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is **2.33**.
-
-<table>
-<tr>
-<td width="50%"><a href="assets/video/chain-shot.mp4"><img src="assets/video/chain-shot.jpg" alt="Play: the single shot that misassigns the lines"></a></td>
-<td width="50%"><a href="assets/video/chain-ep3.mp4"><img src="assets/video/chain-ep3.jpg" alt="Play: the finished episode carrying the same defect"></a></td>
-</tr>
-<tr>
-<td><b>Midstream</b> — <code>happyhorse-1.1</code>, single-shot video, shot 2. V-E1 speech quality <b>2.00</b>, shot composite 3.00. <a href="assets/video/chain-shot.mp4">▶ play</a></td>
-<td><b>Downstream</b> — <code>happyhorse-1.1</code>, the finished drama, final episode, 1 min 05 s. Episode composite <b>2.33</b>. <a href="assets/video/chain-ep3.mp4">▶ play</a></td>
-</tr>
-</table>
-
-Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.
 
 ## Release
 

@@ -206,6 +206,25 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .case>b .cn{font-family:var(--mono);font-style:normal;font-size:12px;font-weight:700;
   color:var(--accent);letter-spacing:.04em;margin-right:9px}
 .case-lead{font-size:13px;color:var(--muted);line-height:1.7;margin:-2px 0 4px}
+/* the cases are read one at a time; the strip of numbers is the index */
+.case-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:15px 0 2px}
+.case-tabs button{font-family:var(--mono);font-size:11.5px;font-weight:700;
+  letter-spacing:.04em;color:var(--muted);background:var(--sheet);
+  border:1px solid var(--line);border-radius:20px;padding:5px 13px;cursor:pointer;
+  transition:color .15s,background .15s,border-color .15s}
+.case-tabs button:hover{color:var(--ink);border-color:var(--ink-2)}
+.case-tabs button[aria-selected="true"]{color:#fff;background:var(--accent);
+  border-color:var(--accent)}
+.case-step{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}
+.case-step button{font-size:12.5px;line-height:1.5;color:var(--ink-2);background:none;
+  border:0;padding:0;cursor:pointer;text-align:left;font-family:inherit}
+.case-step button:last-child{text-align:right}
+.case-step button:hover:not([disabled]){color:var(--accent)}
+.case-step button[disabled]{opacity:.3;cursor:default}
+.case-step .k{display:block;font-family:var(--mono);font-size:10px;
+  letter-spacing:.06em;color:var(--muted);margin-bottom:3px}
+@media (max-width:720px){.case-step{grid-template-columns:1fr}
+  .case-step button,.case-step button:last-child{text-align:left}}
 .case p b,.case figcaption b,.case td b{display:inline}
 .case p{font-size:14px;color:var(--ink-2);margin-bottom:0;line-height:1.7}
 .case table{margin-top:14px;font-size:12.5px}
@@ -643,11 +662,12 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <section id="cases">
   <div class="wrap">
     <h2><span data-l="en">Cases</span><span data-l="zh">样例</span></h2>
-    <p class="case-lead" data-l="en">Ordered along the chain — storyboard, keyframes, then shot video. The last two cover what a stage inherits from the one before it.</p>
-    <p class="case-lead" data-l="zh">案例按链路顺序排列：分镜、关键帧、分镜视频依次展开；末尾两例关于某一环节从上一环节继承到的缺陷。</p>
+    <p class="case-lead" data-l="en">Nine cases, shown one at a time: what a single stage decides, what fails only across shots, how a defect travels downstream, and what a single score hides.</p>
+    <p class="case-lead" data-l="zh">九个案例，逐个查看：单一环节决定了什么、什么只在跨镜头时才失效、缺陷如何向下游传导，以及一个分数掩盖了什么。</p>
+    <div class="case-tabs" id="case-tabs" role="tablist"></div>
 
     <div class="case">
-      <b><i class="cn">01</i><span data-l="en">Shot count decides executability</span><span data-l="zh">镜头数决定可执行性</span></b>
+      <b><i class="cn">01</i><span data-l="en">Shot-planning quality constrains chain executability</span><span data-l="zh">镜头规划质量约束生成链路可执行性</span></b>
       <p data-l="en">One identical episode script, forked only at the storyboard stage. All three columns below are verbatim model output covering the <em>same opening beat</em> — a question and its answer. At three shots the question is deleted outright and the scene opens on the answer; at six and at twelve it survives in shot 1.</p>
 <p data-l="zh">同一份剧本，只在分镜设计这一环分叉。下面三栏都是模型原文，覆盖<em>同一个开场节拍</em>——一问一答。切到 3 个镜时，该提问被整句删除，场景直接从回答开始；切到 6 镜与 12 镜时，它都保留在镜头 1 中。</p>
       <div class="sbgrid three">
@@ -725,103 +745,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><i class="cn">02</i><span data-l="en">Equal scores, different failure modes</span><span data-l="zh">分数相同，缺陷形态不同</span></b>
-      <p data-l="en">One item, two models. Both score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in two disjoint places, and the two models trade which dimension they fail.</p>
-<p data-l="zh">同一道题，两个模型。两者都在某个维度上是 1.3–1.7 分，综合分会把它们排在一起，而标注框落在两处互不相交的位置；两个模型还互换了失败的维度。</p>
-
-      <div class="cfig">
-        <div class="crow-h">
-          <b data-l="en">Input</b><b data-l="zh">输入</b>
-          <span data-l="en">the six references both models were given; identity, costume and the set are fixed here</span>
-          <span data-l="zh">两个模型共用的六张参考素材；身份、服装与场景在这里就已经定死</span>
-        </div>
-        <div class="crow">
-          <figure><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao" loading="lazy"><figcaption>龚啸</figcaption></figure>
-          <figure><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan" loading="lazy"><figcaption>江临渊</figcaption></figure>
-          <figure><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia" loading="lazy"><figcaption>沈知夏</figcaption></figure>
-          <figure><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian" loading="lazy"><figcaption>江念念</figcaption></figure>
-          <figure><img src="assets/cases/pair-card-thug.jpg" alt="Character sheet, one of Gong Xiao's men" loading="lazy"><figcaption><span data-l="en">龚啸手下壮汉</span><span data-l="zh">龚啸手下壮汉</span></figcaption></figure>
-          <figure><img src="assets/cases/pair-card-clinic.jpg" alt="Scene reference, the Gu family clinic in disarray" loading="lazy"><figcaption>顾家诊所</figcaption></figure>
-        </div>
-        <div class="cg2 r23">
-          <figure>
-            <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
-            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-C1 face identity <span class="fail">1.67</span>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</span><span data-l="zh">—— I-C1 人脸身份 <span class="fail">1.67</span>，三人共 15 个框，全部落在脸上；同一题的动作交互反而有 3.0 分。</span></figcaption>
-          </figure>
-          <figure>
-            <img src="assets/cases/boxed-action.jpg" alt="Keyframe with thirteen annotator boxes, every one on a limb mid-action" loading="lazy">
-            <figcaption><code>gpt-image-1.5</code> <span data-l="en">— I-B2 action interaction <span class="fail">1.33</span>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</span><span data-l="zh">—— I-B2 动作交互 <span class="fail">1.33</span>，三人共 13 个框，全部落在肢体与动作上；同一题的人脸身份有 3.33 分。</span></figcaption>
-          </figure>
-        </div>
-      </div>
-
-      <details class="script">
-        <summary><span data-l="en">The grid prompt both models were given — 4 panels, actions highlighted</span><span data-l="zh">两个模型共用的宫格提示词 —— 共 4 格，动作已高亮</span></summary>
-        <div class="script-body" data-l="en">
-          <h4>Panel 1 of 4</h4>
-          <p>Anime style, medium close-up, camera slightly low to the right of the counter. The street-facing glass door at frame left <mark>is kicked open with force by 〈Gong Xiao〉's black-and-red high-top fighting shoe</mark>, sole angled at the lens, the frame shuddering with exaggerated speed lines…</p>
-          <h4>Panel 2 of 4</h4>
-          <p>Anime style, low medium close-up. 〈Gong Xiao〉 stands left of centre… several 〈of Gong Xiao's men〉 crowd in behind him facing the counter, <mark>one still bracing the overturned waiting bench with both arms</mark>, the bench tipped into the lower right. 〈Shen Zhixia〉 stands at the counter facing him, <mark>both hands pressed down on the counter edge</mark>, pale but with her back straight. 〈Jiang Niannian〉 presses against the inside of the counter, <mark>a sweet clenched in her fist</mark>…</p>
-          <h4>Panel 3 of 4</h4>
-          <p>Anime style, low close-up. 〈Gong Xiao〉 occupies the left-centre of frame… <mark>he tilts his head, runs his tongue over his teeth and sneers</mark>, mouth pressed down, eyes fixed on the counter…</p>
-          <h4>Panel 4 of 4</h4>
-          <p>Anime style, reverse medium close-up from the right of the counter. 〈Shen Zhixia〉 stands right of centre facing 〈Gong Xiao〉, <mark>both hands pressed hard on the counter edge, knuckles white</mark>, face bloodless, her look shaking but set… 〈Jiang Niannian〉 presses against the inside of the counter beside her, <mark>clutching the sweet, chin up, watching in fright</mark>…</p>
-        </div>
-        <div class="script-body" data-l="zh">
-          <h4>宫格 Panel #1 / 共 4</h4>
-          <p>动漫风格，中近景，机位在柜台右侧略偏低，画面左侧的临街玻璃门<mark>被〈龚啸〉的黑红高帮搏击训练鞋猛力踹开</mark>，鞋底斜向镜头，门框震动并带夸张速度线……</p>
-          <h4>宫格 Panel #2 / 共 4</h4>
-          <p>动漫风格，低机位中近景，〈龚啸〉站在画面中央偏左……几名〈龚啸手下壮汉〉挤在他背后，面向柜台方向，<mark>其中一人双臂仍撑着掀翻的候诊长椅</mark>，长椅斜倒在右下角；〈沈知夏〉站在柜台前，面向左侧的〈龚啸〉，<mark>双手压住柜台边缘</mark>，脸色发白但脊背挺住；〈江念念〉贴在柜台内侧，面向左侧门口，<mark>攥着糖</mark>，杏眼紧张……</p>
-          <h4>宫格 Panel #3 / 共 4</h4>
-          <p>动漫风格，低机位近景，〈龚啸〉占据画面左中部……<mark>他偏头舔牙冷笑</mark>，嘴角压低，眼神凶狠盯向柜台……</p>
-          <h4>宫格 Panel #4 / 共 4</h4>
-          <p>动漫风格，柜台右侧反打中近景，〈沈知夏〉站在画面右侧偏中，身体面向左侧的〈龚啸〉……<mark>双手用力压在柜台边缘，指节发白</mark>，脸色苍白、眼神发抖却坚定；〈江念念〉贴在柜台内侧靠近〈沈知夏〉，<mark>攥着糖仰头紧张看</mark>……</p>
-        </div>
-      </details>
-
-      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them. Highlighted above are the actions the prompt asks for: <code>gpt-image-1.5</code> holds every face and does not perform them, while <code>wan2.7-image-pro</code> performs them and loses the faces — the same white-coated woman is boxed again and again as her identity drifts panel to panel, though the sheets never change.</p>
-<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。上面高亮的是提示词要求的动作：<code>gpt-image-1.5</code> 保住了人脸身份，却未做出这些动作；<code>wan2.7-image-pro</code> 做出了动作，却丢失了身份——同一位白大褂女性在四格中被反复框出，设定卡自始至终没有改变，身份却在格与格之间漂移。</p>
-    </div>
-
-    <div class="case">
-      <b><i class="cn">03</i><span data-l="en">Cross-shot consistency is a separate capability</span><span data-l="zh">跨镜一致是一项独立能力</span></b>
-      <p data-l="en">Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.</p>
-<p data-l="zh">同一集、同一套角色设定卡。榜首档一行的两位主角跨镜稳住了，末档一行没有——相差 2.66 分。真正重要的性质是，失败那一行里的每一格单独看都无可指摘：镜 7 单看没有任何错，它错在与镜 5 的关系上。</p>
-
-      <div class="cfig">
-        <div class="crow-h">
-          <b>T1 <code>gpt-image-2</code></b>
-          <span>MI-D1 cross-shot character consistency <span class="pass">4.33</span></span>
-          <span>alternate shots, 1, 3, … 11 of 13</span>
-        </div>
-        <div class="crow">
-          <figure><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5" loading="lazy"><figcaption>shot 5</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7" loading="lazy"><figcaption>shot 7</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
-        </div>
-      </div>
-
-      <div class="cfig">
-        <div class="crow-h">
-          <b>T4 <code>wan2.7-image-pro</code></b>
-          <span>MI-D1 cross-shot character consistency <span class="fail">1.67</span></span>
-        </div>
-        <div class="crow">
-          <figure><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators" loading="lazy"><figcaption>shot 5</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators" loading="lazy"><figcaption>shot 7</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
-          <figure><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
-        </div>
-      </div>
-    </div>
-
-    <div class="case">
-      <b><i class="cn">04</i><span data-l="en">Difficulty is set by the input paradigm, not the visual style</span><span data-l="zh">难度由输入范式决定，而非画风</span></b>
+      <b><i class="cn">02</i><span data-l="en">Task difficulty is dominated by the input paradigm</span><span data-l="zh">任务难度由输入范式主导</span></b>
       <p data-l="en">One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>kling-v3-omni</code>; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.</p>
 <p data-l="zh">同一集里的同一个镜头，完整跑过三种范式。剧目、集数、镜号，以及分镜、图像、视频三个模型全部固定为 <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>kling-v3-omni</code>，唯一的变量是视频模型所接收的输入。两张帧图、一张宫格、五张参考，给出的是同一个节拍的三种调度、三个不同的配角，以及 12 秒、12 秒、7 秒三种时长。全量语料上的不及格维度数：首尾帧 1/10，宫格 9/15。</p>
       <div class="cfig vrow pset">
@@ -860,7 +784,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><i class="cn">05</i><span data-l="en">Tier separation is visible within a single shot</span><span data-l="zh">档位差异在单个镜头内即可见</span></b>
+      <b><i class="cn">03</i><span data-l="en">Model tier differences are observable in a single-shot output</span><span data-l="zh">模型档位差异可于单镜头输出中显现</span></b>
       <p data-l="en">The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.</p>
 <p data-l="zh">同一集的同一个镜头，三个模型。三名标注员分别标出 30、109、94 处问题：榜首档保持了角色外观，中段档出现漂移，末档完全失守。</p>
       <div class="cfig vrow">
@@ -882,7 +806,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><i class="cn">06</i><span data-l="en">Specified sound design is not realised</span><span data-l="zh">提示词指定的音效未被实现</span></b>
+      <b><i class="cn">04</i><span data-l="en">Prompt-specified sound requirements remain poorly realised</span><span data-l="zh">提示词指定音效需求落地仍有问题</span></b>
       <p data-l="en">The prompt carries explicit <code>[Sound Effect]</code> lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score <span class="fail">1.67</span>.</p>
       <p data-l="zh">提示词里逐镜写明了 <code>[Sound Effect]</code>：包厢内低沉的餐厅环境声、远处空调轻响、餐具与酒杯轻微碰响；素圈戒指轻叩桌面的短促声；酒杯细微震响。标注员逐条核对，每一条均标注为「没有体现」。另一名标注员标出了反向的问题：出现了一个杯子碰撞的音效，而画面中并无对应动作。音效与配乐 <span class="fail">1.67</span> 分。</p>
       <div class="cfig vrow two">
@@ -896,7 +820,44 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><i class="cn">07</i><span data-l="en">Character identity does not hold across the shots of one episode</span><span data-l="zh">角色身份在同一集的镜头之间无法保持</span></b>
+      <b><i class="cn">05</i><span data-l="en">Adequate single-shot quality does not guarantee cross-shot stability</span><span data-l="zh">单镜头质量达标仍可能跨镜头失稳</span></b>
+      <p data-l="en">Same episode, same character sheets. The top row holds its two leads across shots and the bottom row does not — a 2.66-point gap. Every panel in the failing row is defensible on its own: nothing in shot 7 is wrong except relative to shot 5.</p>
+<p data-l="zh">同一集、同一套角色设定卡。榜首档一行的两位主角跨镜稳住了，末档一行没有——相差 2.66 分。真正重要的性质是，失败那一行里的每一格单独看都无可指摘：镜 7 单看没有任何错，它错在与镜 5 的关系上。</p>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b>T1 <code>gpt-image-2</code></b>
+          <span>MI-D1 cross-shot character consistency <span class="pass">4.33</span></span>
+          <span>alternate shots, 1, 3, … 11 of 13</span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/xshot-t1-01.jpg" alt="Top-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-03.jpg" alt="Top-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-05.jpg" alt="Top-tier shot 5" loading="lazy"><figcaption>shot 5</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-07.jpg" alt="Top-tier shot 7" loading="lazy"><figcaption>shot 7</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-09.jpg" alt="Top-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t1-11.jpg" alt="Top-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b>T4 <code>wan2.7-image-pro</code></b>
+          <span>MI-D1 cross-shot character consistency <span class="fail">1.67</span></span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/xshot-t4-01.jpg" alt="Bottom-tier shot 1" loading="lazy"><figcaption>shot 1</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-03.jpg" alt="Bottom-tier shot 3" loading="lazy"><figcaption>shot 3</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-05.jpg" alt="Bottom-tier shot 5, boxed by annotators" loading="lazy"><figcaption>shot 5</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-07.jpg" alt="Bottom-tier shot 7, boxed by annotators" loading="lazy"><figcaption>shot 7</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-09.jpg" alt="Bottom-tier shot 9" loading="lazy"><figcaption>shot 9</figcaption></figure>
+          <figure><img src="assets/cases/xshot-t4-11.jpg" alt="Bottom-tier shot 11" loading="lazy"><figcaption>shot 11</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <b><i class="cn">06</i><span data-l="en">Long sequences struggle to hold character and background stable across shots</span><span data-l="zh">长序列难以维持跨镜头角色 / 背景稳定</span></b>
       <p data-l="en">The item is a whole episode — its thirteen shot videos, judged only on whether the people hold across them. Six are shown here. Three annotators scored cross-shot character consistency 2 / 1 / 1, a mean of <span class="fail">1.33</span>, and left 28 marks on that one dimension, tagged appearance differing across segments, faces breaking or swapping, and costume changing colour or style. The plainest of them needs no timestamp: “a scar on his face that was not there in the earlier shots”. Others read “character flickers”, “character disappears”, “the characters' positions in the space are a mess”.</p>
       <p data-l="zh">这道题是一整集——该集的十三条分镜视频，只评人物在其间能否保持一致。此处展示其中六条。三名标注员给角色跨镜一致打了 2 / 1 / 1，均分 <span class="fail">1.33</span>，仅这一个维度就留下 28 条标记，标签集中在跨段长相不一、人物崩坏换脸、服装变色与款式变化。其中最直接的一条不依赖时间点：「人物脸上的疤痕，之前镜头中没有」。另有「人物闪现」「人物消失」「人物空间站位混乱」。</p>
       <div class="cfig vrow six">
@@ -912,7 +873,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><i class="cn">08</i><span data-l="en">An upstream defect is re-expressed downstream, not repaired</span><span data-l="zh">上游缺陷不会在下游被修好，而是被换一种形态重新表达</span></b>
+      <b><i class="cn">07</i><span data-l="en">Upstream defects propagate and mutate downstream rather than self-correcting</span><span data-l="zh">上游缺陷向下游传导演化，无法自我修复</span></b>
       <p data-l="en">Rooms drift before people do. Across the four shots the desk, the table lamp and the wooden box all change, and all three annotators reported it — “the desk changes”, “the lamp and the wooden box change in every shot, and so does the sense of depth”, plus set-dressing, lighting and scene-continuity tags. Two of them separately noted the same continuity error: the window shows a bedroom outside. The characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.</p>
 <p data-l="zh">场景比人物更早漂移。四个镜头中的桌子、台灯与木盒均在变化，三名标注员都报告了这一点——「桌子有变化」「台灯与木盒每个镜头都在变，纵深感变化幅度也大」，另有陈设变化、光线色调变化、场景切换混乱三类标签；其中两人还各自发现了同一处穿帮：窗户外面是卧室。而人物一侧保持住了。视频环节不会修复这种漂移，而是换一种形态重新表达出来，并一直留存至成片。</p>
       <div class="cfig">
@@ -931,7 +892,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><i class="cn">09</i><span data-l="en">One defect recorded at three consecutive granularities</span><span data-l="zh">同一处缺陷在三个连续粒度上各被记录一次</span></b>
+      <b><i class="cn">08</i><span data-l="en">The same defect recurs along the storyboard–keyframe–finished-drama chain</span><span data-l="zh">同源缺陷沿分镜-关键帧-成片链路复现</span></b>
       <p data-l="en">The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action <i>That Summer's Cicadas</i>, episode 3.</p>
       <p data-l="zh">环节之间并非彼此独立，最直接的证据如下：同一部剧、同一处错误，在三个连续粒度上各留下一次痕迹。真人短剧《那年蝉鸣》第 3 集。</p>
 
@@ -994,6 +955,67 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       <p class="fnote" data-l="en">Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.</p>
       <p class="fnote" data-l="zh">三个环节各自独立出题，标注员只看到自己那一道。这处缺陷被标出三次，是因为它确实存在三次，而非一次判断顺延至下一环节。</p>
     </div>
+
+    <div class="case">
+      <b><i class="cn">09</i><span data-l="en">Items with equal scores can carry different defect patterns</span><span data-l="zh">同等评分样本可具备差异化缺陷模式</span></b>
+      <p data-l="en">One item, two models. Both score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in two disjoint places, and the two models trade which dimension they fail.</p>
+<p data-l="zh">同一道题，两个模型。两者都在某个维度上是 1.3–1.7 分，综合分会把它们排在一起，而标注框落在两处互不相交的位置；两个模型还互换了失败的维度。</p>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b data-l="en">Input</b><b data-l="zh">输入</b>
+          <span data-l="en">the six references both models were given; identity, costume and the set are fixed here</span>
+          <span data-l="zh">两个模型共用的六张参考素材；身份、服装与场景在这里就已经定死</span>
+        </div>
+        <div class="crow">
+          <figure><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao" loading="lazy"><figcaption>龚啸</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan" loading="lazy"><figcaption>江临渊</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia" loading="lazy"><figcaption>沈知夏</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian" loading="lazy"><figcaption>江念念</figcaption></figure>
+          <figure><img src="assets/cases/pair-card-thug.jpg" alt="Character sheet, one of Gong Xiao's men" loading="lazy"><figcaption><span data-l="en">龚啸手下壮汉</span><span data-l="zh">龚啸手下壮汉</span></figcaption></figure>
+          <figure><img src="assets/cases/pair-card-clinic.jpg" alt="Scene reference, the Gu family clinic in disarray" loading="lazy"><figcaption>顾家诊所</figcaption></figure>
+        </div>
+        <div class="cg2 r23">
+          <figure>
+            <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
+            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-C1 face identity <span class="fail">1.67</span>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</span><span data-l="zh">—— I-C1 人脸身份 <span class="fail">1.67</span>，三人共 15 个框，全部落在脸上；同一题的动作交互反而有 3.0 分。</span></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/cases/boxed-action.jpg" alt="Keyframe with thirteen annotator boxes, every one on a limb mid-action" loading="lazy">
+            <figcaption><code>gpt-image-1.5</code> <span data-l="en">— I-B2 action interaction <span class="fail">1.33</span>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</span><span data-l="zh">—— I-B2 动作交互 <span class="fail">1.33</span>，三人共 13 个框，全部落在肢体与动作上；同一题的人脸身份有 3.33 分。</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <details class="script">
+        <summary><span data-l="en">The grid prompt both models were given — 4 panels, actions highlighted</span><span data-l="zh">两个模型共用的宫格提示词 —— 共 4 格，动作已高亮</span></summary>
+        <div class="script-body" data-l="en">
+          <h4>Panel 1 of 4</h4>
+          <p>Anime style, medium close-up, camera slightly low to the right of the counter. The street-facing glass door at frame left <mark>is kicked open with force by 〈Gong Xiao〉's black-and-red high-top fighting shoe</mark>, sole angled at the lens, the frame shuddering with exaggerated speed lines…</p>
+          <h4>Panel 2 of 4</h4>
+          <p>Anime style, low medium close-up. 〈Gong Xiao〉 stands left of centre… several 〈of Gong Xiao's men〉 crowd in behind him facing the counter, <mark>one still bracing the overturned waiting bench with both arms</mark>, the bench tipped into the lower right. 〈Shen Zhixia〉 stands at the counter facing him, <mark>both hands pressed down on the counter edge</mark>, pale but with her back straight. 〈Jiang Niannian〉 presses against the inside of the counter, <mark>a sweet clenched in her fist</mark>…</p>
+          <h4>Panel 3 of 4</h4>
+          <p>Anime style, low close-up. 〈Gong Xiao〉 occupies the left-centre of frame… <mark>he tilts his head, runs his tongue over his teeth and sneers</mark>, mouth pressed down, eyes fixed on the counter…</p>
+          <h4>Panel 4 of 4</h4>
+          <p>Anime style, reverse medium close-up from the right of the counter. 〈Shen Zhixia〉 stands right of centre facing 〈Gong Xiao〉, <mark>both hands pressed hard on the counter edge, knuckles white</mark>, face bloodless, her look shaking but set… 〈Jiang Niannian〉 presses against the inside of the counter beside her, <mark>clutching the sweet, chin up, watching in fright</mark>…</p>
+        </div>
+        <div class="script-body" data-l="zh">
+          <h4>宫格 Panel #1 / 共 4</h4>
+          <p>动漫风格，中近景，机位在柜台右侧略偏低，画面左侧的临街玻璃门<mark>被〈龚啸〉的黑红高帮搏击训练鞋猛力踹开</mark>，鞋底斜向镜头，门框震动并带夸张速度线……</p>
+          <h4>宫格 Panel #2 / 共 4</h4>
+          <p>动漫风格，低机位中近景，〈龚啸〉站在画面中央偏左……几名〈龚啸手下壮汉〉挤在他背后，面向柜台方向，<mark>其中一人双臂仍撑着掀翻的候诊长椅</mark>，长椅斜倒在右下角；〈沈知夏〉站在柜台前，面向左侧的〈龚啸〉，<mark>双手压住柜台边缘</mark>，脸色发白但脊背挺住；〈江念念〉贴在柜台内侧，面向左侧门口，<mark>攥着糖</mark>，杏眼紧张……</p>
+          <h4>宫格 Panel #3 / 共 4</h4>
+          <p>动漫风格，低机位近景，〈龚啸〉占据画面左中部……<mark>他偏头舔牙冷笑</mark>，嘴角压低，眼神凶狠盯向柜台……</p>
+          <h4>宫格 Panel #4 / 共 4</h4>
+          <p>动漫风格，柜台右侧反打中近景，〈沈知夏〉站在画面右侧偏中，身体面向左侧的〈龚啸〉……<mark>双手用力压在柜台边缘，指节发白</mark>，脸色苍白、眼神发抖却坚定；〈江念念〉贴在柜台内侧靠近〈沈知夏〉，<mark>攥着糖仰头紧张看</mark>……</p>
+        </div>
+      </details>
+
+      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them. Highlighted above are the actions the prompt asks for: <code>gpt-image-1.5</code> holds every face and does not perform them, while <code>wan2.7-image-pro</code> performs them and loses the faces — the same white-coated woman is boxed again and again as her identity drifts panel to panel, though the sheets never change.</p>
+<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。上面高亮的是提示词要求的动作：<code>gpt-image-1.5</code> 保住了人脸身份，却未做出这些动作；<code>wan2.7-image-pro</code> 做出了动作，却丢失了身份——同一位白大褂女性在四格中被反复框出，设定卡自始至终没有改变，身份却在格与格之间漂移。</p>
+    </div>
+
+    <div class="case-step" id="case-step"></div>
   </div>
 </section>
 
@@ -1241,11 +1263,67 @@ function setLang(lang){
   const open = [...document.querySelectorAll('.tab')]
     .findIndex(t => t.getAttribute('aria-selected') === 'true');
   renderBoard(Math.max(0, open));
+  if (typeof paintCaseStep === 'function') paintCaseStep();
   try { localStorage.setItem('dcb-lang', lang); } catch (e) {}
 }
 
 document.getElementById('lang-btn')
   .addEventListener('click', () => setLang(LANG === 'zh' ? 'en' : 'zh'));
+
+/* ── cases, one at a time ─────────────────────────────────────────────── */
+
+const CASES = [...document.querySelectorAll('#cases .case')];
+const caseTabs = document.getElementById('case-tabs');
+const caseStep = document.getElementById('case-step');
+let caseAt = 0;
+
+const caseTitle = el => {
+  const s = el.querySelector(`:scope > b > span[data-l="${LANG}"]`);
+  return s ? s.textContent.trim() : '';
+};
+
+CASES.forEach((c, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = String(i + 1).padStart(2, '0');
+  b.setAttribute('role', 'tab');
+  b.addEventListener('click', () => showCase(i, true));
+  caseTabs.appendChild(b);
+});
+
+caseStep.innerHTML = '<button type="button"></button><button type="button"></button>';
+const [casePrev, caseNext] = caseStep.children;
+casePrev.addEventListener('click', () => showCase(caseAt - 1, true));
+caseNext.addEventListener('click', () => showCase(caseAt + 1, true));
+
+/* Labels carry the neighbouring title, so they have to be redrawn on a
+   language switch as well as on a move. */
+function paintCaseStep(){
+  [...caseTabs.children].forEach((b, i) => {
+    b.setAttribute('aria-selected', i === caseAt ? 'true' : 'false');
+    b.title = caseTitle(CASES[i]);
+  });
+  const edge = (btn, i, key) => {
+    btn.disabled = i < 0 || i >= CASES.length;
+    btn.innerHTML = btn.disabled ? ''
+      : `<span class="k">${key} · ${String(i + 1).padStart(2, '0')}</span>${caseTitle(CASES[i])}`;
+  };
+  edge(casePrev, caseAt - 1, t('PREV', '上一例'));
+  edge(caseNext, caseAt + 1, t('NEXT', '下一例'));
+}
+
+function showCase(i, scroll){
+  if (i < 0 || i >= CASES.length) return;
+  caseAt = i;
+  CASES.forEach((c, j) => {
+    c.hidden = j !== i;
+    if (j !== i) c.querySelectorAll('video').forEach(v => v.pause());
+  });
+  paintCaseStep();
+  if (scroll) caseTabs.scrollIntoView({block: 'start', behavior: 'smooth'});
+}
+
+showCase(0, false);
 
 let saved = 'en';
 try { saved = localStorage.getItem('dcb-lang') || 'en'; } catch (e) {}
