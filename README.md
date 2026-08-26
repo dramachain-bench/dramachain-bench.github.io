@@ -165,8 +165,6 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 
 </details>
 
-> Absolute scores for single-shot video and episode keyframes are **not** comparable with the other granularities, because dimensions were retired from those scales. The main text reports raw means; the covariate-adjusted variant differs by up to 0.11 points.
-
 ---
 
 ## The three systems
