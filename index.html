@@ -215,7 +215,7 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .case-tabs button:hover{color:var(--ink);border-color:var(--ink-2)}
 .case-tabs button[aria-selected="true"]{color:#fff;background:var(--accent);
   border-color:var(--accent)}
-.case-step{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px;
+.case-step{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:15px;
   align-items:start}
 .case-step button{display:flex;flex-direction:column;align-items:flex-start;
   font-size:12.5px;line-height:1.5;color:var(--ink-2);background:none;border:0;
@@ -225,7 +225,7 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .case-step button[disabled]{opacity:.3;cursor:default}
 .case-step .k{font-family:var(--mono);font-size:10px;letter-spacing:.06em;
   color:var(--muted);margin-bottom:3px}
-.case-step .t{max-width:30ch}
+.case-step .t{max-width:100%;text-wrap:balance}
 @media (max-width:720px){.case-step{grid-template-columns:1fr}
   .case-step button,.case-step button:last-child{text-align:left}}
 .case p b,.case figcaption b,.case td b{display:inline}
