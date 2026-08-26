@@ -272,7 +272,7 @@ Nothing is dropped, so dialogue fidelity is **5.00**. 2,155 characters over six 
 
 > “Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.”
 
-Question and answer take a shot each, with room left over for two pure reaction shots. 2,769 characters over twelve shots, most carrying a single turn. **Not one** of the 15 marked problems is an omission: “shots 5–6 have no transition designed”, “shots 1–12 repeat the costume description redundantly” — all of them *not good enough* rather than *missing*.
+Question and answer take a shot each, with room left over for two pure reaction shots. 2,769 characters over twelve shots, most carrying a single turn. **Not one** of the 15 marked problems is an omission: “shots 5–6 have no transition designed”, “shots 1–12 repeat the costume description redundantly” — all of them shortfalls *in expression* rather than *omissions*.
 
 </td>
 </tr>
@@ -400,9 +400,9 @@ One shot of one episode, run through all three paradigms end to end. Drama, epis
 </tr>
 </table>
 
-Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are the complete input for that paradigm — there is nothing else. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
+Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are the complete input for that paradigm; no other material was supplied. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
 
-### 05 · What a tier gap looks like in motion
+### 05 · Tier separation is visible within a single shot
 
 The same shot of the same episode, three models. The three annotators marked 30, 109 and 94 problems respectively — the top tier holds the character's appearance, the mid tier drifts, the bottom tier loses it outright.
 
@@ -421,7 +421,7 @@ The same shot of the same episode, three models. The three annotators marked 30,
 
 Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyframes and the same prompt.
 
-### 06 · Sound design is specified and simply not produced
+### 06 · Specified sound design is not realised
 
 The prompt carries explicit `[Sound Effect]` lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score **1.67**.
 
@@ -432,7 +432,7 @@ The prompt carries explicit `[Sound Effect]` lines per cut: the low room tone of
 </tr>
 </table>
 
-### 07 · The same character, a different face two shots later
+### 07 · Character identity does not hold across the shots of one episode
 
 The item is a whole episode — its thirteen shot videos, judged only on whether the people hold across them. Six are shown here. Three annotators scored cross-shot character consistency 2 / 1 / 1, a mean of **1.33**, and left 28 marks on that one dimension, tagged appearance differing across segments, faces breaking or swapping, and costume changing colour or style. The plainest of them needs no timestamp: “a scar on his face that was not there in the earlier shots”. Others read “character flickers”, “character disappears”, “the characters' positions in the space are a mess”.
 
@@ -455,7 +455,7 @@ The item is a whole episode — its thirteen shot videos, judged only on whether
 
 ### 08 · An upstream defect is re-expressed downstream, not repaired
 
-Rooms drift before people do: all three annotators circled this run for the set dressing while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
+Rooms drift before people do. Across the four shots the desk, the table lamp and the wooden box all change, and all three annotators reported it, while the characters held. The video stage does not repair such a drift — it re-expresses it, and it survives into the finished drama.
 
 **`gpt-image-1.5`**, four consecutive shots — MI-D3 scene **2.00** vs MI-D1 character **3.67**
 
@@ -472,13 +472,13 @@ Rooms drift before people do: all three annotators circled this run for the set 
 </tr>
 </table>
 
-### 09 · One defect, followed from storyboard to delivery
+### 09 · One defect recorded at three consecutive granularities
 
 The clearest evidence that stages are not independent: the same fault, in the same episode, at three consecutive granularities. Live-action *That Summer's Cicadas*, episode 3.
 
 **1 — Upstream: the storyboard packs a three-turn exchange into one shot.** `gpt-5.5-xhigh`, the stage leader, writes shot 3 with three dialogue turns belonging to two characters. Who says which line is carried only by descriptors — “the slim boy in thin metal-framed glasses”, “the tall thin boy with a screwdriver in his chest pocket”. Nothing else marks the speaker. Not a line of it is wrong; the fault is that a three-turn exchange was put in a single shot, leaving the speaker for a downstream video model to infer. Given the same script, a model that cut twelve shots gave each turn its own.
 
-**2 — Midstream: the generated clip gives the lines to the wrong people.** Two annotators working independently marked the same thing. Speech quality lands at **2.00** (2 / 3 / 1) while the shot's composite is 3.00 — the picture holds, the speaker does not.
+**2 — Midstream: the generated clip gives the lines to the wrong people.** Two annotators working independently marked the same thing. Speech quality lands at **2.00** (2 / 3 / 1) while the shot's composite is 3.00 — the image is sound, the speaker attribution is not.
 
 **3 — Downstream: the finished drama still misattributes the same two lines.** The episode is scored on its own, by annotators who did not see the shot-level task. They marked *the same two lines*: one character's line delivered by another, twice over. Both tagged “character misidentification”; the episode composite is **2.33**.
 
