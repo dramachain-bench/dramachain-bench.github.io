@@ -31,7 +31,7 @@ Commercial short-drama production runs as a chain — script, storyboard, keyfra
 
 ---
 
-## Highlights
+## Findings
 
 - **The best chain today barely clears the usable line.** `gpt-5.5-xhigh` → `gpt-image-2` → `seedance-2.0` delivers a finished drama at 3.30, only 0.3 above 3.0.
 - **Upstream defects accumulate rather than stay local.** Degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.
@@ -42,7 +42,7 @@ Commercial short-drama production runs as a chain — script, storyboard, keyfra
 
 ## Leaderboard
 
-Automated board, 5-point scale, over six production stages and five evaluation axes. **All** is the cross-axis composite.
+Automated board, 5-point scale, over six production stages and five axes. **All** is the cross-axis composite.
 
 | Notation | Meaning |
 |---|---|
