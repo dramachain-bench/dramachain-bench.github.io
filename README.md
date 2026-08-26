@@ -55,7 +55,7 @@ Automated board, 5-point scale, over six production stages and five axes. **All*
 Stage headers give model-level PLCC and SRCC against the three-annotator human board.
 
 <details open>
-<summary><b>① Storyboard design</b> &nbsp;·&nbsp; text → text &nbsp;·&nbsp; PLCC 0.936 &nbsp;·&nbsp; SRCC 0.800</summary>
+<summary><b>① Storyboard design</b> &nbsp;·&nbsp; PLCC 0.936 &nbsp;·&nbsp; SRCC 0.800</summary>
 
 <br>
 
@@ -81,7 +81,7 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 </details>
 
 <details>
-<summary><b>② Single keyframe</b> &nbsp;·&nbsp; text + refs → pixels &nbsp;·&nbsp; PLCC 0.959 &nbsp;·&nbsp; SRCC 0.750</summary>
+<summary><b>② Single keyframe</b> &nbsp;·&nbsp; PLCC 0.959 &nbsp;·&nbsp; SRCC 0.750</summary>
 
 <br>
 
@@ -98,7 +98,7 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 </details>
 
 <details>
-<summary><b>③ Episode keyframes</b> &nbsp;·&nbsp; a whole episode of frames &nbsp;·&nbsp; PLCC 0.973 &nbsp;·&nbsp; SRCC 0.964</summary>
+<summary><b>③ Episode keyframes</b> &nbsp;·&nbsp; PLCC 0.973 &nbsp;·&nbsp; SRCC 0.964</summary>
 
 <br>
 
@@ -115,7 +115,7 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 </details>
 
 <details>
-<summary><b>④ Single-shot video</b> &nbsp;·&nbsp; pixels → time + audio &nbsp;·&nbsp; PLCC 0.755 &nbsp;·&nbsp; SRCC 0.829</summary>
+<summary><b>④ Single-shot video</b> &nbsp;·&nbsp; PLCC 0.755 &nbsp;·&nbsp; SRCC 0.829</summary>
 
 <br>
 
@@ -132,7 +132,7 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 </details>
 
 <details>
-<summary><b>⑤ Episode video</b> &nbsp;·&nbsp; shots in sequence &nbsp;·&nbsp; PLCC 0.935 &nbsp;·&nbsp; SRCC 0.943</summary>
+<summary><b>⑤ Episode video</b> &nbsp;·&nbsp; PLCC 0.935 &nbsp;·&nbsp; SRCC 0.943</summary>
 
 <br>
 
@@ -149,7 +149,7 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 </details>
 
 <details>
-<summary><b>⑥ Short drama</b> &nbsp;·&nbsp; the finished short drama &nbsp;·&nbsp; PLCC 0.947 &nbsp;·&nbsp; SRCC 1.000</summary>
+<summary><b>⑥ Short drama</b> &nbsp;·&nbsp; PLCC 0.947 &nbsp;·&nbsp; SRCC 1.000</summary>
 
 <br>
 

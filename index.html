@@ -103,7 +103,6 @@ figcaption{margin-top:11px;font-size:12.5px;color:var(--muted);text-align:center
 .panel[hidden]{display:none}
 .pmeta{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;
   margin:18px 0 12px;font-size:12.5px;color:var(--muted)}
-.pmeta .pm-k{font-family:var(--mono);color:var(--ink-2)}
 .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;
   background:var(--sheet)}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -1063,21 +1062,15 @@ const AXES = [
 const AX_NAME = a => t(a[1], a[3]);
 
 /* Stage labels, keyed to the order of STAGES below. */
-const STAGE_ZH = [
-  ['分镜设计', '文本 → 文本'],
-  ['单分镜图', '文本 + 参考图 → 像素'],
-  ['集分镜图', '整集的帧图'],
-  ['单分镜视频', '像素 → 时序 + 音轨'],
-  ['集分镜视频', '连续多镜'],
-  ['短剧成片', '最终成片']
-];
+const STAGE_ZH = ['分镜设计', '单分镜图', '集分镜图',
+                  '单分镜视频', '集分镜视频', '短剧成片'];
 
 /* Each row: [model, flags, F, C, P, Q, E, All].
    A score is null when the axis is undefined at that stage.
    "b" in the marks string = best in column; "f" = below the 3.0 usable line. */
 const STAGES = [
   {
-    n:'Storyboard design', io:'text → text', plcc:'0.936', srcc:'0.800',
+    n:'Storyboard design', plcc:'0.936', srcc:'0.800',
     rows:[
       ['gpt-5.5-xhigh','',      [4.84,'b'],null,[3.89,'b'],null,[4.10,''],[4.23,'b']],
       ['claude-opus-4.8-max','',[4.51,''], null,[3.80,''], null,[4.19,'b'],[4.17,'']],
@@ -1098,7 +1091,7 @@ const STAGES = [
     ]
   },
   {
-    n:'Single keyframe', io:'text + refs → pixels', plcc:'0.959', srcc:'0.750',
+    n:'Single keyframe', plcc:'0.959', srcc:'0.750',
     rows:[
       ['gpt-image-2','',       [3.65,'b'],[4.32,'b'],[4.47,'b'],[4.13,'b'],null,[3.99,'b']],
       ['gpt-image-1.5','',     [3.25,''], [3.96,''], [4.46,''], [3.90,''], null,[3.72,'']],
@@ -1110,7 +1103,7 @@ const STAGES = [
     ]
   },
   {
-    n:'Episode keyframes', io:'a whole episode of frames', plcc:'0.973', srcc:'0.964',
+    n:'Episode keyframes', plcc:'0.973', srcc:'0.964',
     rows:[
       ['gpt-image-2','',       null,[3.82,'b'],null,null,null,[3.82,'b']],
       ['gpt-image-1.5','',     null,[3.60,''], null,null,null,[3.60,'']],
@@ -1122,7 +1115,7 @@ const STAGES = [
     ]
   },
   {
-    n:'Single-shot video', io:'pixels → time + audio', plcc:'0.755', srcc:'0.829',
+    n:'Single-shot video', plcc:'0.755', srcc:'0.829',
     rows:[
       ['seedance-2.0','‡',  [3.44,''], [3.27,'b'],[3.06,''], [3.77,'b'],[3.05,''], [3.24,'b']],
       ['happyhorse-1.1','', [3.34,''], [3.21,''], [3.04,''], [3.43,''], [3.08,''], [3.18,'']],
@@ -1134,7 +1127,7 @@ const STAGES = [
     ]
   },
   {
-    n:'Episode video', io:'shots in sequence', plcc:'0.935', srcc:'0.943',
+    n:'Episode video', plcc:'0.935', srcc:'0.943',
     rows:[
       ['seedance-2.0','‡',  null,[2.96,'bf'],[3.41,''], null,[3.32,''], [3.11,'b']],
       ['happyhorse-1.1','', null,[2.84,'f'], [3.64,'b'],null,[3.37,''], [3.08,'']],
@@ -1146,7 +1139,7 @@ const STAGES = [
     ]
   },
   {
-    n:'Short drama', io:'the finished short drama', plcc:'0.947', srcc:'1.000',
+    n:'Short drama', plcc:'0.947', srcc:'1.000',
     rows:[
       ['seedance-2.0','‡',  [4.29,'b'],[3.38,''], null,null,[2.68,'f'], [3.30,'b']],
       ['happyhorse-1.1','', [3.82,''], [3.38,''], null,null,[2.69,'bf'],[3.22,'']],
@@ -1219,7 +1212,7 @@ function renderBoard(active = 0){
   panels.innerHTML = '';
 
   STAGES.forEach((stage, i) => {
-    const [name, io] = LANG === 'zh' ? STAGE_ZH[i] : [stage.n, stage.io];
+    const name = LANG === 'zh' ? STAGE_ZH[i] : stage.n;
 
     const tab = document.createElement('button');
     tab.className = 'tab';
@@ -1239,7 +1232,6 @@ function renderBoard(active = 0){
     panel.setAttribute('aria-labelledby', `tab-${i}`);
     panel.hidden = i !== active;
     panel.innerHTML = `<div class="pmeta">
-        <span class="pm-k">${io}</span>
         <span>PLCC <b>${stage.plcc}</b></span>
         <span>SRCC <b>${stage.srcc}</b></span>
       </div>` + buildTable(stage);
