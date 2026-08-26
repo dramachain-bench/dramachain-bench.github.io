@@ -220,7 +220,7 @@ Nine cases: what a single stage decides, what fails only across shots, how a def
 
 ### 01 · Shot-planning quality constrains chain executability
 
-One identical episode script, forked only at the storyboard stage. All three columns below are verbatim model output covering the *same opening beat* — a question and its answer. At three shots the question is deleted outright and the scene opens on the answer; at six and at twelve it survives in shot 1.
+One identical episode script, forked only at the storyboard stage. All three columns are verbatim output covering the *same opening beat*. At three shots the question is deleted and the scene opens on the answer; at six and twelve it survives in shot 1.
 
 <table>
 <tr>
@@ -242,7 +242,7 @@ One identical episode script, forked only at the storyboard stage. All three col
 >
 > *Qi Xiangbei, quietly —* “The Walkman… I fixed it.”
 
-Four dialogue turns inside one 12 s shot. 1,348 characters over three shots; 4 / 2 / 4 turns; the model's own durations 12 / 10 / 8 s. An annotator, verbatim: “just speaking the lines takes more than 12 s. Straight rejection.”
+Four dialogue turns inside one 12 s shot. 1,348 characters over three shots, self-declared at 12 / 10 / 8 s. An annotator, verbatim: “just speaking the lines takes more than 12 s. Straight rejection.”
 
 </td>
 <td>
@@ -259,7 +259,7 @@ Four dialogue turns inside one 12 s shot. 1,348 characters over three shots; 4 /
 >
 > *…* “…Whose handwriting is bad.”
 
-Nothing is dropped, so dialogue fidelity is **5.00**. 2,155 characters over six shots, 2–4 turns each. What the 18 marked problems are about instead is one shot strung with many actions: “shot 4 carries about 8 action beats, density too high”. Executability only 3.00.
+Nothing is dropped, so dialogue fidelity is **5.00**. 2,155 characters over six shots. The 18 marked problems are about something else — one shot strung with many actions: “shot 4 carries about 8 action beats, density too high”. Executability only 3.00.
 
 </td>
 <td>
@@ -272,7 +272,7 @@ Nothing is dropped, so dialogue fidelity is **5.00**. 2,155 characters over six 
 
 > “Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.”
 
-Question and answer take a shot each, with room left over for two pure reaction shots. 2,769 characters over twelve shots, most carrying a single turn. **Not one** of the 15 marked problems is an omission: “shots 5–6 have no transition designed”, “shots 1–12 repeat the costume description redundantly” — all of them shortfalls *in expression* rather than *omissions*.
+Question and answer take a shot each, with room left for two pure reaction shots. 2,769 characters over twelve shots, most carrying a single turn. **Not one** of the 15 marked problems is an omission: “shots 5–6 have no transition designed”, “shots 1–12 repeat the costume description redundantly” — shortfalls *in expression* rather than *omissions*.
 
 </td>
 </tr>
@@ -290,7 +290,7 @@ The three-shot output compresses the episode into 30 s of self-declared duration
 
 ### 02 · Task difficulty is dominated by the input paradigm
 
-One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at `gpt-5.5-xhigh` → `gpt-image-2` → `kling-v3-omni`; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.
+One shot of one episode through all three paradigms, with drama, episode, shot index and all three models (`gpt-5.5-xhigh` → `gpt-image-2` → `kling-v3-omni`) held fixed; the only variable is what the video model is handed. Two frames, one grid or five references produce three stagings, a different supporting character, and clips of 12, 12 and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.
 
 <table>
 <tr>
@@ -315,7 +315,7 @@ One shot of one episode, run through all three paradigms end to end. Drama, epis
 </tr>
 </table>
 
-Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are the complete input for that paradigm; no other material was supplied. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
+Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are that paradigm's complete input. Six models were evaluated under first/last frame, four under grid, five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
 
 ### 03 · Model tier differences are observable in a single-shot output
 
@@ -338,7 +338,7 @@ Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyfr
 
 ### 04 · Prompt-specified sound requirements remain poorly realised
 
-The prompt carries explicit `[Sound Effect]` lines per cut: the low room tone of a private dining room, air conditioning in the distance, cutlery and glasses touching; a plain ring tapping the table; a wine glass ringing faintly. An annotator checked them one by one and marked every one “not realised”. A second annotator marked the inverse — a glass-clink effect that no action on screen accounts for. Sound and music score **1.67**.
+The prompt carries explicit `[Sound Effect]` lines per cut: room tone, cutlery and glasses touching, a ring tapping the table. An annotator checked them one by one and marked every one “not realised”; a second marked the inverse — a glass-clink that no action on screen accounts for. Sound and music score **1.67**.
 
 <table>
 <tr>
@@ -387,7 +387,7 @@ Same episode, same character sheets. The top row holds its two leads across shot
 
 ### 06 · Long sequences struggle to hold character and background stable across shots
 
-The item is a whole episode — its thirteen shot videos, judged only on whether the people hold across them. Six are shown here. Three annotators scored cross-shot character consistency 2 / 1 / 1, a mean of **1.33**, and left 28 marks on that one dimension, tagged appearance differing across segments, faces breaking or swapping, and costume changing colour or style. The plainest of them needs no timestamp: “a scar on his face that was not there in the earlier shots”. Others read “character flickers”, “character disappears”, “the characters' positions in the space are a mess”.
+The item is a whole episode — its thirteen shot videos, judged only on whether the people hold across them; six are shown here. Three annotators scored cross-shot character consistency 2 / 1 / 1, a mean of **1.33**, and left 28 marks on that one dimension: appearance differing across segments, faces breaking or swapping, costume changing colour or style. The plainest needs no timestamp — “a scar on his face that was not there in the earlier shots”.
 
 <table>
 <tr>
@@ -404,7 +404,7 @@ The item is a whole episode — its thirteen shot videos, judged only on whether
 </tr>
 </table>
 
-`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3, shots 0–5 of 13. The woman appears in shots 1, 3 and 5, the man in shots 0 and 2. Compare their faces and their costumes between those appearances: neither holds. No single shot is defective in itself — the mismatch exists only between them.
+`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3, shots 0–5 of 13. The woman appears in shots 1, 3 and 5, the man in shots 0 and 2; neither their faces nor their costumes hold between those appearances. No single shot is defective in itself — the mismatch exists only between them.
 
 ### 07 · Upstream defects propagate and mutate downstream rather than self-correcting
 
@@ -493,7 +493,7 @@ One item, two models. Both score 1.3–1.7 on some dimension, so a composite ran
 
 </details>
 
-Boxes are drawn independently by the three annotators; colour distinguishes them. In bold above are the actions the prompt asks for: `gpt-image-1.5` holds every face and does not perform them, while `wan2.7-image-pro` performs them and loses the faces — the same white-coated woman is boxed again and again as her identity drifts panel to panel, though the sheets never change.
+Boxes are drawn independently by the three annotators; colour distinguishes them. In bold above are the actions the prompt asks for: `gpt-image-1.5` holds every face and does not perform them, `wan2.7-image-pro` performs them and loses the faces — the sheets never changed, yet the same white-coated woman is boxed again and again.
 
 ## Release
 
