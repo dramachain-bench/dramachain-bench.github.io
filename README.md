@@ -218,7 +218,22 @@ The judge replicates the human reference automatically. It aggregates routed mea
 
 ### Equal scores, different failure modes
 
-All four items score 1.3–1.7 on some dimension, so a composite ranks them together. The boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.
+Two separate items, two models each. All four score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.
+
+**Item 1 — input.** The four character sheets, shared by both models below; identity and costume are fixed here.
+
+<table>
+<tr>
+<td><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao"></td>
+<td><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan"></td>
+<td><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia"></td>
+<td><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian"></td>
+</tr>
+<tr>
+<td align="center">龚啸</td><td align="center">江临渊</td>
+<td align="center">沈知夏</td><td align="center">江念念</td>
+</tr>
+</table>
 
 <table>
 <tr>
@@ -226,20 +241,27 @@ All four items score 1.3–1.7 on some dimension, so a composite ranks them toge
 <td width="60%"><img src="assets/cases/boxed-action.jpg" alt="Thirteen annotator boxes, every one on a limb mid-action"></td>
 </tr>
 <tr>
-<td><code>wan2.7-image-pro</code> — I-C1 face identity <b>1.67</b>, 15 boxes, every one on a face; action interaction scored 3.0.</td>
-<td><code>gpt-image-1.5</code> — I-B2 action interaction <b>1.33</b>, 13 boxes, every one on a limb; face identity scored 3.33.</td>
-</tr>
-<tr>
-<td><img src="assets/cases/boxed-extra.jpg" alt="Twelve annotator boxes, all marking extra subjects"></td>
-<td><img src="assets/cases/boxed-hands.jpg" alt="Ten annotator boxes, all marking malformed hands"></td>
-</tr>
-<tr>
-<td><code>seedream-5.0-lite</code> — I-B1 subject attributes <b>1.33</b>, 12 boxes, all “extra subject”; human anatomy scored 3.0.</td>
-<td><code>wan2.7-image-pro</code> — I-E1 human anatomy <b>1.33</b>, 10 boxes, all broken hands; subject attributes scored 3.33.</td>
+<td><code>wan2.7-image-pro</code> — I-C1 face identity <b>1.67</b>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</td>
+<td><code>gpt-image-1.5</code> — I-B2 action interaction <b>1.33</b>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</td>
 </tr>
 </table>
 
-Boxes are drawn independently by the three annotators; colour distinguishes them.
+Boxes are drawn independently by the three annotators; colour distinguishes them. The same white-coated woman is boxed again and again — her identity drifts from panel to panel while the sheets above never change.
+
+**Item 2.** A different item, a different pair of models — and a different pair of dimensions.
+
+<table>
+<tr>
+<td width="50%"><img src="assets/cases/boxed-extra.jpg" alt="Twelve annotator boxes, all marking extra subjects"></td>
+<td width="50%"><img src="assets/cases/boxed-hands.jpg" alt="Ten annotator boxes, all marking malformed hands"></td>
+</tr>
+<tr>
+<td><code>seedream-5.0-lite</code> — I-B1 subject attributes <b>1.33</b>, 12 boxes, all “extra subject”; human anatomy on this same item scored 3.0.</td>
+<td><code>wan2.7-image-pro</code> — I-E1 human anatomy <b>1.33</b>, 10 boxes, all broken hands; subject attributes on this same item scored 3.33.</td>
+</tr>
+</table>
+
+The count is right here and the hands are not, which is the mirror image of the pair above: same band of scores, nothing in common about what went wrong.
 
 ### Cross-shot consistency is a separate capability
 
@@ -300,7 +322,63 @@ Animated drama *Gui Ren*, episode 2, shot 5. Every model receives the same keyfr
 
 ### Shot count decides executability
 
-One identical episode script, forked only at the storyboard stage:
+One identical episode script, forked only at the storyboard stage. All three columns below are verbatim model output covering the *same opening beat* — a question and its answer. At three shots the question is deleted outright and the scene opens on the answer; at six and at twelve it survives in shot 1.
+
+<table>
+<tr>
+<th width="33%">3 shots — <code>mimo-v2.5-pro</code></th>
+<th width="33%">6 shots — <code>gpt-5.5-xhigh</code></th>
+<th width="33%">12 shots — <code>claude-opus-4.8-max</code></th>
+</tr>
+<tr valign="top">
+<td>
+
+~~Zhou Zi'an: “How did you know that lyric sheet was in my tape?”~~<br>
+**in the script, in none of the three shots**
+
+【Shot 1】 A single take of about **12 s**… closing on the stand-off between 〈Gu Yan〉 and 〈Zhou Zi'an〉. 〈Gu Yan〉 wheels his bicycle in and says:
+
+> “Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.”
+>
+> *Zhou Zi'an, ears red —* “…Whose handwriting is bad.”
+>
+> *Qi Xiangbei, quietly —* “The Walkman… I fixed it.”
+
+Four dialogue turns inside one 12 s shot. 1,348 characters over three shots; 4 / 2 / 4 turns; the model's own durations 12 / 10 / 8 s. An annotator, verbatim: “just speaking the lines takes more than 12 s. Straight rejection.”
+
+</td>
+<td>
+
+【Shot 1】 Realistic live-action, a fast lateral tracking shot… 〈Gu Yan〉 wheels his bicycle in from frame left, 〈Zhou Zi'an〉 comes up from frame right clutching the slip of paper. 〈Zhou Zi'an〉 says:
+
+> “How did you know that lyric sheet was in my tape?”
+>
+> *Gu Yan stops the handlebars —* “Lin Zhixia's Walkman broke, I took it in for her.”
+
+【Shot 2】 Handheld, rising off a close-up of the crumpled paper in 〈Zhou Zi'an〉's right hand… 〈Gu Yan〉, flatly:
+
+> “When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.”
+>
+> *…* “…Whose handwriting is bad.”
+
+Nothing is dropped, so dialogue fidelity is **5.00**. 2,155 characters over six shots, 2–4 turns each. What the 18 marked problems are about instead is one shot strung with many actions: “shot 4 carries about 8 action beats, density too high”. Executability only 3.00.
+
+</td>
+<td>
+
+【Shot 1】 Cinematic realism, a **wide establishing shot**… 〈Gu Yan〉 wheels his bicycle in from frame right; 〈Zhou Zi'an〉 steps up from frame left clutching a crumpled slip, eyebrow raised. 〈Zhou Zi'an〉 says:
+
+> “How did you know that lyric sheet was in my tape?”
+
+【Shot 2】 **Over-shoulder**, the camera crossing 〈Zhou Zi'an〉's right shoulder, focus locked on 〈Gu Yan〉's face. 〈Gu Yan〉 says:
+
+> “Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.”
+
+Question and answer take a shot each, with room left over for two pure reaction shots. 2,769 characters over twelve shots, most carrying a single turn. **Not one** of the 15 marked problems is an omission: “shots 5–6 have no transition designed”, “shots 1–12 repeat the costume description redundantly” — all of them *not good enough* rather than *missing*.
+
+</td>
+</tr>
+</table>
 
 | Dimension | Axis | `mimo-v2.5-pro`<br>3 shots | `gpt-5.5-xhigh`<br>6 shots | `claude-opus-4.8-max`<br>12 shots | Behaviour |
 |---|---|---|---|---|---|
@@ -314,35 +392,34 @@ One identical episode script, forked only at the storyboard stage:
 
 The three-shot output compresses the episode into 30 s of self-declared duration and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement, marking the same few defects every time — several actions in one shot, blocking too complex to execute, no reaction shot.
 
-### Each input paradigm carries its own failure mode
+### Difficulty is set by the input paradigm, not the visual style
 
-Grid panels omit people; first/last-frame shots change person between the two frames. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than visual style — 1 of 10 failing dimensions against 9 of 15.
-
-<table>
-<tr>
-<td width="42%"><img src="assets/cases/paradigm-grid.jpg" alt="Grid keyframe where cells that should hold three people hold two"></td>
-<td width="58%"><img src="assets/cases/paradigm-ff.jpg" alt="First and last frame of one shot showing a different person in each"></td>
-</tr>
-<tr>
-<td><b>Grid panel omits people.</b> <code>wan2.7-image-pro</code>, I-B1 subject attributes <b>1.33</b>: cells that should hold three people hold two.</td>
-<td><b>First/last frame changes person between frames.</b> <code>nano-banana-pro</code>, I-C1 face identity <b>1.33</b>: three annotators boxed it independently, and <em>nothing constrains the last frame against the first</em>.</td>
-</tr>
-</table>
-
-The input for the first/last-frame case — the shot's own first frame, then three character sheets:
+One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at `gpt-5.5-xhigh` → `gpt-image-2` → `kling-v3-omni`; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.
 
 <table>
 <tr>
-<td><img src="assets/cases/paradigm-ref.jpg" alt="The shot's own first frame"></td>
-<td><img src="assets/cases/paradigm-card-a.jpg" alt="Character sheet A"></td>
-<td><img src="assets/cases/paradigm-card-b.jpg" alt="Character sheet B"></td>
-<td><img src="assets/cases/paradigm-card-c.jpg" alt="Character sheet C"></td>
+<th width="33%">first / last frame — 2 inputs</th>
+<th width="33%">grid — 1 input</th>
+<th width="33%">multi-reference — 5 inputs</th>
 </tr>
 <tr>
-<td align="center">first frame</td><td align="center">character sheet</td>
-<td align="center">character sheet</td><td align="center">character sheet</td>
+<td><img src="assets/cases/para3-ff-a.jpg" alt="First frame: a man signing a demolition agreement"><img src="assets/cases/para3-ff-b.jpg" alt="Last frame of the same shot"></td>
+<td><img src="assets/cases/para3-grid.jpg" alt="One composite image holding the shot's four cuts as a 2x2 grid"></td>
+<td><img src="assets/cases/para3-ref-1.jpg" alt="Character sheet, Shen Zhixing"><img src="assets/cases/para3-ref-2.jpg" alt="Character sheet, Su Jinxiu"><img src="assets/cases/para3-ref-3.jpg" alt="Scene reference, the Su family dining room"><img src="assets/cases/para3-ref-4.jpg" alt="Prop reference, the demolition notice"><img src="assets/cases/para3-ref-5.jpg" alt="Prop reference, the divorce agreement"></td>
+</tr>
+<tr>
+<td><a href="assets/video/para3-ff.mp4"><img src="assets/video/para3-ff.jpg" alt="Play: first/last-frame output"></a></td>
+<td><a href="assets/video/para3-grid.mp4"><img src="assets/video/para3-grid.jpg" alt="Play: grid output"></a></td>
+<td><a href="assets/video/para3-mref.mp4"><img src="assets/video/para3-mref.jpg" alt="Play: multi-reference output"></a></td>
+</tr>
+<tr>
+<td>Pinned at both ends, the clip only has to travel between two fixed compositions. It drifts off the document and lands on the seated man exactly as the last frame specifies — a camera move, not a scene. <a href="assets/video/para3-ff.mp4">▶ play</a></td>
+<td>Four cuts arrive as one 2×2 image, so the model reads its own coverage off the panels — a wide two-shot across the dinner table, nothing like the close-up on the left. <a href="assets/video/para3-grid.mp4">▶ play</a></td>
+<td>No frame is given at all — characters, set and props arrive as three separate channels and the framing is left open. Su Jinxiu, referenced here and in neither of the other two runs, is the only one of the three clips she appears in. It runs 7 s, not 12. <a href="assets/video/para3-mref.mp4">▶ play</a></td>
 </tr>
 </table>
+
+Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are the complete input for that paradigm — there is nothing else. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
 
 ### An upstream defect is re-expressed downstream, not repaired
 

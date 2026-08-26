@@ -241,6 +241,11 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .sb-l i{font-style:normal;color:var(--muted);font-size:11.5px}
 .sb-n{margin-top:9px;padding-top:8px;border-top:1px solid var(--hairline);
   font-size:11.5px;line-height:1.68;color:var(--muted)}
+/* a scripted line that the storyboard dropped, shown where it should have been */
+.sb-cut{font-size:12.5px;line-height:1.75;color:var(--muted);margin-bottom:7px;
+  padding-left:13px;border-left:2px dashed var(--bad)}
+.sb-cut em{display:block;font-style:normal;font-family:var(--mono);font-size:10px;
+  letter-spacing:.05em;color:var(--bad);margin-top:2px}
 .sbgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;align-items:start}
 .sbgrid .sb{margin-top:14px}
 .vrow.one{grid-template-columns:minmax(0,0.62fr)}
@@ -273,6 +278,8 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .cg2 img{width:100%;border:1px solid var(--line);border-radius:6px}
 .cg2 figcaption{margin-top:6px;font-size:11.5px;text-align:left;color:var(--muted);
   line-height:1.58}
+/* inputs sit above the outputs they were given to, inside one figure block */
+.cfig .crow+.cg2{margin-top:13px}
 .cjf{display:grid;grid-template-columns:0.36fr 0.64fr;gap:15px;align-items:start}
 .cjf img{width:100%;border:1px solid var(--line);border-radius:6px}
 .cjf table{margin-top:0}
@@ -284,7 +291,7 @@ tbody tr:not(.extra)+tr.extra td{border-top:1px dashed #B9B1A0}
 .vrow.four{grid-template-columns:repeat(4,1fr);gap:9px}
 .vrow.six{grid-template-columns:repeat(6,1fr);gap:7px}
 .vrow.six figcaption{font-size:10.5px;text-align:center}
-.sbgrid.three{grid-template-columns:repeat(3,1fr)}
+.sbgrid.three{grid-template-columns:repeat(3,1fr);align-items:stretch}
 @media (max-width:720px){.vrow.six{grid-template-columns:repeat(3,1fr)}
   .sbgrid.three{grid-template-columns:1fr}}
 .vrow.four figcaption{font-size:11px;text-align:center}
@@ -318,6 +325,25 @@ details.script>summary:hover{color:var(--accent)}
 .vrow figcaption{margin-top:7px;font-size:11.5px;color:var(--muted);line-height:1.58;
   text-align:left}
 .vrow figcaption b{display:block;font-size:12.5px;color:var(--ink);margin-bottom:2px}
+/* one shot, three paradigms: each column carries its own inputs above the clip */
+.vrow.pset .ph{display:flex;align-items:baseline;justify-content:space-between;
+  gap:8px;padding-bottom:5px;margin-bottom:7px;border-bottom:1px solid var(--line)}
+.vrow.pset .ph b{display:inline;font-size:12.5px;color:var(--ink);margin:0}
+.vrow.pset .ph span{font-family:var(--mono);font-size:10.5px;color:var(--muted);
+  white-space:nowrap}
+.vrow.pset .pin{display:flex;gap:4px;margin-bottom:8px}
+.vrow.pset .pin img{flex:1 1 0;min-width:0;height:70px;object-fit:cover;
+  border:1px solid var(--line);border-radius:4px;cursor:zoom-in;background:#111}
+/* the grid is one composite whose 2x2 layout is the point, so show all of it */
+.vrow.pset .pin.whole img{flex:0 1 auto;width:auto;max-width:100%;object-fit:contain}
+.vrow.pset .pv{position:relative}
+.vrow.pset figure::after{display:none}
+.vrow.pset .pv::after{content:"\25B6  sound";position:absolute;top:9px;right:9px;
+  font:600 10.5px/1 var(--sans);letter-spacing:.06em;color:#fff;
+  background:rgba(20,18,15,.72);border-radius:11px;padding:5px 9px;
+  opacity:0;transition:opacity .16s;pointer-events:none}
+.vrow.pset figure:hover .pv::after{opacity:1}
+.vrow.pset video{aspect-ratio:16/9;object-fit:contain}
 .vtag{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:600;
   letter-spacing:.04em;padding:1px 7px;border-radius:10px;margin-bottom:5px}
 .vtag.t1{background:#E7F0EA;color:#2E6B47}
@@ -609,32 +635,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 
     <div class="case">
       <b><span data-l="en">Equal scores, different failure modes</span><span data-l="zh"><b>同分，但坏在不同地方</b></span></b>
-      <p data-l="en">All four items score 1.3–1.7 on some dimension, so a composite ranks them together. The boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.</p>
-<p data-l="zh">四道题都在某个维度上得 1.3–1.7 分，综合分会把它们视为同样差。而标注框落在四个互不相交的位置，且每一对里两个模型互换了失败的维度。</p>
-      <div class="cfig cg2 r23">
-        <figure>
-          <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
-          <figcaption><code>wan2.7-image-pro</code> — I-C1 face identity <span class="fail">1.67</span>, 15 boxes, every one on a face; action interaction scored 3.0.</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/cases/boxed-action.jpg" alt="Keyframe with thirteen annotator boxes, every one on a limb mid-action" loading="lazy">
-          <figcaption><code>gpt-image-1.5</code> — I-B2 action interaction <span class="fail">1.33</span>, 13 boxes, every one on a limb; face identity scored 3.33.</figcaption>
-        </figure>
-      </div>
-      <div class="cfig cg2">
-        <figure>
-          <img src="assets/cases/boxed-extra.jpg" alt="Keyframe with twelve annotator boxes, all marking extra subjects" loading="lazy">
-          <figcaption><code>seedream-5.0-lite</code> — I-B1 subject attributes <span class="fail">1.33</span>, 12 boxes, all “extra subject”; human anatomy scored 3.0.</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/cases/boxed-hands.jpg" alt="Keyframe with ten annotator boxes, all marking malformed hands" loading="lazy">
-          <figcaption><code>wan2.7-image-pro</code> — I-E1 human anatomy <span class="fail">1.33</span>, 10 boxes, all broken hands; subject attributes scored 3.33.</figcaption>
-        </figure>
-      </div>
+      <p data-l="en">Two separate items, two models each. All four score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.</p>
+<p data-l="zh">两道彼此独立的题，每题两个模型。四者都在某个维度上得 1.3–1.7 分，综合分会把它们视为同样差——但标注框落在四个互不相交的位置，且每一对里两个模型互换了失败的维度。</p>
+
       <div class="cfig">
         <div class="crow-h">
-          <span data-l="en">The character sheets both models were given. Identity and costume are specified here; what the boxes mark is the gap between these and what came back.</span>
-          <span data-l="zh">两个模型拿到的角色设定卡。身份与服装在这里就已经定死，标注框标出的正是它与产出之间的落差。</span>
+          <b data-l="en">Item 1 — input</b><b data-l="zh">第一题 · 输入</b>
+          <span data-l="en">the four character sheets, shared by both models below; identity and costume are fixed here</span>
+          <span data-l="zh">四张角色设定卡，下面两个模型共用；身份与服装在这里就已经定死</span>
         </div>
         <div class="crow">
           <figure><img src="assets/cases/pair-card-gongxiao.jpg" alt="Character sheet, Gong Xiao" loading="lazy"><figcaption>龚啸</figcaption></figure>
@@ -642,9 +650,39 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
           <figure><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia" loading="lazy"><figcaption>沈知夏</figcaption></figure>
           <figure><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian" loading="lazy"><figcaption>江念念</figcaption></figure>
         </div>
+        <div class="cg2 r23">
+          <figure>
+            <img src="assets/cases/boxed-face.jpg" alt="Four-panel keyframe with fifteen annotator boxes, every one on a face" loading="lazy">
+            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-C1 face identity <span class="fail">1.67</span>, 15 boxes, every one on a face; action interaction on this same item scored 3.0.</span><span data-l="zh">—— I-C1 人脸身份 <span class="fail">1.67</span>，三人共 15 个框，全部落在脸上；同一题的动作交互反而有 3.0 分。</span></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/cases/boxed-action.jpg" alt="Keyframe with thirteen annotator boxes, every one on a limb mid-action" loading="lazy">
+            <figcaption><code>gpt-image-1.5</code> <span data-l="en">— I-B2 action interaction <span class="fail">1.33</span>, 13 boxes, every one on a limb; face identity on this same item scored 3.33.</span><span data-l="zh">—— I-B2 动作交互 <span class="fail">1.33</span>，三人共 13 个框，全部落在肢体与动作上；同一题的人脸身份有 3.33 分。</span></figcaption>
+          </figure>
+        </div>
       </div>
-      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them. In the face-identity item the same white-coated woman is boxed again and again — the identity drifts from panel to panel while the sheet above never changes.</p>
-<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。人脸身份那一题里，同一位白大褂女性在四格中被反复框出——设定卡自始至终没变，身份却在格与格之间漂移。</p>
+      <p data-l="en" class="fnote">Boxes are drawn independently by the three annotators; colour distinguishes them. The same white-coated woman is boxed again and again — her identity drifts from panel to panel while the sheets above never change.</p>
+<p class="fnote" data-l="zh">标注框由三名标注员各自独立画出，框色用于区分标注员。同一位白大褂女性在四格中被反复框出——设定卡自始至终没变，身份却在格与格之间漂移。</p>
+
+      <div class="cfig">
+        <div class="crow-h">
+          <b data-l="en">Item 2</b><b data-l="zh">第二题</b>
+          <span data-l="en">a different item, a different pair of models — and a different pair of dimensions</span>
+          <span data-l="zh">另一道题、另一对模型，坏的也是另一对维度</span>
+        </div>
+        <div class="cg2">
+          <figure>
+            <img src="assets/cases/boxed-extra.jpg" alt="Keyframe with twelve annotator boxes, all marking extra subjects" loading="lazy">
+            <figcaption><code>seedream-5.0-lite</code> <span data-l="en">— I-B1 subject attributes <span class="fail">1.33</span>, 12 boxes, all “extra subject”; human anatomy on this same item scored 3.0.</span><span data-l="zh">—— I-B1 主体属性 <span class="fail">1.33</span>，三人共 12 个框，全部是「多出主体」「主体数量错」；同一题的人体结构有 3.0 分。</span></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/cases/boxed-hands.jpg" alt="Keyframe with ten annotator boxes, all marking malformed hands" loading="lazy">
+            <figcaption><code>wan2.7-image-pro</code> <span data-l="en">— I-E1 human anatomy <span class="fail">1.33</span>, 10 boxes, all broken hands; subject attributes on this same item scored 3.33.</span><span data-l="zh">—— I-E1 人体结构合理性 <span class="fail">1.33</span>，三人共 10 个框，全部是「肢体扭曲粘连」「多指 / 少指畸形」；同一题的主体属性有 3.33 分。</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <p data-l="en" class="fnote">The count is right here and the hands are not, which is the mirror image of the pair above: same band of scores, nothing in common about what went wrong.</p>
+<p class="fnote" data-l="zh">这一对是人数对、手画坏，正好和上面那对互为镜像：分数落在同一档，出错的地方毫无交集。</p>
     </div>
 
     <div class="case">
@@ -776,29 +814,51 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     
     <div class="case">
       <b><span data-l="en">Shot count decides executability</span><span data-l="zh"><b>切几个镜决定了能不能拍</b></span></b>
-      <p data-l="en">One identical episode script, forked only at the storyboard stage. The three-shot output compresses the episode into 30 s and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement.</p>
-<p data-l="zh">同一份剧本，只在分镜设计这一环分叉。切 3 个镜的产出把整集压缩进 30 秒、10 轮台词；三名标注员对它的描述可执行性与拍摄节奏都给了 1.00 分，零分歧。</p>
+      <p data-l="en">One identical episode script, forked only at the storyboard stage. All three columns below are verbatim model output covering the <em>same opening beat</em> — a question and its answer. At three shots the question is deleted outright and the scene opens on the answer; at six and at twelve it survives in shot 1.</p>
+<p data-l="zh">同一份剧本，只在分镜设计这一环分叉。下面三栏都是模型原文，覆盖<em>同一个开场节拍</em>——一问一答。切 3 个镜时，那个提问被整句删掉，直接从回答开始；切 6 镜和 12 镜时，它都还在镜头 1 里。</p>
       <div class="sbgrid three">
         <div class="sb">
           <div class="sb-h"><span data-l="en">3 shots &nbsp;·&nbsp; <code>mimo-v2.5-pro</code></span><span data-l="zh">3 镜 &nbsp;·&nbsp; <code>mimo-v2.5-pro</code></span></div>
-          <p class="sb-v" data-l="en">Shot 1, about 12 s. Opening on a wide of the bike shed, the camera pushes slowly in… finally settling on Gu Yan and Zhou Zi'an face to face. Gu Yan, wheeling his bicycle: “Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.” Zhou Zi'an, clutching a slip of paper, steps forward, ears red: “…Whose handwriting is bad.” As Gu Yan makes to leave, the camera pans right and Qi Xiangbei enters frame edge, head down: “The Walkman… I fixed it.” Both turn to look off right. Qi Xiangbei: “…I know. I didn't change it. He copied it wrong; it's not mine to fix.” Hold on Zhou Zi'an's stunned face.</p>
-          <p class="sb-v" data-l="zh">【镜头 1】画面：一个长约 12 秒的镜头，从自行车棚的中远景开始，镜头缓慢向前推进……最终推近至〈顾砚〉与〈周子安〉的对峙。〈顾砚〉推着自行车……他说：「林知夏的随身听坏了，我帮她送去修。修好取回来时，里头夹着这张抄错的歌词 —— 字丑得很有特色。」〈周子安〉攥着一张纸条，上前一步，耳根泛红，说：「……谁字丑了。」〈顾砚〉推车欲走时，镜头向右微摇，〈祁向北〉的侧脸进入画面边缘，他低着头……轻声说：「随身听……是我修的。」〈顾砚〉与〈周子安〉同时转头看向画外右侧。〈祁向北〉说：「……知道。我没改。是他抄的，我不能替他改。」镜头最后定格在〈周子安〉怔住的脸部特写上。</p>
-          <p class="sb-n" data-l="en">1,348 characters over three shots; 4 / 2 / 4 dialogue turns; the model's own durations 12 / 10 / 8 s. Shots 2 and 3 are written the same way.</p>
-          <p class="sb-n" data-l="zh">三个镜头共 1,348 字，每镜 4 / 2 / 4 段对白，模型自标 12 / 10 / 8 秒。镜头 2 与镜头 3 是同样的写法。</p>
+          <p class="sb-cut" data-l="en"><s>Zhou Zi'an: “How did you know that lyric sheet was in my tape?”</s><em>in the script, in none of the three shots</em></p>
+          <p class="sb-cut" data-l="zh"><s>〈周子安〉「你怎么知道我磁带里有这盘歌词？」</s><em>剧本里有，三个镜头里都没有</em></p>
+          <p class="sb-v" data-l="en">【Shot 1】 A single take of about <b>12 s</b>… closing on the stand-off between 〈Gu Yan〉 and 〈Zhou Zi'an〉. 〈Gu Yan〉 wheels his bicycle in and says:</p>
+          <p class="sb-v" data-l="zh">【镜头 1】画面：一个长约 <b>12 秒</b>的镜头……聚焦于〈顾砚〉与〈周子安〉的对峙。〈顾砚〉推着自行车……他说：</p>
+          <p class="sb-l" data-l="en">“Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.”</p>
+          <p class="sb-l" data-l="zh">「林知夏的随身听坏了，我帮她送去修。修好取回来时，里头夹着这张抄错的歌词 —— 字丑得很有特色。」</p>
+          <p class="sb-l" data-l="en"><i>Zhou Zi'an, ears red —</i> “…Whose handwriting is bad.”</p>
+          <p class="sb-l" data-l="zh"><i>〈周子安〉耳根泛红 ——</i>「……谁字丑了。」</p>
+          <p class="sb-l" data-l="en"><i>Qi Xiangbei, quietly —</i> “The Walkman… I fixed it.” <i>… “…I know. I didn't change it. He copied it wrong; it's not mine to fix.”</i></p>
+          <p class="sb-l" data-l="zh"><i>〈祁向北〉轻声说 ——</i>「随身听……是我修的。」<i>……「……知道。我没改。是他抄的，我不能替他改。」</i></p>
+          <p class="sb-n" data-l="en">Four dialogue turns inside one 12 s shot. 1,348 characters over three shots; 4 / 2 / 4 turns; the model's own durations 12 / 10 / 8 s. An annotator, verbatim: “just speaking the lines takes more than 12 s. Straight rejection.”</p>
+          <p class="sb-n" data-l="zh">一个 12 秒的镜头里塞了四段对白。三镜共 1,348 字，每镜 4 / 2 / 4 段对白，模型自标 12 / 10 / 8 秒。标注员原话：「光是说台词都不止 12 秒了。直接毙掉」。</p>
         </div>
         <div class="sb">
           <div class="sb-h"><span data-l="en">6 shots &nbsp;·&nbsp; <code>gpt-5.5-xhigh</code></span><span data-l="zh">6 镜 &nbsp;·&nbsp; <code>gpt-5.5-xhigh</code></span></div>
-          <p class="sb-v" data-l="en">The same exchange is split across shots, one beat to a shot, so no shot has to carry more than it can hold. Dialogue fidelity and event coverage recover outright at this density; executability reaches 3.00 and shooting rhythm 3.67.</p>
-          <p class="sb-v" data-l="zh">同一段戏被拆到多个镜头里，一个镜头承担一个节拍，没有哪一镜需要装下超过它能装的量。到这个密度，对白保真与事件覆盖直接恢复满血；描述可执行性到 3.00，拍摄节奏到 3.67。</p>
-          <p class="sb-n" data-l="en">Six shots is already enough for the two F-axis dimensions and for rhythm; only executability keeps climbing beyond it.</p>
-          <p class="sb-n" data-l="zh">六个镜头已经足够两条 F 轴维度和拍摄节奏；再往上，只有描述可执行性还在继续涨。</p>
+          <p class="sb-v" data-l="en">【Shot 1】 Realistic live-action, a fast lateral tracking shot… 〈Gu Yan〉 wheels his bicycle in from frame left, 〈Zhou Zi'an〉 comes up from frame right clutching the slip of paper. The camera pushes quickly into a two-shot. 〈Zhou Zi'an〉 says:</p>
+          <p class="sb-v" data-l="zh">【镜头 1】画面：写实真人风格的<b>快节奏横向跟拍</b>……画面左侧〈顾砚〉推着自行车向右走近……画面右侧〈周子安〉攥着纸条迎上来，带着挑衅。镜头快速推成两人中近景，〈周子安〉says:</p>
+          <p class="sb-l" data-l="en">“How did you know that lyric sheet was in my tape?”</p>
+          <p class="sb-l" data-l="zh">「你怎么知道我磁带里有这盘歌词？」</p>
+          <p class="sb-l" data-l="en"><i>Gu Yan stops the handlebars, his lenses catching the light —</i> “Lin Zhixia's Walkman broke, I took it in for her.”</p>
+          <p class="sb-l" data-l="zh"><i>〈顾砚〉停住车把，镜片反光遮住眼神 ——</i>「林知夏的随身听坏了，我帮她送去修。」</p>
+          <p class="sb-v" data-l="en">【Shot 2】 Handheld, rising off a close-up of the crumpled paper in 〈Zhou Zi'an〉's right hand… 〈Gu Yan〉, flatly:</p>
+          <p class="sb-v" data-l="zh">【镜头 2】画面：手持感中近景从〈周子安〉右手攥皱的纸条特写上移……〈顾砚〉淡淡指出 says:</p>
+          <p class="sb-l" data-l="en">“When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.” <i>… “…Whose handwriting is bad.”</i></p>
+          <p class="sb-l" data-l="zh">「修好取回来时，里头夹着这张抄错的歌词 —— 字丑得很有特色。」<i>……「……谁字丑了。」</i></p>
+          <p class="sb-n" data-l="en">Nothing is dropped, so dialogue fidelity is <b>5.00</b>. 2,155 characters over six shots, 2–4 turns each. What the 18 marked problems are about instead is one shot strung with many actions: “shot 4 carries about 8 action beats, density too high”, “shots 2, 4 and 6 hold too much for one shot and really need splitting”. Executability only 3.00.</p>
+          <p class="sb-n" data-l="zh">一句没少，对白保真 <b>5.00</b>。六镜共 2,155 字，每镜 2–4 段对白。18 处问题指向的是另一件事——一镜串多动作：「镜头 4 包含约 8 个动作信息，密度偏高」「镜头 2、4、6 单镜信息偏多，实际需要拆镜」。可执行性只有 3.00。</p>
         </div>
         <div class="sb">
           <div class="sb-h"><span data-l="en">12 shots &nbsp;·&nbsp; <code>claude-opus-4.8-max</code></span><span data-l="zh">12 镜 &nbsp;·&nbsp; <code>claude-opus-4.8-max</code></span></div>
-          <p class="sb-v" data-l="en">Each question and each answer gets its own shot, which is what removes the ambiguity the three-shot version created: with one speaker per shot, nothing downstream has to infer who is talking.</p>
-          <p class="sb-v" data-l="zh">一问一答各自成镜，这正好消除了三镜版本制造的歧义：一镜一个说话人，下游不需要再自己去认谁在说话。</p>
-          <p class="sb-n" data-l="en">Executability 4.00, the only dimension that twelve shots buys over six.</p>
-          <p class="sb-n" data-l="zh">描述可执行性 4.00，这是十二镜相对六镜唯一多买到的东西。</p>
+          <p class="sb-v" data-l="en">【Shot 1】 Cinematic realism, a <b>wide establishing shot</b>… 〈Gu Yan〉 wheels his bicycle in from frame right; 〈Zhou Zi'an〉 steps up from frame left clutching a crumpled slip, eyebrow raised. 〈Zhou Zi'an〉 says:</p>
+          <p class="sb-v" data-l="zh">【镜头 1】画面：写实电影质感的<b>广角建立镜头</b>……画面右侧〈顾砚〉推着自行车由右向左走近……画面左侧〈周子安〉攥着一张皱纸条，快步迎上前，眉梢挑起带着挑衅。〈周子安〉says:</p>
+          <p class="sb-l" data-l="en">“How did you know that lyric sheet was in my tape?”</p>
+          <p class="sb-l" data-l="zh">「你怎么知道我磁带里有这盘歌词？」</p>
+          <p class="sb-v" data-l="en">【Shot 2】 <b>Over-shoulder</b>, the camera crossing 〈Zhou Zi'an〉's right shoulder, focus locked on 〈Gu Yan〉's face. 〈Gu Yan〉 says:</p>
+          <p class="sb-v" data-l="zh">【镜头 2】画面：<b>过肩中近景</b>，机位越过〈周子安〉右肩，焦点锁在〈顾砚〉脸上。〈顾砚〉says:</p>
+          <p class="sb-l" data-l="en">“Lin Zhixia's Walkman broke, I took it in for her. When I picked it up there was this mis-copied lyric sheet inside — handwriting with real character.”</p>
+          <p class="sb-l" data-l="zh">「林知夏的随身听坏了，我帮她送去修。修好取回来时，里头夹着这张抄错的歌词 —— 字丑得很有特色。」</p>
+          <p class="sb-n" data-l="en">Question and answer take a shot each, with room left over for two pure reaction shots. 2,769 characters over twelve shots, most carrying a single turn. <b>Not one</b> of the 15 marked problems is an omission: “shots 5–6 have no transition designed from the bike shed to the classroom”, “shot 5 lacks its own reaction shot”, “shots 1–12 repeat the costume description redundantly” — all of them <em>not good enough</em> rather than <em>missing</em>.</p>
+          <p class="sb-n" data-l="zh">一问一答各占一个镜头，还留出了两个纯反应镜头。十二镜共 2,769 字，多数镜只有 1 段对白。15 处问题里<b>没有一处</b>是「漏了什么」：「镜头 5-6 从车棚到教室的转场没有过渡设计」「镜头 5 缺少独立反应镜头」「镜头 1-12 人物外貌服饰描写重复冗余」——全是<em>不够出彩</em>，而不是<em>缺东西</em>。</p>
         </div>
       </div>
 
@@ -827,28 +887,42 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     </div>
 
     <div class="case">
-      <b><span data-l="en">Each input paradigm carries its own failure mode</span><span data-l="zh"><b>每种输入范式都有自己的病</b></span></b>
-      <p data-l="en">Grid panels omit people; first/last-frame shots change person between the two frames. Neither failure is available to the other paradigm, which is why difficulty is set by paradigm rather than visual style — 1 of 10 failing dimensions against 9 of 15.</p>
-<p data-l="zh">宫格会漏画人物；首尾帧则在两帧之间换人。这两种失败方式对另一种范式都不成立，这正是难度由范式而非画风决定的原因——不及格维度数首尾帧 1/10，宫格 9/15。</p>
-      <div class="cfig cg2 r169">
+      <b><span data-l="en">Difficulty is set by the input paradigm, not the visual style</span><span data-l="zh"><b>决定难度的是输入范式，不是画风</b></span></b>
+      <p data-l="en">One shot of one episode, run through all three paradigms end to end. Drama, episode, shot index, storyboard model, image model and video model are held fixed at <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>kling-v3-omni</code>; the only variable is what the video model is handed. Two frames, one grid or five references produce three different stagings of the same beat, a different supporting character on screen, and clips of 12 s, 12 s and 7 s. Failing dimensions across the corpus: 1 of 10 under first/last frame, 9 of 15 under grid.</p>
+<p data-l="zh">同一集里的同一个镜头，完整跑过三种范式。剧目、集数、镜号，以及分镜、图像、视频三个模型全部固定为 <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>kling-v3-omni</code>，唯一的变量是交到视频模型手里的东西。两张帧图、一张宫格、五张参考，给出的是同一个节拍的三种调度、三个不同的配角，以及 12 秒、12 秒、7 秒三种时长。全量语料上的不及格维度数：首尾帧 1/10，宫格 9/15。</p>
+      <div class="cfig vrow pset">
         <figure>
-          <img src="assets/cases/paradigm-grid.jpg" alt="Grid keyframe where cells that should hold three people hold two" loading="lazy">
-          <figcaption><b>Grid panel omits people.</b> <code>wan2.7-image-pro</code>, I-B1 subject attributes <span class="fail">1.33</span>: cells that should hold three people hold two.</figcaption>
+          <div class="ph"><b><span data-l="en">first / last frame</span><span data-l="zh">首尾帧</span></b><span>2</span></div>
+          <div class="pin">
+            <img src="assets/cases/para3-ff-a.jpg" alt="First frame: close-up of a man signing a demolition agreement" loading="lazy">
+            <img src="assets/cases/para3-ff-b.jpg" alt="Last frame of the same shot" loading="lazy">
+          </div>
+          <div class="pv"><video src="assets/video/para3-ff.mp4" poster="assets/video/para3-ff.jpg" muted loop playsinline preload="none"></video></div>
+          <figcaption><span data-l="en">Pinned at both ends, the clip only has to travel between two fixed compositions. It drifts off the document and lands on the seated man exactly as the last frame specifies — a camera move, not a scene.</span><span data-l="zh">两端都被钉死，模型要做的只是在两张固定构图之间走一趟。镜头从文件上缓缓移开，最后精确落在尾帧指定的那个坐着的男人身上——这是一次运镜，不是一场戏。</span></figcaption>
         </figure>
         <figure>
-          <img src="assets/cases/paradigm-ff.jpg" alt="First and last frame of one shot showing a different person in each" loading="lazy">
-          <figcaption><b>First/last frame changes person between frames.</b> <code>nano-banana-pro</code>, I-C1 face identity <span class="fail">1.33</span>: three annotators boxed it independently, and <em>nothing constrains the last frame against the first</em>.</figcaption>
+          <div class="ph"><b><span data-l="en">grid</span><span data-l="zh">宫格</span></b><span>1</span></div>
+          <div class="pin whole">
+            <img src="assets/cases/para3-grid.jpg" alt="One composite image holding the shot's four cuts as a 2x2 grid" loading="lazy">
+          </div>
+          <div class="pv"><video src="assets/video/para3-grid.mp4" poster="assets/video/para3-grid.jpg" muted loop playsinline preload="none"></video></div>
+          <figcaption><span data-l="en">Four cuts arrive as one 2×2 image, so the model reads its own coverage off the panels — a wide two-shot across the dinner table, nothing like the close-up on the left.</span><span data-l="zh">四个 Cut 压在一张 2×2 图里，模型得自己从格子里读出调度——给出的是隔着餐桌的双人中景，和左边那种特写完全不是一回事。</span></figcaption>
+        </figure>
+        <figure>
+          <div class="ph"><b><span data-l="en">multi-reference</span><span data-l="zh">多参考</span></b><span>5</span></div>
+          <div class="pin">
+            <img src="assets/cases/para3-ref-1.jpg" alt="Character sheet, Shen Zhixing" loading="lazy">
+            <img src="assets/cases/para3-ref-2.jpg" alt="Character sheet, Su Jinxiu" loading="lazy">
+            <img src="assets/cases/para3-ref-3.jpg" alt="Scene reference, the Su family dining room" loading="lazy">
+            <img src="assets/cases/para3-ref-4.jpg" alt="Prop reference, the demolition notice" loading="lazy">
+            <img src="assets/cases/para3-ref-5.jpg" alt="Prop reference, the divorce agreement" loading="lazy">
+          </div>
+          <div class="pv"><video src="assets/video/para3-mref.mp4" poster="assets/video/para3-mref.jpg" muted loop playsinline preload="none"></video></div>
+          <figcaption><span data-l="en">No frame is given at all — characters, set and props arrive as three separate channels and the framing is left open. Su Jinxiu, referenced here and in neither of the other two runs, is the only one of the three clips she appears in. It runs 7 s, not 12.</span><span data-l="zh">一张帧图都不给，角色、场景、道具分三路送进来，构图完全放开。苏锦绣只在这一路被参考，也只在这一条片子里出现过。时长 7 秒，不是 12 秒。</span></figcaption>
         </figure>
       </div>
-      <div class="cfig">
-        <div class="crow-h"><span>The input for the first/last-frame case: the shot's own first frame, then three character sheets.</span></div>
-        <div class="crow">
-          <figure><img src="assets/cases/paradigm-ref.jpg" alt="The shot's own first frame" loading="lazy"><figcaption>first frame</figcaption></figure>
-          <figure><img src="assets/cases/paradigm-card-a.jpg" alt="Character sheet A" loading="lazy"><figcaption>character sheet</figcaption></figure>
-          <figure><img src="assets/cases/paradigm-card-b.jpg" alt="Character sheet B" loading="lazy"><figcaption>character sheet</figcaption></figure>
-          <figure><img src="assets/cases/paradigm-card-c.jpg" alt="Character sheet C" loading="lazy"><figcaption>character sheet</figcaption></figure>
-        </div>
-      </div>
+      <p class="fnote" data-l="en">Live-action <i>Zhui Xu Wu Feng</i>, episode 1, shot 3. Thumbnails above each clip are the complete input for that paradigm — there is nothing else. Six models were evaluated under first/last frame, four under grid and five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.</p>
+      <p class="fnote" data-l="zh">真人《赘婿无锋》第 1 集第 3 镜。每条片子上方的缩略图就是该范式的全部输入，没有别的东西。首尾帧下评了 6 个模型，宫格 4 个，多参考 5 个；第四种范式「多关键帧」已定义，本期未评测。</p>
     </div>
 
 
