@@ -216,7 +216,7 @@ The judge replicates the human reference automatically. It aggregates routed mea
 
 ## Case studies
 
-Ordered along the chain — storyboard, keyframes, then shot video. The last three cover what a stage inherits from the one before it, and what the automated judge makes of all of it.
+Ordered along the chain — storyboard, keyframes, then shot video. The last two cover what a stage inherits from the one before it.
 
 ### 01 · Shot count decides executability
 
@@ -285,16 +285,14 @@ Question and answer take a shot each, with room left over for two pure reaction 
 | S-B1 executability | P | *1.00* | 3.00 | **4.00** | rises monotonically with shot count |
 | S-C2 shooting rhythm | E | *1.00* | **3.67** | **3.67** | 6 shots is already enough |
 | Overall impression | | *1.67* | **4.00** | **4.00** | — |
-| Problems marked | | 23 | 18 | 15 | fewer, and they change in kind |
-| Annotator disagreement | | 1.75 | 0.75 | 0.63 | worse artefacts are harder to score |
 
 The three-shot output compresses the episode into 30 s of self-declared duration and 10 dialogue turns; all three annotators scored its executability and shooting rhythm at 1.00 with zero disagreement, marking the same few defects every time — several actions in one shot, blocking too complex to execute, no reaction shot.
 
 ### 02 · Equal scores, different failure modes
 
-Two separate items, two models each. All four score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in four disjoint places, and within each pair the two models trade which dimension they fail.
+One item, two models. Both score 1.3–1.7 on some dimension, so a composite ranks them together — yet the boxes fall in two disjoint places, and the two models trade which dimension they fail.
 
-**Item 1 — input.** The four character sheets, shared by both models below; identity and costume are fixed here.
+**Input.** The six references both models were given; identity, costume and the set are fixed here.
 
 <table>
 <tr>
@@ -302,10 +300,12 @@ Two separate items, two models each. All four score 1.3–1.7 on some dimension,
 <td><img src="assets/cases/pair-card-jianglinyuan.jpg" alt="Character sheet, Jiang Linyuan"></td>
 <td><img src="assets/cases/pair-card-shenzhixia.jpg" alt="Character sheet, Shen Zhixia"></td>
 <td><img src="assets/cases/pair-card-jiangniannian.jpg" alt="Character sheet, Jiang Niannian"></td>
+<td><img src="assets/cases/pair-card-thug.jpg" alt="Character sheet, one of Gong Xiao's men"></td>
+<td><img src="assets/cases/pair-card-clinic.jpg" alt="Scene reference, the Gu family clinic"></td>
 </tr>
 <tr>
-<td align="center">龚啸</td><td align="center">江临渊</td>
-<td align="center">沈知夏</td><td align="center">江念念</td>
+<td align="center">龚啸</td><td align="center">江临渊</td><td align="center">沈知夏</td>
+<td align="center">江念念</td><td align="center">龚啸手下壮汉</td><td align="center">顾家诊所</td>
 </tr>
 </table>
 
@@ -320,22 +320,20 @@ Two separate items, two models each. All four score 1.3–1.7 on some dimension,
 </tr>
 </table>
 
-Boxes are drawn independently by the three annotators; colour distinguishes them. The same white-coated woman is boxed again and again — her identity drifts from panel to panel while the sheets above never change.
+<details>
+<summary>The grid prompt both models were given — 4 panels, actions in bold</summary>
 
-**Item 2.** A different item, a different pair of models — and a different pair of dimensions.
+**Panel 1 of 4.** Anime style, medium close-up, camera slightly low to the right of the counter. The street-facing glass door at frame left **is kicked open with force by 〈Gong Xiao〉's black-and-red high-top fighting shoe**, sole angled at the lens, the frame shuddering with exaggerated speed lines…
 
-<table>
-<tr>
-<td width="50%"><img src="assets/cases/boxed-extra.jpg" alt="Twelve annotator boxes, all marking extra subjects"></td>
-<td width="50%"><img src="assets/cases/boxed-hands.jpg" alt="Ten annotator boxes, all marking malformed hands"></td>
-</tr>
-<tr>
-<td><code>seedream-5.0-lite</code> — I-B1 subject attributes <b>1.33</b>, 12 boxes, all “extra subject”; human anatomy on this same item scored 3.0.</td>
-<td><code>wan2.7-image-pro</code> — I-E1 human anatomy <b>1.33</b>, 10 boxes, all broken hands; subject attributes on this same item scored 3.33.</td>
-</tr>
-</table>
+**Panel 2 of 4.** Anime style, low medium close-up. 〈Gong Xiao〉 stands left of centre… several 〈of Gong Xiao's men〉 crowd in behind him facing the counter, **one still bracing the overturned waiting bench with both arms**, the bench tipped into the lower right. 〈Shen Zhixia〉 stands at the counter facing him, **both hands pressed down on the counter edge**, pale but with her back straight. 〈Jiang Niannian〉 presses against the inside of the counter, **a sweet clenched in her fist**…
 
-The count is right here and the hands are not, which is the mirror image of the pair above: same band of scores, nothing in common about what went wrong.
+**Panel 3 of 4.** Anime style, low close-up. 〈Gong Xiao〉 occupies the left-centre of frame… **he tilts his head, runs his tongue over his teeth and sneers**, mouth pressed down, eyes fixed on the counter…
+
+**Panel 4 of 4.** Anime style, reverse medium close-up from the right of the counter. 〈Shen Zhixia〉 stands right of centre facing 〈Gong Xiao〉, **both hands pressed hard on the counter edge, knuckles white**, face bloodless, her look shaking but set… 〈Jiang Niannian〉 presses against the inside of the counter beside her, **clutching the sweet, chin up, watching in fright**…
+
+</details>
+
+Boxes are drawn independently by the three annotators; colour distinguishes them. In bold above are the actions the prompt asks for: `gpt-image-1.5` holds every face and does not perform them, while `wan2.7-image-pro` performs them and loses the faces — the same white-coated woman is boxed again and again as her identity drifts panel to panel, though the sheets never change.
 
 ### 03 · Cross-shot consistency is a separate capability
 
@@ -436,7 +434,7 @@ The prompt carries explicit `[Sound Effect]` lines per cut: the low room tone of
 
 ### 07 · The same character, a different face two shots later
 
-Six consecutive shots of one episode. The three annotators land on one phenomenon and time-stamp it: “at 8 s the woman's face is wrong”, “at 3 s the man's face changes”, “at 3 s the woman's face changes”, plus “character flickers” and “character disappears”. Their tags concentrate on appearance differing across segments, faces breaking or swapping, and costume changing style. Cross-shot character consistency scores **1.33**.
+The item is a whole episode — its thirteen shot videos, judged only on whether the people hold across them. Six are shown here. Three annotators scored cross-shot character consistency 2 / 1 / 1, a mean of **1.33**, and left 28 marks on that one dimension, tagged appearance differing across segments, faces breaking or swapping, and costume changing colour or style. The plainest of them needs no timestamp: “a scar on his face that was not there in the earlier shots”. Others read “character flickers”, “character disappears”, “the characters' positions in the space are a mess”.
 
 <table>
 <tr>
@@ -453,7 +451,9 @@ Six consecutive shots of one episode. The three annotators land on one phenomeno
 </tr>
 </table>
 
-`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3. Watch the woman across shots 1, 3 and 5, and the man across 0 and 2. Each shot on its own is unremarkable; the episode is scored on whether they are the same people throughout.
+`pixverse-c1`, multi-reference, live-action *Chronicle of Buried Injustice* episode 3, shots 0–5 of 13. Watch the woman across shots 1, 3 and 5, and the man across 0 and 2. Each shot on its own is unremarkable; the episode is scored on whether they are the same people throughout.
+
+Most marks also carry a second offset — “at 8 s the woman's face is wrong”, “at 3 s the man's face changes”. Those seconds cannot be resolved to a shot: each shot was watched as its own clip and the marker schema stored no shot id beside the note. The report treats this as a defect in the labelling, not a finding: for a cross-shot item the unit of marking should be a shot number or a shot range.
 
 ### 08 · An upstream defect is re-expressed downstream, not repaired
 
@@ -496,21 +496,6 @@ The clearest evidence that stages are not independent: the same fault, in the sa
 </table>
 
 Each stage was scored as its own task, by annotators who saw only that task. The defect was found three times over because it was there three times, not because one judgement carried into the next.
-
-### 10 · Automated scoring drifts where there is no reference to check against
-
-Every dimension with a reference to check against is right; the one purely perceptual dimension is off by almost four points in the lenient direction. The three annotators scored technical quality 1 / 1 / 2 and tagged it consistently — structural distortion, noise, blur, ghosting.
-
-<img src="assets/cases/judgefail.jpg" alt="The nano-banana-pro keyframe whose technical quality the judge overestimated" width="360">
-
-| Dimension | human | judge | err | |
-|---|---|---|---|---|
-| I-B1 subject attributes | 2.00 | 2 | 0.00 | correct |
-| I-C2 appearance, costume | 2.33 | 2 | 0.33 | correct |
-| I-B3 scene and layout | 2.67 | 3 | 0.33 | correct |
-| I-A1 technical quality | *1.33* | *5* | *3.67* | **overestimated** |
-
----
 
 ## Release
 
