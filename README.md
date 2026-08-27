@@ -6,14 +6,14 @@
 
 **From Production Pipeline and Annotation System to Validated Automated Evaluation**
 
-Haoyuan Shi<sup>1</sup> &nbsp; Mingtao Chen<sup>1</sup> &nbsp; Shuo Jiang<sup>1</sup> &nbsp; Ziyan Chen<sup>1,2</sup><br>
+Haoyuan Shi<sup>1,*</sup> &nbsp; Mingtao Chen<sup>1,*</sup> &nbsp; Shuo Jiang<sup>1</sup> &nbsp; Ziyan Chen<sup>1,2</sup><br>
 Xuyi Sheng<sup>3</sup> &nbsp; Yiming Liu<sup>1</sup> &nbsp; Ying Zhang<sup>1</sup> &nbsp; Miao Wang<sup>1,4</sup><br>
 Jianxiang Lu<sup>1</sup> &nbsp; Fanyang Lu<sup>1</sup> &nbsp; Songyuanyi Lu<sup>1</sup> &nbsp; Xiele Wu<sup>1</sup><br>
 Zhichao Hu<sup>1,†</sup> &nbsp; Yuhong Liu<sup>1</sup> &nbsp; Richeng Xuan<sup>1,§</sup>
 
 <sup>1</sup>Hunyuan, Tencent &nbsp;&nbsp; <sup>2</sup>Beijing Film Academy &nbsp;&nbsp; <sup>3</sup>Peking University &nbsp;&nbsp; <sup>4</sup>Shenzhen University
 
-<sup>†</sup>Project Lead &nbsp;&nbsp; <sup>§</sup>Corresponding Author
+<sup>*</sup>Equal Contribution &nbsp;&nbsp; <sup>†</sup>Project Lead &nbsp;&nbsp; <sup>§</sup>Corresponding Author
 
 </div>
 
