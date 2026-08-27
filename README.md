@@ -499,6 +499,10 @@ Boxes are drawn independently by the three annotators; colour distinguishes them
 
 DramaChain Bench supports extensible evaluation rather than static benchmarking. The dimension set, the judge framework and a subset of the data will follow.
 
+## Acknowledgements
+
+We would like to express our sincere thanks to Yunxin Li, Baotian Hu and Min Zhang (Hetao Institute), Yong Xiang (Peking University), Fan Hong (Beijing Film Academy) and Fei Gao (Shenzhen University) for their concern for and guidance on this paper. We also greatly appreciate the professional advice on film and television production from Ningxuan Zhang (editing), Yekai Xu and Tianlun Huang (directing), Yanyi Li (screenwriting), Jiahou Huang (producing), and Xiang Chen, Jiayu Li and Zichen Tang (cinematography). We further thank Huxin Peng and Liang Dong (Tencent) for their help with data procurement.
+
 ## Citation
 
 ```bibtex
