@@ -501,7 +501,7 @@ DramaChain Bench supports extensible evaluation rather than static benchmarking.
 
 ## Acknowledgements
 
-We would like to express our sincere thanks to Yunxin Li, Baotian Hu and Min Zhang (Shenzhen Loop Area Institute), Yong Xiang (Peking University), Fan Hong (Beijing Film Academy) and Fei Gao (Shenzhen University) for their concern for and guidance on this paper. We also greatly appreciate the professional advice on film and television production from Yekai Xu and Tianlun Huang (directors), Yanyi Li (screenwriter), Jiahou Huang (producer), Jiaxin Yuan (art director), Xiang Chen, Jiayu Li and Zichen Tang (cinematographers), Ningxuan Zhang (editor), and Shangheng Jiang (colourist). We further thank Huxin Peng and Liang Dong (Tencent) for their help with data procurement.
+We would like to express our sincere thanks to Yunxin Li, Baotian Hu and Min Zhang (Shenzhen Loop Area Institute), Yong Xiang (Peking University), Fan Hong (Beijing Film Academy) and Fei Gao (Shenzhen University) for their support on this paper. We also greatly appreciate the professional advice on film and television production from Yekai Xu and Tianlun Huang (directors), Yanyi Li (screenwriter), Jiahou Huang (producer), Jiaxin Yuan (art director), Xiang Chen, Jiayu Li and Zichen Tang (cinematographers), Ningxuan Zhang (editor), and Shangheng Jiang (colourist). We further thank Huxin Peng and Liang Dong (Tencent) for their help with data procurement.
 
 ## Citation
 
