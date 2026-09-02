@@ -497,7 +497,7 @@ Boxes are drawn independently by the three annotators; colour distinguishes them
 
 ## Release
 
-DramaChain Bench supports extensible evaluation rather than static benchmarking. The dimension set, the judge framework and a subset of the data will follow.
+The paper is on arXiv as [arXiv:2609.00646](https://arxiv.org/abs/2609.00646) ([PDF](https://arxiv.org/pdf/2609.00646)). DramaChain Bench supports extensible evaluation rather than static benchmarking: the dimension set, the judge framework and a subset of the data will follow.
 
 ## Acknowledgements
 
@@ -506,13 +506,16 @@ We would like to express our sincere thanks to Yunxin Li, Baotian Hu and Min Zha
 ## Citation
 
 ```bibtex
-@techreport{shi2026dramachain,
-  title       = {DramaChain Bench: An End-to-End Benchmark for Short-Drama Generation},
-  author      = {Shi, Haoyuan and Chen, Mingtao and Jiang, Shuo and Chen, Ziyan and
-                 Sheng, Xuyi and Liu, Yiming and Zhang, Ying and Wang, Miao and
-                 Lu, Jianxiang and Lu, Fanyang and Lu, Songyuanyi and Wu, Xiele and
-                 Hu, Zhichao and Liu, Yuhong and Xuan, Richeng},
-  institution = {Hunyuan, Tencent},
-  year        = {2026}
+@article{shi2026dramachain,
+  title         = {DramaChain Bench: An End-to-End Benchmark for Short-Drama Generation},
+  author        = {Shi, Haoyuan and Chen, Mingtao and Jiang, Shuo and Chen, Ziyan and
+                   Sheng, Xuyi and Liu, Yiming and Zhang, Ying and Wang, Miao and
+                   Lu, Jianxiang and Lu, Fanyang and Lu, Songyuanyi and Wu, Xiele and
+                   Hu, Zhichao and Liu, Yuhong and Xuan, Richeng},
+  journal       = {arXiv preprint arXiv:2609.00646},
+  eprint        = {2609.00646},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  year          = {2026}
 }
 ```
