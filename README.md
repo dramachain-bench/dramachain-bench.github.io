@@ -315,7 +315,7 @@ One shot of one episode through all three paradigms, with drama, episode, shot i
 </tr>
 </table>
 
-Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are that paradigm's complete input. Six models were evaluated under first/last frame, four under grid, five under multi-reference; a fourth paradigm, multi-keyframe, is defined but not run this round.
+Live-action *Zhui Xu Wu Feng*, episode 1, shot 3. The thumbnails above each clip are that paradigm's complete input. Eight models were evaluated under first/last frame, six under grid and seven under multi-reference — two, two and three of them scored automatically only; a fourth paradigm, multi-keyframe, is defined but not run this round.
 
 ### 03 · Model tier differences are observable in a single-shot output
 
