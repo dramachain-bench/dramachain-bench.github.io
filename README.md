@@ -23,7 +23,7 @@ Zhichao Hu<sup>1,†</sup> &nbsp; Yuhong Liu<sup>1</sup> &nbsp; Richeng Xuan<sup
 
 Commercial short-drama production runs as a chain — script, storyboard, keyframes, shot video, finished drama — but benchmarks score only the video stage, on inputs written for the test rather than produced by a pipeline. So no one can say which stage caused a delivery defect, or how far it travelled.
 
-**DramaChain Bench** scores every stage of a full production chain, on items that chain itself produced. Five evaluation axes are instantiated at six granularities into 63 leaf dimensions, over 5,785 items. Three professional annotators score each item independently with every defect localised in space and time, giving 17,488 scores and 255,925 traceable attributions. An agentic judge then reproduces that board at a mean PLCC of 0.918 — enough to admit new models at no annotation cost.
+**DramaChain Bench** scores every stage of a full production chain, on items that chain itself produced. Five evaluation axes are instantiated at six granularities into 63 leaf dimensions, with a reference set of 5,569 triply annotated items. Three professional annotators score each item independently, with defects localised in space and time where applicable; the full annotation collection contains 17,488 scores and 255,925 traceable attributions. An agentic judge then tracks the human board at a mean model-level PLCC of 0.918; new models can be scored automatically, although those scores are not themselves checked against human ratings.
 
 <div align="center">
 <img src="assets/overview.png" alt="DramaChain Bench overview: the dimension system, the production pipeline, the labeling system and the agentic judge" width="820">
@@ -33,16 +33,16 @@ Commercial short-drama production runs as a chain — script, storyboard, keyfra
 
 ## Findings
 
-- **The strongest annotated chain barely clears the usable line.** Chained as `gpt-5.5-xhigh` → `gpt-image-2` → `seedance-2.0`, the finished drama scores 3.17 under human annotation — 0.17 above the 3.0 usable line.<br>*Note: it leads among the annotated models only — `gpt-6-astra-max`, `gpt-image-2.5` and `seedance-2.5`, added afterwards, score higher at their stages but were never annotated.*
-- **Upstream defects accumulate rather than stay local.** Degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.
-- **Quality decays along the chain.** 3.78 at storyboard design down to 2.93 at episode video; no pixel or video stage reaches the text stage's mean.
-- **Composite scores hide dimensional trade-offs.** `seedream-5.0-pro` and `nano-banana-pro` differ by 0.02 overall, but by 0.39 and 0.60 on two axes in opposite directions.
+- **The strongest annotated chain barely clears the usable line.** Chained as `gpt-5.5-xhigh` → `gpt-image-2` → `seedance-2.0`, the finished drama receives an automated score of 3.30 — only 0.30 above the 3.0 usable line.<br>*Note: it leads among the annotated models only. Of the models added after the annotation round and scored automatically only, `gpt-6-astra-max` leads storyboards, `gpt-image-2.5` both keyframe stages and `seedance-2.5` the finished drama (3.70); `seedance-2.0` still leads shot video.*
+- **Upstream defects accumulate rather than stay local.** In automated scores of controlled substitutions, degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.
+- **Quality decays along the chain.** Mean automated scores fall from 3.78 at storyboard design to 2.93 at episode video; no pixel or video stage reaches the text stage's mean.
+- **Composite scores hide dimensional trade-offs.** `seedream-5.0-pro` and `nano-banana-pro` differ by 0.02 in automated composite score, but by 0.39 and 0.60 on two axes in opposite directions.
 
 ---
 
 ## Leaderboard
 
-Automated board, 5-point scale, over six production stages and five axes. **All** is the cross-axis composite.
+Automated board, 5-point scale, over six production stages and five axes. **All** averages all applicable leaf dimensions, weighting axes by leaf count.
 
 | Notation | Meaning |
 |---|---|
@@ -70,12 +70,16 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 | `kimi-k2.6` | 3.66 | 3.42 | 3.74 | 3.64 |
 | `qwen3.7-max` | 3.24 | 3.48 | 3.59 | 3.48 |
 | `mimo-v2.5-pro` | *2.68* | 3.53 | 3.41 | 3.26 |
+| `gpt-6-astra-max` † | 4.90 | 4.25 | 4.28 | 4.43 |
 | `gpt-5.6-sol-max` † | 4.95 | 4.02 | 4.31 | 4.40 |
+| `glm-5.3-max` † | 4.78 | 3.88 | 4.20 | 4.26 |
 | `claude-fable-5-max` † | 4.55 | 3.99 | 4.20 | 4.24 |
 | `claude-opus-5-max` † | 4.45 | 3.85 | 4.30 | 4.22 |
 | `kimi-k3` † | 4.67 | 3.87 | 4.17 | 4.22 |
 | `qwen3.8-max` † | 4.55 | 3.88 | 3.94 | 4.08 |
+| `hy4-preview` † | 4.69 | 3.56 | 3.91 | 4.02 |
 | `grok-4.5` † | 3.96 | 3.85 | 3.92 | 3.92 |
+| `gemini-3.8-flash-high` † | 4.18 | 3.42 | 3.79 | 3.80 |
 | `gemini-3.6-flash-high` † | 4.04 | 3.65 | 3.71 | 3.78 |
 
 </details>
@@ -94,6 +98,7 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 | `nano-banana-pro` | 3.17 | 3.89 | 4.34 | 3.79 | 3.62 |
 | `wan2.7-image-pro` | *2.95* | 3.63 | 4.03 | 3.46 | 3.38 |
 | `seedream-5.0-lite` ‡ | *2.96* | 3.40 | 3.89 | 3.40 | 3.32 |
+| `gpt-image-2.5` † | 3.83 | 4.46 | 4.64 | 4.23 | 4.12 |
 
 </details>
 
@@ -111,11 +116,12 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 | `nano-banana-pro` | 3.04 | 3.04 |
 | `wan2.7-image-pro` | 3.00 | 3.00 |
 | `seedream-5.0-lite` ‡ | *2.91* | *2.91* |
+| `gpt-image-2.5` † | 4.00 | 4.00 |
 
 </details>
 
 <details>
-<summary><b>④ Single-shot video</b> &nbsp;·&nbsp; PLCC 0.755 &nbsp;·&nbsp; SRCC 0.829</summary>
+<summary><b>④ Shot video</b> &nbsp;·&nbsp; PLCC 0.755 &nbsp;·&nbsp; SRCC 0.829</summary>
 
 <br>
 
@@ -128,6 +134,8 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 | `wan2.7` ‡ | **3.45** | *2.96* | *2.87* | 3.22 | *2.92* | 3.04 |
 | `veo-3.1` ‡ | 3.17 | *2.77* | *2.73* | 3.32 | *2.76* | *2.88* |
 | `seedance-2.5` †‡ | 3.24 | 3.40 | *2.97* | 3.71 | *2.85* | 3.17 |
+| `minimax-h3` † | 3.43 | 3.20 | *2.83* | 3.46 | 3.11 | 3.17 |
+| `wan-3.0` † | 3.51 | 3.26 | *2.74* | 3.42 | *2.97* | 3.15 |
 
 </details>
 
@@ -145,6 +153,8 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 | `veo-3.1` ‡ | *2.47* | 3.27 | 3.18 | *2.76* |
 | `pixverse-c1` | *2.42* | 3.08 | 3.16 | *2.71* |
 | `seedance-2.5` †‡ | 3.16 | 3.11 | 3.50 | 3.25 |
+| `wan-3.0` † | 3.12 | 3.70 | 3.42 | 3.25 |
+| `minimax-h3` † | *2.87* | 3.17 | 3.27 | *2.99* |
 
 </details>
 
@@ -162,6 +172,8 @@ Stage headers give model-level PLCC and SRCC against the three-annotator human b
 | `pixverse-c1` | 3.05 | *2.88* | *2.58* | *2.81* |
 | `veo-3.1` ‡ | *2.67* | 3.07 | *2.44* | *2.79* |
 | `seedance-2.5` †‡ | 4.40 | 3.93 | 3.00 | 3.70 |
+| `wan-3.0` † | 4.23 | 3.56 | *2.74* | 3.47 |
+| `minimax-h3` † | 3.77 | 3.33 | *2.51* | 3.20 |
 
 </details>
 
@@ -202,7 +214,7 @@ Generates the 20 dramas and 60 episodes the benchmark rests on, calibrated again
 <img src="assets/labeling.png" alt="The DramaChain labeling system: rubrics, attribution, spatio-temporal grounding and three-pass QC" width="880">
 </div>
 
-Three professional annotators independently score every item on all applicable dimensions, using a five-point decidable rubric per leaf dimension. Rubric tiers define observable criteria mapped to a closed vocabulary of attribution tags, and every deduction is localised in space and time. The result is 17,488 scores and 255,925 reviewable attributions contributed by 543 annotators.
+Three professional annotators independently score every item on all applicable dimensions, using a five-point decidable rubric per leaf dimension. Rubric tiers define observable criteria mapped to a closed vocabulary of attribution tags, and deductions are localised in space and time where applicable. The result is 17,488 scores and 255,925 reviewable attributions contributed by 543 annotators.
 
 ### DramaChain Agentic Judge — automated evaluation
 
@@ -497,7 +509,7 @@ Boxes are drawn independently by the three annotators; colour distinguishes them
 
 ## Release
 
-The paper is on arXiv as [arXiv:2609.00646](https://arxiv.org/abs/2609.00646) ([PDF](https://arxiv.org/pdf/2609.00646)). DramaChain Bench supports extensible evaluation rather than static benchmarking: the dimension set, the judge framework and a subset of the data will follow.
+The paper is on arXiv as [arXiv:2609.00646](https://arxiv.org/abs/2609.00646) ([PDF](https://arxiv.org/pdf/2609.00646)). DramaChain Bench supports extensible evaluation rather than static benchmarking: we will release all benchmark data, the judge models and the DramaChain Agent generation pipeline.
 
 ## Acknowledgements
 

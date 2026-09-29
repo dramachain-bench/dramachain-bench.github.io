@@ -494,8 +494,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     <h2><span data-l="en">Abstract</span><span data-l="zh">摘要</span></h2>
     <p data-l="en" class="lede">Commercial short-drama production runs as a chain — script, storyboard, keyframes, shot video, finished drama — but benchmarks score only the video stage, on inputs written for the test rather than produced by a pipeline. So no one can say which stage caused a delivery defect, or how far it travelled.</p>
 <p class="lede" data-l="zh">短剧的商业化生产遵循一条多环节链路——剧本、分镜设计、分镜图、分镜视频，直到最终成片。但现有基准大多只评测其中的视频生成一环，且使用为测试预先写好的题面，而非产线上游的真实产出。于是没有人能说清，一个交付缺陷究竟由哪一环造成，又传导了多远。</p>
-    <p data-l="en" class="lede"><b>DramaChain Bench</b> scores every stage of a full production chain, on items that chain itself produced. Five evaluation axes are instantiated at six granularities into 63 leaf dimensions, over 5,785 items. Three professional annotators score each item independently with every defect localised in space and time, giving 17,488 scores and 255,925 traceable attributions. An agentic judge then reproduces that board at a mean PLCC of 0.918 — enough to admit new models at no annotation cost.</p>
-<p class="lede" data-l="zh"><b>DramaChain Bench</b> 对完整生产链路的每一环都评测，且题面全部由该链路自身产出。五条评测轴在六个粒度上各自实例化，细化为 63 个叶子维度，覆盖 5,785 道题。三名专业标注员对每道题独立打分，所有缺陷都在时空上定位，共产出 17,488 份打分与 255,925 条可追溯的归因记录。随后由 agentic 判官自动复现该榜单，模型级相关达到平均 PLCC 0.918——足以让新模型零标注成本进榜。</p>
+    <p data-l="en" class="lede"><b>DramaChain Bench</b> scores every stage of a full production chain, on items that chain itself produced. Five evaluation axes are instantiated at six granularities into 63 leaf dimensions, with a reference set of 5,569 triply annotated items. Three professional annotators score each item independently, with defects localised in space and time where applicable; the full annotation collection contains 17,488 scores and 255,925 traceable attributions. An agentic judge then tracks the human board at a mean model-level PLCC of 0.918; new models can be scored automatically, although those scores are not themselves checked against human ratings.</p>
+<p class="lede" data-l="zh"><b>DramaChain Bench</b> 对完整生产链路的每一环都评测，且题面全部由该链路自身产出。五条评测轴在六个粒度上各自实例化，细化为 63 个叶子维度，参考集含 5,569 道三人标注的题。三名专业标注员对每道题独立打分，缺陷在适用时进行时空定位；全部标注采集共产出 17,488 份打分与 255,925 条可追溯的归因记录。随后由 agentic 判官自动打分，与人工榜的模型级 PLCC 平均达到 0.918；新模型可以直接自动评分，但这些分数本身未经人工核验。</p>
 
     <figure>
       <img src="assets/overview.png" alt="DramaChain Bench overview: the dimension system, the production pipeline, the labeling system and the agentic judge" width="820">
@@ -507,14 +507,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
   <div class="wrap">
     <h2><span data-l="en">Findings</span><span data-l="zh">核心结论</span></h2>
     <div class="hl">
-      <div data-l="en" class="hl-item"><b>The strongest annotated chain barely clears the usable line.</b><span>Chained as <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>seedance-2.0</code>, the finished drama scores 3.17 under human annotation — 0.17 above the 3.0 usable line.</span><i class="hl-note">Note: it leads among the annotated models only — <code>gpt-6-astra-max</code>, <code>gpt-image-2.5</code> and <code>seedance-2.5</code>, added afterwards, score higher at their stages but were never annotated.</i></div>
-<div class="hl-item" data-l="zh"><b>有人工标注的最强链路也只是勉强过线。</b><span><code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>seedance-2.0</code> 串联的成片，在人工标注中得 3.17 分，仅比 3.0 可用线高 0.17。</span><i class="hl-note">注：它只是有人工标注的模型里最强的一条——后来补测的 <code>gpt-6-astra-max</code>、<code>gpt-image-2.5</code>、<code>seedance-2.5</code> 在各自环节分更高，但没有人工标注。</i></div>
-      <div data-l="en" class="hl-item"><b>Upstream defects accumulate rather than stay local.</b><span>Degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.</span></div>
-<div class="hl-item" data-l="zh"><b>上游缺陷会累积传导，而不是留在原地。</b><span>只替换一个上游环节为更弱的模型，单分镜视频掉 0.07–0.13 分，到成片则放大为 0.25–0.83 分。</span></div>
-      <div data-l="en" class="hl-item"><b>Quality decays along the chain.</b><span>3.78 at storyboard design down to 2.93 at episode video; no pixel or video stage reaches the text stage's mean.</span></div>
-<div class="hl-item" data-l="zh"><b>质量沿链路逐级衰减。</b><span>从分镜设计的 3.78 一路降到集分镜视频的 2.93；没有任何像素或视频环节能达到文本环节的均分。</span></div>
-      <div data-l="en" class="hl-item"><b>Composite scores hide dimensional trade-offs.</b><span><code>seedream-5.0-pro</code> and <code>nano-banana-pro</code> differ by 0.02 overall, but by 0.39 and 0.60 on two axes in opposite directions.</span></div>
-<div class="hl-item" data-l="zh"><b>综合分掩盖了维度上的取舍。</b><span><code>seedream-5.0-pro</code> 与 <code>nano-banana-pro</code> 综合分只差 0.02，但在两条轴上分别以 0.39 和 0.60 的差距朝相反方向拉开。</span></div>
+      <div data-l="en" class="hl-item"><b>The strongest annotated chain barely clears the usable line.</b><span>Chained as <code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>seedance-2.0</code>, the finished drama receives an automated score of 3.30 — only 0.30 above the 3.0 usable line.</span><i class="hl-note">Note: it leads among the annotated models only. Of the models added after the annotation round and scored automatically only, <code>gpt-6-astra-max</code> leads storyboards, <code>gpt-image-2.5</code> both keyframe stages and <code>seedance-2.5</code> the finished drama (3.70); <code>seedance-2.0</code> still leads shot video.</i></div>
+<div class="hl-item" data-l="zh"><b>有人工标注的最强链路也只是勉强过线。</b><span><code>gpt-5.5-xhigh</code> → <code>gpt-image-2</code> → <code>seedance-2.0</code> 串联的成片，自动化评分为 3.30 分，仅比 3.0 可用线高 0.30。</span><i class="hl-note">注：它只是有人工标注的模型里最强的一条。标注轮次之后补测、仅做自动评测的模型中，<code>gpt-6-astra-max</code> 领跑分镜，<code>gpt-image-2.5</code> 领跑两档分镜图，<code>seedance-2.5</code> 领跑成片（3.70）；分镜视频仍是 <code>seedance-2.0</code> 最高。</i></div>
+      <div data-l="en" class="hl-item"><b>Upstream defects accumulate rather than stay local.</b><span>In automated scores of controlled substitutions, degrading one upstream stage costs a single clip 0.07–0.13 points but the finished drama 0.25–0.83.</span></div>
+<div class="hl-item" data-l="zh"><b>上游缺陷会累积传导，而不是留在原地。</b><span>按受控替换实验的自动化评分，只替换一个上游环节为更弱的模型，分镜视频掉 0.07–0.13 分，到成片则放大为 0.25–0.83 分。</span></div>
+      <div data-l="en" class="hl-item"><b>Quality decays along the chain.</b><span>Mean automated scores fall from 3.78 at storyboard design to 2.93 at episode video; no pixel or video stage reaches the text stage's mean.</span></div>
+<div class="hl-item" data-l="zh"><b>质量沿链路逐级衰减。</b><span>自动化均分从分镜设计的 3.78 一路降到集分镜视频的 2.93；没有任何像素或视频环节能达到文本环节的均分。</span></div>
+      <div data-l="en" class="hl-item"><b>Composite scores hide dimensional trade-offs.</b><span><code>seedream-5.0-pro</code> and <code>nano-banana-pro</code> differ by 0.02 in automated composite score, but by 0.39 and 0.60 on two axes in opposite directions.</span></div>
+<div class="hl-item" data-l="zh"><b>综合分掩盖了维度上的取舍。</b><span><code>seedream-5.0-pro</code> 与 <code>nano-banana-pro</code> 自动化综合分只差 0.02，但在两条轴上分别以 0.39 和 0.60 的差距朝相反方向拉开。</span></div>
     </div>
   </div>
 </section>
@@ -522,8 +522,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <section id="leaderboard">
   <div class="wrap">
     <h2><span data-l="en">Leaderboard</span><span data-l="zh">榜单</span></h2>
-    <p data-l="en">Automated board, 5-point scale, over six production stages and five axes. <b>All</b> is the cross-axis composite.</p>
-<p data-l="zh">自动化评测榜，5 分制，覆盖六个生产环节与五条评测轴。<b>综合分</b>为跨轴汇总指标。</p>
+    <p data-l="en">Automated board, 5-point scale, over six production stages and five axes. <b>All</b> averages all applicable leaf dimensions, weighting axes by leaf count.</p>
+<p data-l="zh">自动化评测榜，5 分制，覆盖六个生产环节与五条评测轴。<b>综合分</b>为全部适用叶子维度的均值，各轴按叶子维度数加权。</p>
     <div class="legend">
       <span data-l="en"><i>bold</i> — best value in the column among fully annotated models</span>
 <span data-l="zh"><i>加粗</i> —— 有完整人工标注的模型中该轴的最优值</span>
@@ -554,8 +554,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
       <img src="assets/agent.png" alt="The DramaChain Agent production pipeline, forking at exactly one stage per run" width="880">
     </figure>
 
-    <p data-l="en"><b>What the calibration means.</b> One script, run end to end by our pipeline and by three commercial short-drama platforms — OiiOii, XiaoYunQue and Flova. Shot segmentation, character and scene consistency, camera language and audio all land in the same band; what differs is house style. This is what licenses the benchmark to treat pipeline output as representative of the product category rather than as a weaker stand-in.</p>
-<p data-l="zh"><b>对标是什么意思。</b>同一份剧本，由本链路与 OiiOii、小云雀、Flova 三个商用短剧平台各自端到端跑一遍。分镜切分、角色与场景一致性、镜头语言与音轨都落在同一档，差别在于各家的风格取向。正是这一点，让本基准有理由把链路产出视为该品类的代表水平，而不是一个更弱的替身。</p>
+    <p data-l="en"><b>What the calibration means.</b> One script, run end to end by our pipeline and by three commercial short-drama platforms — OiiOii, XiaoYunQue and Flova. Shot segmentation, character and scene consistency, camera language and audio all land in the same band; what differs is house style. This single-script example illustrates a practical production setting; it is not a controlled comparison, a claim of general platform equivalence or a ranking.</p>
+<p data-l="zh"><b>对标是什么意思。</b>同一份剧本，由本链路与 OiiOii、小云雀、Flova 三个商用短剧平台各自端到端跑一遍。分镜切分、角色与场景一致性、镜头语言与音轨都落在同一档，差别在于各家的风格取向。这是一个单剧本示例，说明的是实际生产场景，并非受控对比，也不代表平台之间整体等价或存在排名。</p>
 
     <div class="cfig vrow four">
       <figure>
@@ -655,8 +655,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
     <p class="fnote" data-l="zh">分数为三名标注员对成片的综合印象，与榜单同为 5 分制，括号内为三人各自的打分。《替月》的 4.00 是全量语料中成片粒度的最高共识分，与另一部并列。每部剧都跑过三种输入范式与三个以上视频模型，此处展示的是其中得分最高的一次。视频统一转码为 1280×720，点击才开始播放。</p>
 
     <h3><span data-l="en">DramaChain Labeling System — human reference</span><span data-l="zh">DramaChain 标注系统 —— 人工基准</span></h3>
-    <p data-l="en">Three professional annotators score every item independently against a five-point decidable rubric, each deduction tagged from a closed vocabulary and localised in space and time — 17,488 scores and 255,925 reviewable attributions from 543 annotators.</p>
-<p data-l="zh">三名专业标注员依据五分制可判定量表对每道题独立打分，每一处扣分都从封闭词表中选取标签并在时空上定位——共 543 名标注员产出 17,488 份打分与 255,925 条可复核的归因记录。</p>
+    <p data-l="en">Three professional annotators score every item independently against a five-point decidable rubric, each deduction tagged from a closed vocabulary and localised in space and time where applicable — 17,488 scores and 255,925 reviewable attributions from 543 annotators.</p>
+<p data-l="zh">三名专业标注员依据五分制可判定量表对每道题独立打分，每一处扣分都从封闭词表中选取标签，并在适用时进行时空定位——共 543 名标注员产出 17,488 份打分与 255,925 条可复核的归因记录。</p>
     <figure>
       <img src="assets/labeling.png" alt="The DramaChain labeling system: rubrics, attribution, spatio-temporal grounding and three-pass quality control" width="880">
     </figure>
@@ -941,7 +941,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
             <div class="cfig vrow one">
               <figure>
                 <video src="assets/video/chain-shot.mp4" poster="assets/video/chain-shot.jpg" muted loop playsinline preload="none"></video>
-                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">Single-shot video, shot 2 · V-E1 speech quality <span class="fail">2.00</span>, shot composite 3.00</span><span data-l="zh">单分镜视频，镜 2 · V-E1 语音质量 <span class="fail">2.00</span>，该镜综合 3.00</span></figcaption>
+                <figcaption><b><code>happyhorse-1.1</code></b><span data-l="en">Shot video, shot 2 · V-E1 speech quality <span class="fail">2.00</span>, shot composite 3.00</span><span data-l="zh">分镜视频，镜 2 · V-E1 语音质量 <span class="fail">2.00</span>，该镜综合 3.00</span></figcaption>
               </figure>
             </div>
           </div>
@@ -1041,8 +1041,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 56px;font-size:12.5px;
 <section id="citation">
   <div class="wrap">
     <h2><span data-l="en">Release &amp; citation</span><span data-l="zh">开放与引用</span></h2>
-    <p data-l="en">The paper is on arXiv as <a href="https://arxiv.org/abs/2609.00646">arXiv:2609.00646</a> (<a href="https://arxiv.org/pdf/2609.00646">PDF</a>). DramaChain Bench supports extensible evaluation rather than static benchmarking: the dimension set, the judge framework and a subset of the data will follow.</p>
-<p data-l="zh">论文已发布于 arXiv：<a href="https://arxiv.org/abs/2609.00646">arXiv:2609.00646</a>（<a href="https://arxiv.org/pdf/2609.00646">PDF</a>）。DramaChain Bench 支持可扩展的持续评测，而非一次性的静态基准：维度体系、评测框架与部分数据将陆续开放。</p>
+    <p data-l="en">The paper is on arXiv as <a href="https://arxiv.org/abs/2609.00646">arXiv:2609.00646</a> (<a href="https://arxiv.org/pdf/2609.00646">PDF</a>). DramaChain Bench supports extensible evaluation rather than static benchmarking: we will release all benchmark data, the judge models and the DramaChain Agent generation pipeline.</p>
+<p data-l="zh">论文已发布于 arXiv：<a href="https://arxiv.org/abs/2609.00646">arXiv:2609.00646</a>（<a href="https://arxiv.org/pdf/2609.00646">PDF</a>）。DramaChain Bench 支持可扩展的持续评测，而非一次性的静态基准：我们将开放全部基准数据、判分模型与 DramaChain Agent 生成管线。</p>
 <pre>@article{shi2026dramachain,
   title         = {DramaChain Bench: An End-to-End Benchmark for Short-Drama Generation},
   author        = {Shi, Haoyuan and Chen, Mingtao and Jiang, Shuo and Chen, Ziyan and
@@ -1087,7 +1087,7 @@ const AX_NAME = a => t(a[1], a[3]);
 
 /* Stage labels, keyed to the order of STAGES below. */
 const STAGE_ZH = ['分镜设计', '单分镜图', '集分镜图',
-                  '单分镜视频', '集分镜视频', '短剧成片'];
+                  '分镜视频', '集分镜视频', '短剧成片'];
 
 /* Each row: [model, flags, F, C, P, Q, E, All].
    A score is null when the axis is undefined at that stage.
@@ -1121,14 +1121,12 @@ const STAGES = [
   {
     n:'Single keyframe', plcc:'0.959', srcc:'0.750',
     rows:[
-      ['gpt-image-2.5','†', [3.83,''],[4.47,''],[4.63,''],[4.23,''],null,[4.12,'']],
+      ['gpt-image-2.5','†', [3.83,''],[4.46,''],[4.64,''],[4.23,''],null,[4.12,'']],
       ['gpt-image-2','', [3.65,'b'],[4.32,'b'],[4.47,'b'],[4.13,'b'],null,[3.99,'b']],
       ['gpt-image-1.5','', [3.25,''],[3.96,''],[4.46,''],[3.90,''],null,[3.72,'']],
       ['nano-banana-2','', [3.33,''],[3.92,''],[4.25,''],[3.71,''],null,[3.68,'']],
       ['seedream-5.0-pro','', [3.56,''],[3.92,''],[3.74,''],[3.52,''],null,[3.64,'']],
       ['nano-banana-pro','', [3.17,''],[3.89,''],[4.34,''],[3.79,''],null,[3.62,'']],
-      ['hy-image-3.5-v1.2','†', [3.14,''],[4.05,''],[4.27,''],[3.70,''],null,[3.59,'']],
-      ['hy-image-3.5','†', [3.05,''],[3.92,''],[4.20,''],[3.77,''],null,[3.54,'']],
       ['wan2.7-image-pro','', [2.95,'f'],[3.63,''],[4.03,''],[3.46,''],null,[3.38,'']],
       ['seedream-5.0-lite','‡', [2.96,'f'],[3.40,''],[3.89,''],[3.40,''],null,[3.32,'']]
     ]
@@ -1136,12 +1134,10 @@ const STAGES = [
   {
     n:'Episode keyframes', plcc:'0.973', srcc:'0.964',
     rows:[
-      ['gpt-image-2.5','†', null,[4.04,''],null,null,null,[4.00,'']],
+      ['gpt-image-2.5','†', null,[4.00,''],null,null,null,[4.00,'']],
       ['gpt-image-2','', null,[3.82,'b'],null,null,null,[3.82,'b']],
       ['gpt-image-1.5','', null,[3.60,''],null,null,null,[3.60,'']],
-      ['hy-image-3.5-v1.2','†', null,[3.47,''],null,null,null,[3.47,'']],
       ['nano-banana-2','', null,[3.47,''],null,null,null,[3.47,'']],
-      ['hy-image-3.5','†', null,[3.36,''],null,null,null,[3.36,'']],
       ['seedream-5.0-pro','', null,[3.28,''],null,null,null,[3.28,'']],
       ['nano-banana-pro','', null,[3.04,''],null,null,null,[3.04,'']],
       ['wan2.7-image-pro','', null,[3.00,''],null,null,null,[3.00,'']],
@@ -1149,13 +1145,13 @@ const STAGES = [
     ]
   },
   {
-    n:'Single-shot video', plcc:'0.755', srcc:'0.829',
+    n:'Shot video', plcc:'0.755', srcc:'0.829',
     rows:[
       ['seedance-2.0','‡', [3.44,''],[3.27,'b'],[3.06,''],[3.77,'b'],[3.05,''],[3.24,'b']],
       ['happyhorse-1.1','', [3.34,''],[3.21,''],[3.04,''],[3.43,''],[3.08,''],[3.18,'']],
-      ['minimax-h3','†', [3.47,''],[3.19,''],[3.14,''],[3.46,''],[3.11,''],[3.17,'']],
-      ['seedance-2.5','†‡', [3.23,''],[3.41,''],[2.96,'f'],[3.71,''],[2.85,'f'],[3.17,'']],
-      ['wan3.0','†', [3.55,''],[3.26,''],[3.04,''],[3.42,''],[2.97,'f'],[3.15,'']],
+      ['minimax-h3','†', [3.43,''],[3.20,''],[2.83,'f'],[3.46,''],[3.11,''],[3.17,'']],
+      ['seedance-2.5','†‡', [3.24,''],[3.40,''],[2.97,'f'],[3.71,''],[2.85,'f'],[3.17,'']],
+      ['wan-3.0','†', [3.51,''],[3.26,''],[2.74,'f'],[3.42,''],[2.97,'f'],[3.15,'']],
       ['kling-3.0-omni','', [3.22,''],[3.23,''],[3.08,'b'],[3.28,''],[2.88,'f'],[3.11,'']],
       ['pixverse-c1','', [3.07,''],[3.09,''],[2.92,'f'],[3.42,''],[3.10,'b'],[3.10,'']],
       ['wan2.7','‡', [3.45,'b'],[2.96,'f'],[2.87,'f'],[3.22,''],[2.92,'f'],[3.04,'']],
@@ -1166,11 +1162,11 @@ const STAGES = [
     n:'Episode video', plcc:'0.935', srcc:'0.943',
     rows:[
       ['seedance-2.5','†‡', null,[3.16,''],[3.11,''],null,[3.50,''],[3.25,'']],
-      ['wan3.0','†', null,[3.11,''],[3.70,''],null,[3.44,''],[3.25,'']],
+      ['wan-3.0','†', null,[3.12,''],[3.70,''],null,[3.42,''],[3.25,'']],
       ['seedance-2.0','‡', null,[2.96,'bf'],[3.41,''],null,[3.32,''],[3.11,'b']],
       ['happyhorse-1.1','', null,[2.84,'f'],[3.64,'b'],null,[3.37,''],[3.08,'']],
       ['kling-3.0-omni','', null,[2.79,'f'],[3.31,''],null,[3.48,'b'],[3.06,'']],
-      ['minimax-h3','†', null,[2.87,'f'],[3.17,''],null,[3.24,''],[2.99,'f']],
+      ['minimax-h3','†', null,[2.87,'f'],[3.17,''],null,[3.27,''],[2.99,'f']],
       ['wan2.7','‡', null,[2.57,'f'],[3.24,''],null,[3.35,''],[2.87,'f']],
       ['veo-3.1','‡', null,[2.47,'f'],[3.27,''],null,[3.18,''],[2.76,'f']],
       ['pixverse-c1','', null,[2.42,'f'],[3.08,''],null,[3.16,''],[2.71,'f']]
@@ -1180,7 +1176,7 @@ const STAGES = [
     n:'Short drama', plcc:'0.947', srcc:'1.000',
     rows:[
       ['seedance-2.5','†‡', [4.40,''],[3.93,''],null,null,[3.00,''],[3.70,'']],
-      ['wan3.0','†', [4.23,''],[3.56,''],null,null,[2.72,'f'],[3.47,'']],
+      ['wan-3.0','†', [4.23,''],[3.56,''],null,null,[2.74,'f'],[3.47,'']],
       ['seedance-2.0','‡', [4.29,'b'],[3.38,''],null,null,[2.68,'f'],[3.30,'b']],
       ['happyhorse-1.1','', [3.82,''],[3.38,''],null,null,[2.69,'bf'],[3.22,'']],
       ['minimax-h3','†', [3.77,''],[3.33,''],null,null,[2.51,'f'],[3.20,'']],
